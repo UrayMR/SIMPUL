@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
       ]
     );
 
-    \App\Models\User::factory(3)->state(['role' => 'teacher'])->create();
-    \App\Models\User::factory(10)->state(['role' => 'student'])->create();
+    \App\Models\User::factory(25)->state(['role' => 'teacher'])->create();
+    \App\Models\User::factory(15)->state(['role' => 'student'])->create();
   }
 }

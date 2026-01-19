@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes
@@ -11,8 +12,9 @@ Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->as('admin.')
     ->group(function () {
-        // Dashboard route
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/users/pending-list', [UserController::class, 'pendingList'])->name('users.pending-list');
+        Route::resource('/users', UserController::class);
     });
 
 Route::middleware(['auth'])
