@@ -12,16 +12,18 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasUuids;
 
     public const ROLE_ADMIN = 'admin';
+    public const ROLE_TEACHER = 'teacher';
+    public const ROLE_STUDENT = 'student';
 
-    public const STATUS_AKTIF = 'aktif';
-    public const STATUS_NONAKTIF = 'nonaktif';
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_INACTIVE = 'inactive';
+    public const STATUS_PENDING = 'pending';
+    public const STATUS_REJECTED = 'rejected';
 
     protected $fillable = [
         'name',
         'email',
         'password',
-        'profile_photo_path',
-        'nomor_telepon',
         'role',
         'status',
     ];
@@ -34,6 +36,9 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'id' => 'string',
+            'role' => 'string',
+            'status' => 'string',
             'email_verified_at' => 'datetime',
         ];
     }

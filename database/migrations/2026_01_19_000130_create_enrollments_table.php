@@ -10,10 +10,9 @@ return new class extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignUuid('course_id')->constrained('courses')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('course_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
-
             $table->unique(['user_id', 'course_id']);
         });
     }

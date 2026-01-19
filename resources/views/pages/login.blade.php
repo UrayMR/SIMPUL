@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Login - SILAYANKRIS')
+@section('title', 'Login - SIMPUL')
 
 @section('content')
 	<div class="card">
@@ -11,7 +11,7 @@
 						<img src="{{ asset('assets/img/logo.png') }}" alt="Logo" width="40">
 					</span>
 					<span class="app-brand-text demo text-white fw-bolder"
-						style="text-transform: uppercase; letter-spacing: 2px">SILAYANKRIS</span>
+						style="text-transform: uppercase; letter-spacing: 2px">SIMPUL</span>
 				</a>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 				<p>Silakan masukkan email dan password untuk mengakses layanan kami.</p>
 			</div>
 
-			<form id="formAuthentication" method="POST" action="{{ route('login', ['type' => request('type')]) }}">
+			<form id="formAuthentication" method="POST" action="{{ route('login') }}" class="mb-3">
 				@csrf
 				<div class="mb-3">
 					<label for="email" class="form-label">Email</label>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,11 @@ class AuthController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        if (Auth::user()->role == 'admin') {
+
+        // Authenticated user
+        $user = Auth::user();
+
+        if ($user->role == User::ROLE_ADMIN) {
             return redirect()->intended(route('admin.dashboard', absolute: false));
         } else {
             return redirect()->intended(route('home', absolute: false));

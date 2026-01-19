@@ -9,27 +9,17 @@ class TransactionSeeder extends Seeder
 {
     public function run(): void
     {
-        $enrollments = DB::table('enrollments')->get(['user_id', 'course_id']);
-
+        $enrollments = \App\Models\Enrollment::all();
         foreach ($enrollments as $enrollment) {
-            $course = DB::table('courses')->where('id', $enrollment->course_id)->first(['price']);
+            $course = \App\Models\Course::find($enrollment->course_id);
             if (!$course) {
                 continue;
             }
-
-            DB::table('transactions')->updateOrInsert(
-                [
-                    'user_id' => $enrollment->user_id,
-                    'course_id' => $enrollment->course_id,
-                ],
-                [
-                    'amount' => $course->price,
-                    'payment_proof_image' => null,
-                    'status' => rand(0, 1) ? 'approved' : 'pending',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]
-            );
+            \App\Models\Transaction::factory()->create([
+                'user_id' => $enrollment->user_id,
+                'course_id' => $enrollment->course_id,
+                'amount' => $course->price,
+            ]);
         }
     }
 }

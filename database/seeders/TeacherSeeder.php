@@ -9,21 +9,9 @@ class TeacherSeeder extends Seeder
 {
     public function run(): void
     {
-        $teachers = DB::table('users')->where('role', 'teacher')->get(['id', 'name']);
-
-        foreach ($teachers as $t) {
-            DB::table('teachers')->updateOrInsert(
-                ['user_id' => $t->id],
-                [
-                    'bio' => 'Experienced instructor in various subjects.',
-                    'expertise' => 'General',
-                    'phone_number' => '0800000000',
-                    'profile_image' => null,
-                    'approved_at' => now(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]
-            );
+        $teacherUsers = \App\Models\User::where('role', 'teacher')->get();
+        foreach ($teacherUsers as $user) {
+            \App\Models\Teacher::factory()->create(['user_id' => $user->id]);
         }
     }
 }

@@ -9,11 +9,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table): void {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignUuid('course_id')->constrained('courses')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('course_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->decimal('amount', 10, 2);
-            $table->string('payment_proof_image')->nullable();
+            $table->string('payment_proof_path')->nullable();
             $table->enum('status', ['approved', 'pending', 'rejected'])->default('pending');
             $table->timestamps();
         });

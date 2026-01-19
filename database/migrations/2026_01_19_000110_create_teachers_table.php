@@ -10,11 +10,11 @@ return new class extends Migration
     {
         Schema::create('teachers', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignUuid('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->text('bio')->nullable();
             $table->string('expertise')->nullable();
             $table->string('phone_number')->nullable();
-            $table->string('profile_image')->nullable();
+            $table->string('profile_image_path')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
         });

@@ -12,7 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnUpdate()->restrictOnDelete();
-            $table->string('thumbnail_image')->nullable();
+            $table->string('thumbnail_path')->nullable();
             $table->string('title');
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2)->default(0);
