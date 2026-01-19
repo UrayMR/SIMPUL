@@ -1,17 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\BeritaController;
-use App\Http\Controllers\Admin\Periodik\PerBulanController;
-use App\Http\Controllers\Admin\Periodik\PerSemesterController;
-use App\Http\Controllers\Admin\Periodik\PerTahunController;
-use App\Http\Controllers\Admin\GerejaController;
-use App\Http\Controllers\Admin\LokasiController;
-use App\Http\Controllers\Admin\SekolahController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\User\Periodik\PerBulanUserController;
-use App\Http\Controllers\User\Periodik\PerSemesterUserController;
-use App\Http\Controllers\User\Periodik\PerTahunUserController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes
@@ -19,6 +8,8 @@ Route::redirect('/', '/beranda');
 Route::view('/beranda', 'pages.guest.home')->name('beranda');
 
 Route::middleware(['auth', 'role:admin'])
+    ->prefix('admin')
+    ->as('admin.')
     ->group(function () {
         // Dashboard route
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -53,8 +53,10 @@ class LoginRequest extends FormRequest
         $user = Auth::user();
 
         $message = match ($user->status) {
-            'nonaktif' => 'Akun Anda sedang tidak aktif.',
-            'aktif' => null,
+            'inactive' => 'Akun Anda telah dinonaktifkan. Silahkan hubungi kontak SIMPUL.',
+            'pending' => 'Akun Anda masih dalam pengajuan. Silahkan menunggu 1x24 jam untuk proses verifikasi.',
+            'rejected' => 'Pengajuan akun Anda ditolak. Silahkan hubungi kontak SIMPUL.',
+            'active' => null,
             default => null,
         };
 
