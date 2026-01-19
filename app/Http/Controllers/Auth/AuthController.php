@@ -27,7 +27,7 @@ class AuthController extends Controller
         if ($user->role == User::ROLE_ADMIN) {
             return redirect()->intended(route('admin.dashboard', absolute: false));
         } else {
-            return redirect()->intended(route('home', absolute: false));
+            return redirect()->intended(route('beranda', absolute: false));
         }
     }
 
@@ -38,6 +38,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home');
+        return redirect()->route('beranda');
     }
 }

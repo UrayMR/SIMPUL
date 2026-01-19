@@ -6,7 +6,7 @@
 	<div class="card">
 		<div class="card-header bg-primary">
 			<div class="app-brand justify-content-center p-2" style="margin-bottom: 0px !important">
-				<a href="{{ route('home') }}" class="app-brand-link gap-2 text-decoration-none">
+				<a href="{{ route('beranda') }}" class="app-brand-link gap-2 text-decoration-none">
 					<span class="app-brand-logo demo">
 						<img src="{{ asset('assets/img/logo.png') }}" alt="Logo" width="40">
 					</span>
