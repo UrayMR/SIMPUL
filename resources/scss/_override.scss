@@ -1,0 +1,240 @@
+// Warna utama Sneat
+$primary: #008080;
+
+// Override CSS variable Bootstrap
+:root {
+    --bs-primary: #{$primary};
+    --bs-primary-rgb: #{red($primary)}, #{green($primary)}, #{blue($primary)};
+}
+
+// NEWS
+.news-title {
+    color: #003232;
+}
+.news-title:hover {
+    color: #008080;
+}
+.img-hover-slide {
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.img-hover-slide img {
+    transition: transform 1.2s ease;
+    transform: translateY(0);
+}
+
+.img-hover-slide:hover img {
+    transform: translateY(-5%);
+}
+
+/* ===============================
+   BUTTON PRIMARY (sesuai warna Sneat)
+   =============================== */
+
+.btn-primary {
+    background-color: $primary !important;
+    border-color: $primary !important;
+}
+
+/* =========================================
+   CLEAN INPUT-GROUP (border halus, modern)
+   ========================================= */
+
+/* Override global form control focus */
+.form-control:focus,
+.form-select:focus {
+    border-color: $primary !important;
+    box-shadow: 0 0 0 0.15rem
+        rgba(red($primary), green($primary), blue($primary), 0.25) !important;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdown-toggle::after {
+    content: "";
+    display: inline-block;
+    margin-top: 0 !important;
+    width: 1em;
+    height: 1em;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' fill='none' stroke='%23333' stroke-width='2' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1em 1em;
+    border: none !important;
+    vertical-align: middle;
+    transform: none !important;
+}
+
+.dropdown-toggle:hover::after {
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' fill='none' stroke='%23fff' stroke-width='2' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.dropdown-toggle.show::after,
+.dropdown-toggle[aria-expanded="true"]::after {
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' fill='none' stroke='%23fff' stroke-width='2' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 10l4-4 4 4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.btn.dropdown-toggle:hover {
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Sebelum focus */
+.input-group {
+    border: 1px solid #d0d5dd; /* border halus */
+    border-radius: 8px; /* rounded seperti screenshot */
+    overflow: hidden; /* supaya rapi */
+}
+
+.input-group .input-group-text,
+.input-group .form-control,
+.input-group .btn {
+    border: none !important; /* hilangkan border bawaan Bootstrap */
+    box-shadow: none !important;
+}
+
+/* Placeholder lebih lembut */
+.input-group .form-control::placeholder {
+    color: #9ca3af;
+}
+
+/* Saat focus – seluruh group berubah merah */
+.input-group:focus-within {
+    border-color: $primary !important;
+    box-shadow: 0 0 0 0.1rem
+        rgba(red($primary), green($primary), blue($primary), 0.25) !important;
+}
+.input-group .input-group-text {
+    border-right: 1px solid #e5e7eb !important; /* garis tipis seperti screenshot */
+}
+
+.input-group .form-control {
+    border-right: 1px solid #e5e7eb !important;
+}
+
+/* Hilangkan border-right pada tombol agar rapi */
+.input-group .btn {
+    border-right: none !important;
+}
+
+/* ===============================
+   FIX ACTIVE MENU SNEAT (HILANGKAN UNGU)
+   =============================== */
+
+/* Background active */
+/* Background active */
+.layout-menu .menu-inner .menu-item.active > .menu-link,
+.layout-menu .menu-inner .menu-item.open > .menu-link {
+    background-color: rgba(
+        red($primary),
+        green($primary),
+        blue($primary),
+        0.15
+    ) !important;
+    color: $primary !important;
+}
+
+/* Hover */
+.layout-menu .menu-link:hover {
+    background-color: rgba(
+        red($primary),
+        green($primary),
+        blue($primary),
+        0.08
+    ) !important;
+    color: $primary !important;
+}
+
+/* Icon warna active */
+.layout-menu .menu-item.active .menu-icon,
+.layout-menu .menu-item.open .menu-icon {
+    color: $primary !important;
+}
+
+/* Text active */
+.layout-menu .menu-item.active .menu-link div,
+.layout-menu .menu-item.open .menu-link div {
+    color: $primary !important;
+}
+
+/* Indicator garis */
+.layout-menu .menu-item.active::before,
+.layout-menu .menu-item.active > .menu-link::before {
+    background-color: $primary !important;
+}
+
+/* =========================================
+   PAGINATION PRIMARY (sesuai warna Sneat)
+   ========================================= */
+
+/* =========================================
+   FIX PAGINATION PRIMARY (Bootstrap + Sneat)
+   ========================================= */
+
+.pagination {
+    --bs-pagination-color: #{$primary};
+    --bs-pagination-hover-color: #{$primary};
+    --bs-pagination-focus-color: #{$primary};
+
+    --bs-pagination-hover-bg: rgba(
+        red($primary),
+        green($primary),
+        blue($primary),
+        0.15
+    );
+    --bs-pagination-hover-border-color: #{$primary};
+
+    --bs-pagination-active-bg: #{$primary} !important;
+    --bs-pagination-active-border-color: #{$primary} !important;
+    --bs-pagination-active-color: #fff !important;
+
+    --bs-pagination-border-color: #d0d5dd;
+}
+
+.page-item.active .page-link {
+    background-color: $primary !important;
+    border-color: $primary !important;
+    color: #fff !important;
+}
+.page-link:hover {
+    color: $primary !important;
+}
+
+.page-item:not(.active) .page-link:hover {
+    background-color: rgba(
+        red($primary),
+        green($primary),
+        blue($primary),
+        0.15
+    ) !important;
+    border-color: $primary !important;
+}
+
+a.layout-menu-toggle.sidebar-toggle {
+    background-color: $primary !important;
+    color: #fff !important;
+}
+
+a.layout-menu-toggle.sidebar-toggle .bx {
+    color: #fff !important;
+}
+
+a.layout-menu-toggle.sidebar-toggle:hover {
+    background-color: lighten($primary, 8%) !important;
+}
+
+a.layout-menu-toggle.sidebar-toggle:hover .bx {
+    color: #fff !important;
+}
+
+.bg-menu-theme
+    .menu-sub
+    > .menu-item.active
+    > .menu-link:not(.menu-toggle):before {
+    background-color: $primary !important;
+}
