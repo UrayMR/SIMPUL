@@ -1,6 +1,6 @@
 <style>
     :root {
-        --primary: #008080;
+        --primary: #1E3A8A;
     }
 
     /* Kompensasi untuk fixed navbar */
@@ -226,7 +226,7 @@
         <!-- Logo Desktop -->
         <a class="navbar-brand d-none d-lg-flex align-items-center gap-2" href="/">
             <img src="{{ asset('assets/img/logo.png') }}" height="34">
-            <span class="fw-bold fs-5 text-primary">SILAYANKRIS</span>
+            <span class="fw-bold fs-5 text-app-primary">SILAYANKRIS</span>
         </a>
 
         <!-- Mobile Profile -->
@@ -367,7 +367,7 @@
                 @endauth
 
                 @guest
-                    <a href="/login" class="btn btn-primary px-4 py-2 rounded-3 fw-semibold mt-3 mt-lg-0">Masuk</a>
+                    <a href="/login" class="btn btn-app-primary px-4 py-2 rounded-3 fw-semibold mt-3 mt-lg-0">Masuk</a>
                 @endguest
 
             </ul>

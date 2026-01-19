@@ -58,6 +58,32 @@
             background-repeat: no-repeat;
         }
 
+        .hero-section {
+            position: relative;
+            min-height: 90vh;
+            /* background-image: url('{{ asset('assets/img/kemenag2.jpg') }}'); */
+            /* background-color: black; */
+            /* background-size: cover; */
+            /* background-position: center; */
+            /* background-repeat: no-repeat; */
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            /* background: rgba(0, 0, 0, 0.45); */
+            background: #fffff;
+            /* gelap biar teks kebaca */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+        }
+
         @media (min-width: 992px) {
             .hero-image {
                 height: 85vh;
@@ -218,36 +244,42 @@
 
     <main>
         {{-- HERO SECTION --}}
-        <section class="hero-section " data-aos="fade-up">
-            <div class="container pb-5">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <div class="py-4 text-center text-lg-start">
-                            <h1 class="fw-bold text-primary mb-3 display-5 ">
-                                Selamat Datang di SILAYANKRIS
-                            </h1>
-                            <p class="fs-5 mb-3">
-                                <strong>SILAYANKRIS</strong> - Sistem Informasi Layanan Penyelenggara Kristen <br>
-                                Kementerian Agama Kota Surabaya
-                            </p>
-                            <p class="text-muted mb-5">
-                                Akses berbagai layanan dan informasi penyelenggaraan Kristen <br>
-                                secara cepat, mudah, dan terintegrasi dalam satu sistem.
-                            </p>
-                            <a href="/layanan">
-                                <button class="btn btn-primary btn-lg">
-                                    Hubungi Kami
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="hero-image"></div>
+        <section class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <div class="row justify-content-center text-center">
+                    <div class="col-lg-9">
+
+                        <h1 class="fw-bold text-app-primary display-5 mb-2">
+                            Belajar Bersama SIMPUL
+                        </h1>
+                        <h1 class="fw-bold text-app-primary display-5 mb-2">
+                            Jadi Talenta Digital Terbaik
+                        </h1>
+                        
+
+                        {{-- <p class="fs-5 text-dark mb-4">
+                            <strong>SIMPUL</strong> – Sistem Informasi Manajemen Pembelajaran Unggul<br>
+                            Platform kursus online untuk belajar langsung dari para ahli
+                        </p> --}}
+
+                        <p class="mb-3 fs-5  text-dark">
+                            {{-- Temukan berbagai course berkualitas dari guru terbaik,<br>
+                            tingkatkan skill, dan raih peluang karier yang lebih baik. --}}
+                            Platform online course terbaik dengan dukungan mentor<br> berpengalaman dan materi terlengkap
+                        </p>
+
+                        <a href="/courses" class="btn btn-app-primary btn-lg px-5">
+                            Jelajahi Course
+                        </a>
+
+
                     </div>
                 </div>
             </div>
         </section>
-        
+
+
         {{-- PROFIL SECTION --}}
         <section class="profil-section" data-aos="fade-up">
             <div class="container py-5">
@@ -295,7 +327,8 @@
                                     Kantor Kementerian Agama Kota Surabaya. Melalui Website ini, kami menyediakan
                                     pusat informasi dan layanan terpadu yang berkaitan dengan pendidikan, pembinaan,
                                     serta pelayanan umat Kristen di Kota Surabaya.
-                                    Kami berkomitmen memberikan akses yang mudah bagi para guru, pengurus gereja, lembaga keagamaan, dan masyarakat umum terhadap berbagai program, kebijakan,
+                                    Kami berkomitmen memberikan akses yang mudah bagi para guru, pengurus gereja, lembaga
+                                    keagamaan, dan masyarakat umum terhadap berbagai program, kebijakan,
                                     data, dan berita terbaru. Harapan kami, layanan ini dapat mendukung terwujudnya
                                     pembinaan kehidupan umat beragama yang harmonis, berkualitas, dan berkarakter.
                                     <br><br>
@@ -332,31 +365,32 @@
                         <div class="card border-0 shadow-lg h-100 pelayanan-card">
                             <div class="card-body text-center py-5">
                                 <div class="mb-3">
-                                    <i class="bi bi-building fs-1 text-primary"></i>
+                                    <i class="bi bi-building fs-1 text-app-primary"></i>
                                 </div>
                                 <h5 class="card-title fw-bold mb-3">Layanan Gereja</h5>
                                 <p class="card-text text-muted">
                                     Pendataan data Gereja <br> di wilayah Surabaya secara digital dan terintegrasi.
                                 </p>
-                                <a href="{{ route('login', ['type' => 'gereja']) }}" class="btn btn-primary mt-3">
+                                <a href="{{ route('login', ['type' => 'gereja']) }}" class="btn btn-app-primary mt-3">
                                     Masuk ke Layanan Gereja
                                 </a>
                             </div>
                         </div>
                     </div>
-                    
+
                     {{-- Card 2 --}}
                     <div class="col-md-6 mb-4 fade-up">
                         <div class="card border-0 shadow-lg h-100 pelayanan-card">
                             <div class="card-body text-center py-5">
                                 <div class="mb-3">
-                                    <i class="bi bi-person-badge fs-1 text-primary"></i>
+                                    <i class="bi bi-person-badge fs-1 text-app-primary"></i>
                                 </div>
                                 <h5 class="card-title fw-bold mb-3">Layanan TPG Guru</h5>
                                 <p class="card-text text-muted">
-                                    Pendataan berkas Tunjangan Profesi Guru <br> di wilayah Surabaya secara digital dan terintegrasi.
+                                    Pendataan berkas Tunjangan Profesi Guru <br> di wilayah Surabaya secara digital dan
+                                    terintegrasi.
                                 </p>
-                                <a href="{{ route('login', ['type' => 'tpg']) }}" class="btn btn-primary mt-3">
+                                <a href="{{ route('login', ['type' => 'tpg']) }}" class="btn btn-app-primary mt-3">
                                     Masuk ke Layanan TPG Guru
                                 </a>
                             </div>
@@ -368,7 +402,8 @@
         </section>
 
         {{-- PEGAWAI SECTION --}}
-        <section class="pegawai-section" style="background-color: #008080; color: #ffffff;" data-aos="fade-up" data-aos-delay="0">
+        <section class="pegawai-section" style="background-color: #008080; color: #ffffff;" data-aos="fade-up"
+            data-aos-delay="0">
             <div class="container py-5 border-bottom">
 
                 {{-- Header --}}

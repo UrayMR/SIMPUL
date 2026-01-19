@@ -1,10 +1,27 @@
 // Warna utama Sneat
-$primary: #008080;
+
+// App color palette (do not override Bootstrap)
+$brand-primary: #1E3A8A; // Biru Tua (#1E3A8A)
+$brand-secondary: #3B82F6;    // Biru Muda (#3B82F6)
+$brand-background: #FFFFFF;    // Putih
+$brand-background-soft: #F3F4F6; // Abu Muda
+$brand-text: #111827;          // Hitam
+$brand-text-secondary: #6B7280; // Abu Gelap
 
 // Override CSS variable Bootstrap
 :root {
-    --bs-primary: #{$primary};
-    --bs-primary-rgb: #{red($primary)}, #{green($primary)}, #{blue($primary)};
+    --bs-primary: #{$brand-secondary};
+    --bs-primary-rgb: #{red($brand-secondary)}, #{green($brand-secondary)}, #{blue($brand-secondary)};
+
+    /* App custom palette variables (non-Bootstrap) */
+    --app-primary: #{$brand-primary};
+    --app-primary-rgb: #{red($brand-primary)}, #{green($brand-primary)}, #{blue($brand-primary)};
+    --app-secondary: #{$brand-secondary};
+    --app-secondary-rgb: #{red($brand-secondary)}, #{green($brand-secondary)}, #{blue($brand-secondary)};
+    --app-background: #{$brand-background};
+    --app-background-soft: #{$brand-background-soft};
+    --app-text: #{$brand-text};
+    --app-text-secondary: #{$brand-text-secondary};
 }
 
 // NEWS
@@ -29,13 +46,95 @@ $primary: #008080;
 }
 
 /* ===============================
-   BUTTON PRIMARY (sesuai warna Sneat)
+   TEXT (sesuai warna Sneat)
+   =============================== */
+
+/* Utilities using app palette (safe, not overriding Bootstrap) */
+.text-app { color: var(--app-text) !important; }
+.text-app-secondary { color: var(--app-text-secondary) !important; }
+.text-app-primary { color: var(--app-primary) !important; }
+.text-app-secondary-accent { color: var(--app-secondary) !important; }
+
+.bg-app { background-color: var(--app-background) !important; }
+.bg-app-soft { background-color: var(--app-background-soft) !important; }
+.bg-app-primary { background-color: var(--app-primary) !important; }
+.bg-app-secondary { background-color: var(--app-secondary) !important; }
+
+
+
+/* ===============================
+   BUTTON  (sesuai warna Sneat)
    =============================== */
 
 .btn-primary {
-    background-color: $primary !important;
-    border-color: $primary !important;
+    background-color: $brand-secondary !important;
+    border-color: $brand-secondary !important;
 }
+
+/* App button variants (non-Bootstrap names to avoid override) */
+.btn-app-primary {
+    background-color: $brand-primary !important;
+    border-color: $brand-primary !important;
+    color: #fff !important;
+}
+.btn-app-primary:hover,
+.btn-app-primary:focus {
+    background-color: lighten($brand-primary, 6%) !important;
+    border-color: lighten($brand-primary, 6%) !important;
+    box-shadow: 0 0 0 0.15rem rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.25) !important;
+}
+
+.btn-app-secondary {
+    background-color: $brand-secondary !important;
+    border-color: $brand-secondary !important;
+    color: #fff !important;
+}
+.btn-app-secondary:hover,
+.btn-app-secondary:focus {
+    background-color: lighten($brand-secondary, 6%) !important;
+    border-color: lighten($brand-secondary, 6%) !important;
+    box-shadow: 0 0 0 0.15rem rgba(red($brand-secondary), green($brand-secondary), blue($brand-secondary), 0.25) !important;
+}
+
+.btn-app-outline-primary {
+    background-color: transparent !important;
+    color: $brand-primary !important;
+    border-color: $brand-primary !important;
+}
+.btn-app-outline-primary:hover,
+.btn-app-outline-primary:focus {
+    background-color: rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.08) !important;
+    color: $brand-primary !important;
+    border-color: $brand-primary !important;
+    box-shadow: 0 0 0 0.15rem rgba(red($brand-primary), green($brand-primary), blue($brand-primary), 0.2) !important;
+}
+
+.btn-app-outline-secondary {
+    background-color: transparent !important;
+    color: $brand-secondary !important;
+    border-color: $brand-secondary !important;
+}
+.btn-app-outline-secondary:hover,
+.btn-app-outline-secondary:focus {
+    background-color: rgba(red($brand-secondary), green($brand-secondary), blue($brand-secondary), 0.08) !important;
+    color: $brand-secondary !important;
+    border-color: $brand-secondary !important;
+    box-shadow: 0 0 0 0.15rem rgba(red($brand-secondary), green($brand-secondary), blue($brand-secondary), 0.2) !important;
+}
+
+.btn-app-soft {
+    background-color: $brand-background-soft !important;
+    border-color: $brand-background-soft !important;
+    color: $brand-text !important;
+}
+.btn-app-soft:hover,
+.btn-app-soft:focus {
+    background-color: darken($brand-background-soft, 3%) !important;
+    border-color: darken($brand-background-soft, 3%) !important;
+    color: $brand-text !important;
+}
+
+
 
 /* =========================================
    CLEAN INPUT-GROUP (border halus, modern)
@@ -44,9 +143,9 @@ $primary: #008080;
 /* Override global form control focus */
 .form-control:focus,
 .form-select:focus {
-    border-color: $primary !important;
+    border-color: $brand-secondary !important;
     box-shadow: 0 0 0 0.15rem
-        rgba(red($primary), green($primary), blue($primary), 0.25) !important;
+        rgba(red($brand-secondary), green($brand-secondary), blue($brand-secondary), 0.25) !important;
 }
 
 .dropdown-toggle {
@@ -105,9 +204,9 @@ $primary: #008080;
 
 /* Saat focus – seluruh group berubah merah */
 .input-group:focus-within {
-    border-color: $primary !important;
+    border-color: $brand-secondary !important;
     box-shadow: 0 0 0 0.1rem
-        rgba(red($primary), green($primary), blue($primary), 0.25) !important;
+        rgba(red($brand-secondary), green($brand-secondary), blue($brand-secondary), 0.25) !important;
 }
 .input-group .input-group-text {
     border-right: 1px solid #e5e7eb !important; /* garis tipis seperti screenshot */
@@ -131,41 +230,41 @@ $primary: #008080;
 .layout-menu .menu-inner .menu-item.active > .menu-link,
 .layout-menu .menu-inner .menu-item.open > .menu-link {
     background-color: rgba(
-        red($primary),
-        green($primary),
-        blue($primary),
+        red($brand-secondary),
+        green($brand-secondary),
+        blue($brand-secondary),
         0.15
     ) !important;
-    color: $primary !important;
+    color: $brand-secondary !important;
 }
 
 /* Hover */
 .layout-menu .menu-link:hover {
     background-color: rgba(
-        red($primary),
-        green($primary),
-        blue($primary),
+        red($brand-secondary),
+        green($brand-secondary),
+        blue($brand-secondary),
         0.08
     ) !important;
-    color: $primary !important;
+    color: $brand-secondary !important;
 }
 
 /* Icon warna active */
 .layout-menu .menu-item.active .menu-icon,
 .layout-menu .menu-item.open .menu-icon {
-    color: $primary !important;
+    color: $brand-secondary !important;
 }
 
 /* Text active */
 .layout-menu .menu-item.active .menu-link div,
 .layout-menu .menu-item.open .menu-link div {
-    color: $primary !important;
+    color: $brand-secondary !important;
 }
 
 /* Indicator garis */
 .layout-menu .menu-item.active::before,
 .layout-menu .menu-item.active > .menu-link::before {
-    background-color: $primary !important;
+    background-color: $brand-secondary !important;
 }
 
 /* =========================================
@@ -177,46 +276,46 @@ $primary: #008080;
    ========================================= */
 
 .pagination {
-    --bs-pagination-color: #{$primary};
-    --bs-pagination-hover-color: #{$primary};
-    --bs-pagination-focus-color: #{$primary};
+    --bs-pagination-color: #{$brand-secondary};
+    --bs-pagination-hover-color: #{$brand-secondary};
+    --bs-pagination-focus-color: #{$brand-secondary};
 
     --bs-pagination-hover-bg: rgba(
-        red($primary),
-        green($primary),
-        blue($primary),
+        red($brand-secondary),
+        green($brand-secondary),
+        blue($brand-secondary),
         0.15
     );
-    --bs-pagination-hover-border-color: #{$primary};
+    --bs-pagination-hover-border-color: #{$brand-secondary};
 
-    --bs-pagination-active-bg: #{$primary} !important;
-    --bs-pagination-active-border-color: #{$primary} !important;
+    --bs-pagination-active-bg: #{$brand-secondary} !important;
+    --bs-pagination-active-border-color: #{$brand-secondary} !important;
     --bs-pagination-active-color: #fff !important;
 
     --bs-pagination-border-color: #d0d5dd;
 }
 
 .page-item.active .page-link {
-    background-color: $primary !important;
-    border-color: $primary !important;
+    background-color: $brand-secondary !important;
+    border-color: $brand-secondary !important;
     color: #fff !important;
 }
 .page-link:hover {
-    color: $primary !important;
+    color: $brand-secondary !important;
 }
 
 .page-item:not(.active) .page-link:hover {
     background-color: rgba(
-        red($primary),
-        green($primary),
-        blue($primary),
+        red($brand-secondary),
+        green($brand-secondary),
+        blue($brand-secondary),
         0.15
     ) !important;
-    border-color: $primary !important;
+    border-color: $brand-secondary !important;
 }
 
 a.layout-menu-toggle.sidebar-toggle {
-    background-color: $primary !important;
+    background-color: $brand-secondary !important;
     color: #fff !important;
 }
 
@@ -225,7 +324,7 @@ a.layout-menu-toggle.sidebar-toggle .bx {
 }
 
 a.layout-menu-toggle.sidebar-toggle:hover {
-    background-color: lighten($primary, 8%) !important;
+    background-color: lighten($brand-secondary, 8%) !important;
 }
 
 a.layout-menu-toggle.sidebar-toggle:hover .bx {
@@ -236,5 +335,5 @@ a.layout-menu-toggle.sidebar-toggle:hover .bx {
     .menu-sub
     > .menu-item.active
     > .menu-link:not(.menu-toggle):before {
-    background-color: $primary !important;
+    background-color: $brand-secondary !important;
 }
