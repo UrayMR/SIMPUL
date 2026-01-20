@@ -8,6 +8,7 @@ use App\Models\Teacher;
 use App\Http\Requests\CourseRequest;
 use App\Models\User;
 use App\Utils\ImageCompressor;
+use App\Utils\YoutubeUrlParser;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
@@ -118,7 +119,7 @@ class CourseController extends Controller
             unset($validated['hero_path']);
         }
 
-        $validated['enrollments_count'] = 0;
+        $validated['video_url'] = YoutubeUrlParser::extractId($validated['video_url'] ?? '');
 
         Course::create($validated);
 
@@ -173,6 +174,8 @@ class CourseController extends Controller
         } else {
             unset($validated['hero_path']);
         }
+
+        $validated['video_url'] = YoutubeUrlParser::extractId($validated['video_url'] ?? '');
 
         $course->update($validated);
 

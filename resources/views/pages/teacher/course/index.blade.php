@@ -23,7 +23,6 @@
 
 	<section class="py-5 bg-light">
 		<div class="container">
-			{{-- Statistik Pribadi --}}
 			<div class="row mb-5 g-4 justify-content-center">
 				<div class="col-md-4">
 					<div class="bg-white rounded-4 shadow-sm p-4 text-center h-100">
