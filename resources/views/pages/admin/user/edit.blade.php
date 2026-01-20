@@ -132,6 +132,27 @@
 						@enderror
 					</div>
 
+					{{-- BIO & EXPERTISE (TEACHER ONLY) --}}
+					<div id="teacherFields" style="display:none;">
+						<div class="mb-3">
+							<label for="bio" class="form-label">Bio <span class="text-muted">(Opsional)</span></label>
+							<textarea name="bio" id="bio" class="form-control @error('bio') is-invalid @enderror" rows="3"
+							 placeholder="Tulis bio singkat...">{{ old('bio', $user->teacher->bio ?? '') }}</textarea>
+							@error('bio')
+								<div class="invalid-feedback">{{ $message }}</div>
+							@enderror
+						</div>
+						<div class="mb-3">
+							<label for="expertise" class="form-label">Keahlian <span class="text-muted">(Opsional)</span></label>
+							<input type="text" name="expertise" id="expertise"
+								class="form-control @error('expertise') is-invalid @enderror" placeholder="Contoh: Matematika, Fisika"
+								value="{{ old('expertise', $user->teacher->expertise ?? '') }}">
+							@error('expertise')
+								<div class="invalid-feedback">{{ $message }}</div>
+							@enderror
+						</div>
+					</div>
+
 					<div class="d-flex justify-content-end mt-4">
 						<button type="submit" class="btn btn-primary" id="submitUserBtn">
 							<span class="button-content">
@@ -157,18 +178,22 @@
 			const roleSelect = document.getElementById('role');
 			const oldPhoto = document.getElementById('old-photo-container');
 
-			// Show/hide photoForm based on role selection
-			function togglePhotoForm() {
+			// Show/hide photoForm and teacherFields based on role selection
+			const teacherFields = document.getElementById('teacherFields');
+
+			function toggleTeacherFields() {
 				if (roleSelect.value === 'teacher') {
 					photoForm.style.display = 'block';
+					teacherFields.style.display = 'block';
 				} else {
 					photoForm.style.display = 'none';
+					teacherFields.style.display = 'none';
 				}
 			}
 			// Initial check on page load
-			togglePhotoForm();
+			toggleTeacherFields();
 			// Listen for changes
-			roleSelect.addEventListener('change', togglePhotoForm);
+			roleSelect.addEventListener('change', toggleTeacherFields);
 
 			photoInput.addEventListener('change', function(event) {
 				const file = event.target.files[0];

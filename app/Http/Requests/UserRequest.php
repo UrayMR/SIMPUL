@@ -45,6 +45,8 @@ class UserRequest extends FormRequest
         if ($this->input('role') === User::ROLE_TEACHER) {
             $rules = array_merge($rules, [
                 'profile_photo_file' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+                'bio' => ['nullable', 'string', 'max:1000'],
+                'expertise' => ['nullable', 'string', 'max:255'],
             ]);
         }
 

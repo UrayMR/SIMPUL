@@ -119,6 +119,12 @@ class UserController extends Controller
             if (!empty($profilePicturePath)) {
                 $teacherData['profile_picture_path'] = $profilePicturePath;
             }
+            if (!empty($data['bio'])) {
+                $teacherData['bio'] = $data['bio'];
+            }
+            if (!empty($data['expertise'])) {
+                $teacherData['expertise'] = $data['expertise'];
+            }
             $user->teacher()->create($teacherData);
         }
 
@@ -178,6 +184,12 @@ class UserController extends Controller
             $teacherData = [];
             if (!empty($profilePicturePath)) {
                 $teacherData['profile_picture_path'] = $profilePicturePath;
+            }
+            if (!empty($data['bio'])) {
+                $teacherData['bio'] = $data['bio'];
+            }
+            if (!empty($data['expertise'])) {
+                $teacherData['expertise'] = $data['expertise'];
             }
             if (!empty($teacherData)) {
                 $user->teacher->update($teacherData);

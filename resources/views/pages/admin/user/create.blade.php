@@ -110,7 +110,6 @@
 					{{-- FOTO PROFIL --}}
 					<div class="mb-3" id="photoForm" style="display:none;">
 						<label for="profile_picture_file" class="form-label">Foto Profil <span class="text-muted">(Opsional)</span></label>
-
 						<div class="text-center mb-3" id="photo-preview-container" style="display:none;">
 							<img id="photo-preview" src="#" alt="Preview Foto Profil" class="img-thumbnail rounded"
 								style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
@@ -118,10 +117,30 @@
 						<input type="file" class="form-control @error('profile_picture_file') is-invalid @enderror"
 							id="profile_picture_file" name="profile_picture_file" accept="image/*">
 						<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 2MB. Ukuran pas foto: 3x4.</small>
-
 						@error('profile_picture_file')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
+					</div>
+
+					{{-- BIO & EXPERTISE (TEACHER ONLY) --}}
+					<div id="teacherFields" style="display:none;">
+						<div class="mb-3">
+							<label for="bio" class="form-label">Bio <span class="text-muted">(Opsional)</span></label>
+							<textarea name="bio" id="bio" class="form-control @error('bio') is-invalid @enderror" rows="3"
+							 placeholder="Tulis bio singkat...">{{ old('bio') }}</textarea>
+							@error('bio')
+								<div class="invalid-feedback">{{ $message }}</div>
+							@enderror
+						</div>
+						<div class="mb-3">
+							<label for="expertise" class="form-label">Keahlian <span class="text-muted">(Opsional)</span></label>
+							<input type="text" name="expertise" id="expertise"
+								class="form-control @error('expertise') is-invalid @enderror" placeholder="Contoh: Matematika, Fisika"
+								value="{{ old('expertise') }}">
+							@error('expertise')
+								<div class="invalid-feedback">{{ $message }}</div>
+							@enderror
+						</div>
 					</div>
 					{{-- SUBMIT BUTTON --}}
 					<div class="d-flex justify-content-end mt-4">
@@ -149,20 +168,22 @@
 		const photoForm = document.getElementById('photoForm');
 		const roleSelect = document.getElementById('role');
 
-		// Show/hide photoForm based on role selection
-		function togglePhotoForm() {
+		// Show/hide photoForm and teacherFields based on role selection
+		const teacherFields = document.getElementById('teacherFields');
+
+		function toggleTeacherFields() {
 			if (roleSelect.value === 'teacher') {
 				photoForm.style.display = 'block';
+				teacherFields.style.display = 'block';
 			} else {
 				photoForm.style.display = 'none';
+				teacherFields.style.display = 'none';
 			}
 		}
-
 		// Initial check on page load
-		togglePhotoForm();
-
+		toggleTeacherFields();
 		// Listen for changes
-		roleSelect.addEventListener('change', togglePhotoForm);
+		roleSelect.addEventListener('change', toggleTeacherFields);
 
 		photoInput.addEventListener('change', function(event) {
 			const file = event.target.files[0];

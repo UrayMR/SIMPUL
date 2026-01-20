@@ -79,7 +79,7 @@
 						</div>
 						<div class="mb-3">
 							<label class="form-label text-start d-block">Nomor Telepon</label>
-							<input type="text" class="form-control" value="{{ $user->phone_number }}" readonly>
+							<input type="text" class="form-control" value="{{ $user->phone_number ?? '-' }}" readonly>
 						</div>
 					</div>
 				</div>
@@ -87,9 +87,17 @@
 				{{-- DATA TEACHER --}}
 				@if ($user->role === 'teacher' && $user->teacher)
 					<hr>
-					<h5>Data Teacher</h5>
-					{{-- Add teacher-specific fields here if needed --}}
+					<div class="mb-3">
+						<label class="form-label">Bio</label>
+						<textarea class="form-control" rows="3" readonly>{{ $user->teacher->bio ?? '-' }}</textarea>
+					</div>
+					<div class="mb-3">
+						<label class="form-label">Keahlian</label>
+						<input type="text" class="form-control" value="{{ $user->teacher->expertise ?? '-' }}" readonly>
+					</div>
 				@endif
+
+				<hr class="my-4">
 
 				<div class="mb-3">
 					<label class="form-label">Dibuat Pada</label>
