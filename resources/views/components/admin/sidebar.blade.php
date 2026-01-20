@@ -2,10 +2,10 @@
 	<div class="app-brand demo">
 		<a href="{{ route('admin.dashboard') }}" class="app-brand-link d-flex align-items-center text-decoration-none">
 			<span class="app-brand-logo demo">
-				<img src="{{ asset('assets/img/logo.png') }}" alt="Logo" style="height: 32px; width: auto; object-fit: contain;"
+				<img src="{{ asset('assets/img/logo/Logo Simpul.svg') }}" alt="Logo" style="height: 32px; width: auto; object-fit: contain;"
 					alt="Logo">
 			</span>
-			<span class="app-brand-text demo menu-text fw-bolder ms-2 fs-5" style="text-transform: none">SILAYANKRIS</span>
+			<span class="app-brand-text demo menu-text fw-bolder ms-2 fs-5" style="text-transform: none">{{ config('app.name') }}</span>
 		</a>
 
 		<a href="" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none  sidebar-toggle">
