@@ -151,7 +151,7 @@
 				<button class="w-100 d-flex align-items-center justify-content-between border-0 bg-transparent p-0" type="button"
 					data-bs-toggle="collapse" data-bs-target="#pendingAccordion" aria-expanded="false" aria-controls="pendingAccordion"
 					id="pendingAccordionBtn" style="outline:none;">
-					<h5 class="card-title fw-semibold mb-0">Daftar Data Pengajuan Akun <span
+					<h5 class="card-title fw-semibold mb-0">Daftar Data Pengajuan Akun Guru<span
 							class="badge bg-warning text-dark ms-2">{{ $pendingCount }}</span></h5>
 					<i class="bi bi-chevron-down ms-auto"></i>
 				</button>
@@ -220,15 +220,15 @@
 										let badgeClass = user.status === 'pending' ? 'bg-warning text-dark' : (user.status === 'rejected' ? 'bg-danger' : 'bg-secondary');
 										let number = meta && meta.from ? (meta.from + idx) : (idx + 1);
 										return `
-																																				<tr>
-																																					<td>${number}</td>
-																																					<td>${user.name}</td>
-																																					<td>${user.email}</td>
-																																					<td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
-																																					<td><span class="badge w-100 ${badgeClass}">${user.status}</span></td>
-																																					<td class="d-flex justify-content-center gap-2">${renderActions(user)}</td>
-																																				</tr>
-																																			`;
+																																					<tr>
+																																						<td>${number}</td>
+																																						<td>${user.name}</td>
+																																						<td>${user.email}</td>
+																																						<td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+																																						<td><span class="badge w-100 ${badgeClass}">${user.status}</span></td>
+																																						<td class="d-flex justify-content-center gap-2">${renderActions(user)}</td>
+																																					</tr>
+																																				`;
 									}).join('')}
 								</tbody>
 							</table>
