@@ -96,22 +96,36 @@
 					@if (auth()->id() !== $user->id)
 						<div class="modal fade" id="modalCenter{{ $user->id }}" tabindex="-1" aria-hidden="true">
 							<div class="modal-dialog modal-dialog-centered" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="modalCenterTitle">Konfirmasi</h5>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-									</div>
-									<div class="modal-body">
-										<p>Apakah anda yakin ingin menghapus <strong>{{ Str::limit($user->name, 15, '...') }}</strong>?<br><br>Semua
-											data yang pernah dibuat oleh pengguna ini akan terhapus juga.</p>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-											<form action="{{ route('admin.users.destroy', $user) }}" method="POST">
-												@csrf
-												@method('DELETE')
-												<button class="btn btn-danger"><i class="bx bx-trash"></i> Hapus</button>
-											</form>
+								<div class="modal-content rounded-4 shadow-lg border-0 p-2">
+									<div class="modal-header border-0 pb-0" style="padding-bottom:0;">
+										<div class="d-flex align-items-center gap-2 w-100">
+											<i class="bi bi-exclamation-triangle-fill text-danger fs-3 me-2"></i>
+											<div class="flex-grow-1">
+												<h5 class="modal-title mb-0 fw-bold text-danger">Konfirmasi Hapus</h5>
+												<small class="text-muted">Aksi ini tidak dapat dibatalkan</small>
+											</div>
+											<button type="button" class="btn-close me-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
+									</div>
+									<div class="modal-body pt-3 pb-0 px-4">
+										<p class="mb-3 fs-6">Apakah Anda yakin ingin menghapus
+											<strong>{{ Str::limit($user->name, 15, '...') }}</strong>?
+											<br><span class="text-danger">Semua data yang pernah dibuat oleh pengguna ini akan terhapus juga.</span>
+										</p>
+									</div>
+									<div class="modal-footer border-0 pt-0 px-4 pb-4 d-flex justify-content-end gap-2">
+										<button type="button" class="btn btn-light border" data-bs-dismiss="modal">Batal</button>
+										<form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="d-inline">
+											@csrf
+											@method('DELETE')
+											<button type="submit" class="btn btn-danger px-4 btn-delete-user">
+												<span class="button-content"><i class="bx bx-trash me-1"></i> Hapus</span>
+												<span class="spinner-content d-none">
+													<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+													Menghapus
+												</span>
+											</button>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -145,7 +159,8 @@
 			<div class="collapse" id="pendingAccordion">
 				<div class="card-body" id="pendingAccordionBody">
 					<div class="text-center text-muted py-4 d-none" id="pending-loading">
-						<div class="spinner-border text-warning m-2" role="status"><span class="visually-hidden">Loading...</span></div>
+						<div class="spinner-border text-warning m-2" role="status"><span class="visually-hidden">Loading...</span>
+						</div>
 						<div> Memuat data...</div>
 					</div>
 					<div id="pending-table-container"></div>
@@ -158,6 +173,17 @@
 @push('scripts')
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
+			// Spinner for delete button in modal
+			document.querySelectorAll('.modal form').forEach(function(form) {
+				form.addEventListener('submit', function(e) {
+					var btn = form.querySelector('.btn-delete-user');
+					if (btn) {
+						btn.disabled = true;
+						btn.querySelector('.button-content').classList.add('d-none');
+						btn.querySelector('.spinner-content').classList.remove('d-none');
+					}
+				});
+			});
 			let loaded = false;
 			const pendingAccordion = document.getElementById('pendingAccordion');
 			const pendingTableContainer = document.getElementById('pending-table-container');
@@ -194,15 +220,15 @@
 										let badgeClass = user.status === 'pending' ? 'bg-warning text-dark' : (user.status === 'rejected' ? 'bg-danger' : 'bg-secondary');
 										let number = meta && meta.from ? (meta.from + idx) : (idx + 1);
 										return `
-																														<tr>
-																															<td>${number}</td>
-																															<td>${user.name}</td>
-																															<td>${user.email}</td>
-																															<td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
-																															<td><span class="badge w-100 ${badgeClass}">${user.status}</span></td>
-																															<td class="d-flex justify-content-center gap-2">${renderActions(user)}</td>
-																														</tr>
-																													`;
+																																				<tr>
+																																					<td>${number}</td>
+																																					<td>${user.name}</td>
+																																					<td>${user.email}</td>
+																																					<td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+																																					<td><span class="badge w-100 ${badgeClass}">${user.status}</span></td>
+																																					<td class="d-flex justify-content-center gap-2">${renderActions(user)}</td>
+																																				</tr>
+																																			`;
 									}).join('')}
 								</tbody>
 							</table>
