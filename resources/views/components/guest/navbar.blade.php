@@ -63,6 +63,14 @@
         }
     }
 
+    /* ===== TOGGLER COLOR (use brand primary) ===== */
+    /* .navbar-toggler {
+        border-color: var(--primary);
+    }
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath stroke='%231E3A8A' stroke-linecap='round' stroke-width='2' d='M2 4.5h12M2 8.5h12M2 12.5h12'/%3E%3C/svg%3E");
+    } */
+
     /* USER DROPDOWN */
     .dropdown-user-menu {
         min-width: 240px;
@@ -126,7 +134,7 @@
     .dropdown-menu .dropdown-item:hover,
     .dropdown-menu .dropdown-item:focus,
     .dropdown-menu .dropdown-item.active {
-        background-color: #E9F5F4 !important;
+        background-color: #c1d9ff !important;
         color: var(--primary) !important;
     }
 
@@ -206,7 +214,7 @@
 
         <!-- Toggle -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLanding">
-            <span class="navbar-toggler-icon"></span>
+           <i class="bi bi-list fs-3 text-app-primary"></i>
         </button>
 
         <!-- Logo Mobile -->
@@ -249,13 +257,15 @@
                                 </div>
                             @endif
                             <div>
-                                <strong>Lovi</strong>
-                                <div style="font-size: 0.8rem; color:#777;">
+                                <strong>{{ auth()->user()->name }}</strong>
+                                {{-- <div style="font-size: 0.8rem; color:#777;">
                                     Admin
-                                </div>
+                                </div> --}}
                             </div>
                         </li>
-
+                          <li><a class="dropdown-item dropdown-user-item"
+                            href="{{ route('user.settings.index') }}">
+                            <i class="bi bi-book"></i> Kelas Saya</a></li>
                         <li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}"><i
                                     class="bx bx-cog"></i>
                                 Pengaturan Akun</a></li>
@@ -310,10 +320,13 @@
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-user-menu shadow">
                     <li class="dropdown-user-header">
-                        <strong>Lovi</strong>
-                        <div style="font-size: 0.8rem; color:#777;">Admin</div>
+                        <strong>{{ auth()->user()->name }}</strong>
+                        {{-- <div style="font-size: 0.8rem; color:#777;">Admin</div> --}}
                     </li>
 
+                    <li><a class="dropdown-item dropdown-user-item"
+                            href="{{ route('user.settings.index') }}">
+                            <i class="bi bi-book"></i> Kelas Saya</a></li>
                     <li><a class="dropdown-item dropdown-user-item"
                             href="{{ route('user.settings.index') }}">
                             <i class="bx bx-cog"></i> Pengaturan Akun</a></li>

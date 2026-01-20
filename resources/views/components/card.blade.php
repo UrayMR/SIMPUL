@@ -101,29 +101,43 @@
          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
      }
 
-     .course-footer {
+     /* FOOTER */
+.course-footer {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
+}
+
+/* USER + PRICE ROW */
+.course-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* USER NAME */
+.course-user {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #555;
+    max-width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* PRICE */
 .course-price {
     font-weight: 700;
     font-size: 1rem;
-    white-space: nowrap;          /* tetap satu baris */
-    overflow: hidden;
-    text-overflow: ellipsis;      /* ... kalau kepanjangan */
-    max-width: 100%;
-       color: #111;
-
-
+    white-space: nowrap;
+    color: #111;
 }
-
 
  </style>
 
- <a href="/" class="course-card-link text-decoration-none text-dark d-block">
+ <a href="/course/{{ $id }}" class="course-card-link text-decoration-none text-dark d-block">
 
      <div class="card course-card shadow-sm border-0">
          <!-- IMAGE / HEADER -->
@@ -140,17 +154,22 @@
              </h5>
 
              <div class="d-flex justify-content-between align-items-center">
-                 <div class="text-muted small">{{ $category }}</div>
+                 <div class="text-muted small"><i class="bx bi-bookmark-fill me-1"></i>{{ $category }}</div>
                  <div class="text-muted small">
-                     <i class="bi bi-bar-chart-fill text-success"></i> 10.000
+                    <i class="bi bi-people-fill me-1"></i>{{$count}} terjual
                  </div>
              </div>
 
              <div class="mt-auto course-footer">
 
-                 <div class="course-price {{ (float) $price === 0.0 ? 'text-danger' : 'text-dark' }}">
+                 <div class="course-meta">
+                     <div class="course-user">
+                        {{ Str::limit($teacher, 20, '...') }}
+                     </div>
 
-                     {{ (float) $price === 0.0 ? 'GRATIS' : 'Rp ' . number_format((float) $price, 0, ',', '.') }}
+                     <div class="course-price {{ (float) $price === 0.0 ? 'text-app-primary' : 'text-dark' }}">
+                         {{ (float) $price === 0.0 ? 'GRATIS' : 'Rp ' . number_format((float) $price, 0, ',', '.') }}
+                     </div>
                  </div>
 
                  <button class="btn btn-app-secondary w-100">

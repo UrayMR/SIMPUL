@@ -15,16 +15,20 @@ class Card extends Component
     public $category;
     public $image;
     public $price;
-    public $link;
+    public $teacher;
+    public $count;
+    public $id;
 
 
-    public function __construct($title ="TITLE", $category = 'IT', $image = 'kemenag2.jpg', $price = 0, $link = null)
+    public function __construct($title ="TITLE", $category = 'IT', $image = 'kemenag2.jpg', $price = 0, $teacher = "Teacher", $count = 0,$id = null)
     {
         $this->title = $title;
         $this->category = $category;
         $this->image = $image;
         $this->price = $price;
-        $this->link = $link;
+        $this->teacher = $teacher;
+        $this->count = $count;
+        $this->id = $id;
     }
 
     /**

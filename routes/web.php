@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -7,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 // Guest routes
 Route::redirect('/beranda', '/beranda');
 Route::view('/', 'pages.guest.home')->name('beranda');
+
+Route::get('/course', [CourseUserController::class, 'index'])->name('course.index');
+Route::get('/course/{course}', [CourseUserController::class, 'show'])->name('course.show');
 
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')

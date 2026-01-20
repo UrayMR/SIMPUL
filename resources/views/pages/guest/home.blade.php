@@ -28,10 +28,30 @@
         }
 
 
-        
+        .hero-title {
+            font-weight: 800;
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            line-height: 1.15;
+            color: var(--app-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .hero-highlight {
+            color: var(--app-primary);
+            opacity: 0.85;
+        }
+
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.7;
+            max-width: 680px;
+            margin: 0 auto;
+        }
 
 
-        
+
+
 
         .hero-section {
             position: relative;
@@ -59,9 +79,9 @@
             color: #fff;
         }
 
-        
 
-        
+
+
 
         .partner-divider {
             width: 80px;
@@ -70,7 +90,7 @@
             border-radius: 999px;
         }
 
-        
+
 
         /* ===== PROFIL BANNER SECTION ===== */
         .profil-section {
@@ -130,8 +150,16 @@
         }
 
 
+        .see-more-link {
+            font-size: 0.95rem;
+            transition: 0.3s ease;
+        }
 
-        
+        .see-more-link:hover {
+            letter-spacing: 0.02em;
+            text-decoration: underline;
+        }
+
 
         /* Animasi fade-in dari bawah */
         .fade-up {
@@ -157,38 +185,29 @@
                 <div class="row justify-content-center text-center">
                     <div class="col-lg-9">
 
-                        <h1 class="fw-bold text-app-primary display-5 mb-2">
-                            Belajar Bersama SIMPUL
-                        </h1>
-                        <h1 class="fw-bold text-app-primary display-5 mb-2">
-                            Jadi Talenta Digital Terbaik
+                        <h1 class="hero-title mb-3">
+                            Belajar Terarah<br>
+                            <span class="hero-highlight">Bertemu di Satu SIMPUL</span>
                         </h1>
 
-
-                        {{-- <p class="fs-5 text-dark mb-4">
-                            <strong>SIMPUL</strong> – Sistem Informasi Manajemen Pembelajaran Unggul<br>
-                            Platform kursus online untuk belajar langsung dari para ahli
-                        </p> --}}
-
-                        <p class="mb-3 fs-5  text-dark">
-                            {{-- Temukan berbagai course berkualitas dari guru terbaik,<br>
-                            tingkatkan skill, dan raih peluang karier yang lebih baik. --}}
-                            Platform online course terbaik dengan dukungan mentor<br> berpengalaman dan materi terlengkap
+                        <p class="hero-subtitle mb-4">
+                            Platform pembelajaran terintegrasi bagi pendidik dan <br> peserta didik
+                            dengan materi berkualitas dan terarah
                         </p>
 
                         <a href="/courses" class="btn btn-app-primary btn-lg px-5">
                             Jelajahi Course
                         </a>
 
-
                     </div>
                 </div>
+
             </div>
         </section>
 
 
         {{-- DAFTAR STUDENT BANNER SECTION --}}
-        <section class="profil-section bg-app-primary text-light">
+        <section class="profil-section bg-app-primary text-app-">
             <div class="container">
                 <div class="row align-items-center">
 
@@ -200,19 +219,19 @@
                     </div>
 
                     {{-- KANAN: KONTEN --}}
-                    <div class="col-lg-7 profil-content">
-                        <h1 class="fw-bold mb-3">
-                            Siap membangun karir Freelancer profesional?<br>
-                            Freelance Plus Solusinya
+                    <div class="col-lg-7 profil-content ps-lg-5">
+                        <h1 class="fw-bold  text-app-white mb-3 ">
+                            Temukan Kelas Sesuai Kebutuhanmu
                         </h1>
 
                         <p class="mb-4">
-                            Kuasai strategi menjadi freelancer profesional untuk meningkatkan
-                            pendapatan secara langsung bersama para pakar berpengalaman.
+                            Beragam kategori pembelajaran dirancang untuk mendukung proses belajar yang terstruktur,
+                            <br>aplikatif, dan mudah dipahami.
+
                         </p>
 
                         <a href="#" class="btn btn-light text-app-primary fw-semibold">
-                            Daftar Sekarang →
+                            Jelajahi Semua Kategori →
                         </a>
                     </div>
 
@@ -223,8 +242,8 @@
 
 
         {{-- COURSE SECTION --}}
-        <section class="pelayanan-section" data-aos="fade-up"data-aos-delay="400">
-            <div class="container py-5 border-bottom">
+        <section class="pelayanan-section bg-white" data-aos="fade-up"data-aos-delay="400">
+            <div class="container py-5 ">
 
                 {{-- Header konsisten --}}
                 <div class="text-center mb-5">
@@ -232,10 +251,15 @@
                     <h2 class="fw-bold text-app-primary mb-2">KELAS UNGGULAN</h2>
                     <div class="partner-divider mx-auto mb-3 bg-app-primary"></div>
                     <p class="text-muted fs-6 mb-0">
-                        Pilih jenis kelas yang ingin Anda pelajari dengan SIMPUL
+                        Kelas unggulan dari pendidik terpilih dengan materi relevan dan terstruktur
                     </p>
                 </div>
-
+                {{-- LINK LIHAT LEBIH BANYAK --}}
+                <div class="d-flex justify-content-center justify-content-lg-end mb-3">
+                    <a href="/courses" class="fw-semibold text-app-primary text-decoration-none see-more-link">
+                        Lihat Lebih Banyak →
+                    </a>
+                </div>
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-3 mb-4 fade-up">
                         <x-card title="Kelas Dasar Agama Kristen" price="3000" />
@@ -251,27 +275,30 @@
                         <x-card title="Kelas Dasar Agama Kristen" price="0" />
                     </div>
                 </div>
+
+                
+
+
             </div>
         </section>
 
         {{-- DAFTAR GURU SECTION --}}
-        <section class="profil-section bg-app-white">
-            <div class="container">
-                <div class="row align-items-center bg-app-primary rounded-4 p-4 p-lg-5">
+        <section class="profil-section bg-white pt-1 pb-4">
+            <div class="container ">
+                <div class="row align-items-center bg-app-primary rounded p-4 p-lg-5">
 
                     {{-- KIRI: KONTEN --}}
-                    <div class="col-lg-7 text-light profil-content">
-                        <h1 class="fw-bold mb-3">
-                            Tertarik untuk jadi Guru & Memberi Dampak Positif?
+                    <div class="col-lg-7 profil-content">
+                        <h1 class="fw-bold  text-app-white  mb-3">
+                            Tertarik untuk jadi Guru untuk Penghasilan Tambahan?
                         </h1>
 
                         <p class="mb-4">
-                            Lebih dari 100+ Guru telah bekerja sama dengan SIMPUL untuk<br>membangun pendidikan yang lebih
-                            baik di Indonesia.
+                            Dosen, guru, atau praktisi di bidang tertentu dapat<br> berkontribusi dalam ekosistem pembelajaran.
                         </p>
 
                         <a href="#" class="btn btn-light text-app-primary fw-semibold">
-                            Daftar Sekarang →
+                            Daftar sebagai Pendidik →
                         </a>
                     </div>
 
