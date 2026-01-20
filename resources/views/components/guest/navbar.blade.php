@@ -201,15 +201,6 @@
     }
 @endphp
 
-@php
-    $isLayananActive =
-        request()->is('layanan') ||
-        request()->is('user/perbulan*') ||
-        request()->is('user/persemester*') ||
-        request()->is('user/pertahun*') ||
-        request()->is('user/pendataan-gereja*');
-@endphp
-
 <nav class="navbar navbar-expand-lg smart-navbar show py-3">
     <div class="container">
 
@@ -220,13 +211,13 @@
 
         <!-- Logo Mobile -->
         <a class="navbar-brand mobile-logo d-lg-none" href="/">
-            <img src="{{ asset('assets/img/logo.png') }}" height="34">
+            <img src="{{ asset('assets/img/logo/Logo Simpul.svg') }}" height="46">
         </a>
 
         <!-- Logo Desktop -->
         <a class="navbar-brand d-none d-lg-flex align-items-center gap-2" href="/">
-            <img src="{{ asset('assets/img/logo.png') }}" height="34">
-            <span class="fw-bold fs-5 text-app-primary">SILAYANKRIS</span>
+            <img src="{{ asset('assets/img/logo/Logo Simpul.svg') }}" height="46">
+            <span class="fw-bold fs-5 text-app-primary">SIMPUL</span>
         </a>
 
         <!-- Mobile Profile -->
@@ -258,9 +249,9 @@
                                 </div>
                             @endif
                             <div>
-                                <strong>{{ auth()->user()->name }}</strong>
+                                <strong>Lovi</strong>
                                 <div style="font-size: 0.8rem; color:#777;">
-                                    {{ auth()->user()->role }}
+                                    Admin
                                 </div>
                             </div>
                         </li>
@@ -277,101 +268,77 @@
         @endauth
 
         <!-- Menu -->
-        <div class="collapse navbar-collapse justify-content-end" id="navbarLanding">
+       <div class="collapse navbar-collapse" id="navbarLanding">
 
-            <ul class="navbar-nav ms-lg-4 gap-lg-4">
+    <!-- ===== MENU TENGAH ===== -->
+    <ul class="navbar-nav mx-auto gap-lg-4 align-items-lg-center">
 
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
-                </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('berita*') ? 'active' : '' }}" href="/berita">Berita</a>
-                </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('course*') ? 'active' : '' }}" href="/course">Kelas</a>
+        </li>
 
-                @guest
-                    <li class="nav-item">
-                        <a class="nav-link {{ $isLayananActive ? 'active' : '' }}" href="/layanan">Layanan</a>
-                    </li>
-                @endguest
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is(patterns: 'Karir*') ? 'active' : '' }}" href="/layanan">Lowongan Karir</a>
+            </li>
+            
 
-                @auth
-                    @if (auth()->user()->role == 'guru' || auth()->user()->role == 'staff-gereja')
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle {{ $isLayananActive ? 'active' : '' }}"
-                                data-bs-toggle="dropdown">Layanan</a>
-                            <ul class="dropdown-menu">
-                                @if (auth()->user()->role == 'guru')
-                                    <li><a class="dropdown-item" href="{{ route('user.perbulan.index') }}">Upload Berkas
-                                            Per-bulan</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('user.persemester.index') }}">Upload Berkas
-                                            Per-semester</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('user.pertahun.index') }}">Upload Berkas
-                                            Per-tahun</a></li>
-                                @endif
+       
+    </ul>
 
-                                @if (auth()->user()->role == 'staff-gereja')
-                                    <li><a class="dropdown-item" href="/user/pendataan-gereja">Pendataan Gereja</a></li>
-                                @endif
-                            </ul>
-                        </li>
-                    @endif
+    <!-- ===== RIGHT ACTION (LOGIN / PROFILE) ===== -->
+    <ul class="navbar-nav align-items-lg-center gap-3">
 
-                    @if (auth()->user()->role == 'admin')
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}"
-                                href="/admin/dashboard">Dashboard</a>
-                        </li>
-                    @endif
-                @endauth
-
-                @auth
-                    <li class="nav-item dropdown d-none d-lg-block">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-                            <div class="avatar avatar-online me-2">
-                                @if (!empty($profilePhotoUrl))
-                                    <img src="{{ $profilePhotoUrl }}" class="rounded-circle"
-                                        style="width:40px;height:40px;object-fit:cover;">
-                                @else
-                                    <div class="d-flex align-items-center justify-content-center rounded-circle text-white"
-                                        style="width:40px;height:40px;font-weight:600;background: var(--primary);">
-                                        {{ $initials ?? 'U' }}
-                                    </div>
-                                @endif
+        @auth
+            <li class="nav-item dropdown d-none d-lg-block">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                        @if (!empty($profilePhotoUrl))
+                            <img src="{{ $profilePhotoUrl }}" class="rounded-circle"
+                                style="width:40px;height:40px;object-fit:cover;">
+                        @else
+                            <div class="d-flex align-items-center justify-content-center rounded-circle text-white"
+                                style="width:40px;height:40px;font-weight:600;background: var(--primary);">
+                                {{ $initials ?? 'U' }}
                             </div>
-                        </a>
+                        @endif
+                    </div>
+                </a>
 
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-user-menu shadow">
-                            <li class="dropdown-user-header">
-                                @if (!empty($profilePhotoUrl))
-                                    <img src="{{ $profilePhotoUrl }}">
-                                @else
-                                    <div class="d-flex align-items-center justify-content-center rounded-circle text-white"
-                                        style="width:42px;height:42px;font-weight:600;background: var(--primary);">
-                                        {{ $initials ?? 'U' }}
-                                    </div>
-                                @endif
-                                <div>
-                                    <strong>{{ auth()->user()->name }}</strong>
-                                    <div style="font-size: 0.8rem; color:#777;">{{ auth()->user()->role }}</div>
-                                </div>
-                            </li>
-
-                            <li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}"><i
-                                        class="bx bx-cog"></i>
-                                    Pengaturan Akun</a></li>
-                            <li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}"><i
-                                        class="bx bx-power-off"></i> Keluar</a></li>
-                        </ul>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-user-menu shadow">
+                    <li class="dropdown-user-header">
+                        <strong>Lovi</strong>
+                        <div style="font-size: 0.8rem; color:#777;">Admin</div>
                     </li>
-                @endauth
 
-                @guest
-                    <a href="/login" class="btn btn-app-primary px-4 py-2 rounded-3 fw-semibold mt-3 mt-lg-0">Masuk</a>
-                @endguest
+                    <li><a class="dropdown-item dropdown-user-item"
+                            href="{{ route('user.settings.index') }}">
+                            <i class="bx bx-cog"></i> Pengaturan Akun</a></li>
+                    <li><a class="dropdown-item dropdown-user-item text-danger"
+                            href="{{ route('logout') }}">
+                            <i class="bx bx-power-off"></i> Keluar</a></li>
+                </ul>
+            </li>
+        @endauth
 
-            </ul>
-        </div>
+        @guest
+            <li class="nav-item">
+               <a href="/login"
+    class="btn btn-app-primary w-100 w-lg-auto px-4 py-2 rounded-3 fw-semibold mt-3 mt-lg-0 text-center">
+    Masuk
+</a>
+
+            </li>
+            {{-- "btn btn-primary px-4 py-2 rounded-3 fw-semibold " --}}
+        @endguest
+
+    </ul>
+
+</div>
+
     </div>
 </nav>
 
