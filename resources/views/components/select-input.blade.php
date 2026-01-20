@@ -13,109 +13,104 @@
     'required' => false, // required input
 ])
 <div class="dropdown {{ $dropdownClass }}">
-    <button id="btn-{{ $id }}"
-        class="btn btn-outline-secondary form-control text-start dropdown-toggle {{ $buttonClass }}"
-        data-bs-toggle="dropdown" @if ($disabled) disabled @endif>
-        {{ $selected && isset($options[$selected]) ? $options[$selected] : $placeholder ?? 'Pilih ' . $label }}
-    </button>
-    <ul class="dropdown-menu w-100 {{ $ulClass }}" id="dropdown-{{ $id }}">
-        @if ($searchable)
-            <li class="px-2 py-1">
-                <input type="text" class="form-control form-control-sm" placeholder="Cari {{ strtolower($label) }}..."
-                    id="search-{{ $id }}">
-            </li>
-            <li>
-                <hr class="dropdown-divider">
-            </li>
-        @endif
+	<button id="btn-{{ $id }}" class="form-control text-start {{ $buttonClass }}"
+		style="background-color: #fff; border: 1px solid #d9dee3; border-radius: 0.375rem; min-height: 38px; padding: 0.375rem 0.75rem; display: flex; align-items: center; justify-content: space-between;"
+		data-bs-toggle="dropdown" @if ($disabled) disabled @endif type="button">
+		<span class="dropdown-label">
+			{{ $selected && isset($options[$selected]) ? $options[$selected] : $placeholder ?? 'Pilih ' . $label }}
+		</span>
+		<span class="ms-2" style="pointer-events:none;">
+			<i class="bx bx-chevron-down fs-5 align-middle"></i>
+		</span>
+	</button>
+	<ul class="dropdown-menu w-100 shadow-sm {{ $ulClass }}" id="dropdown-{{ $id }}"
+		style="border-radius: 0.375rem;">
+		@if ($searchable)
+			<li class="px-2 py-1">
+				<input type="text" class="form-control" style="min-height:38px; padding:0.375rem 0.75rem; font-size:1rem;"
+					placeholder="Cari {{ strtolower($label) }}..." id="search-{{ $id }}">
+			</li>
+			<li>
+				<hr class="dropdown-divider">
+			</li>
+		@endif
 
-        <div id="list-{{ $id }}" style="max-height:150px; overflow-y:auto;">
+		<div id="list-{{ $id }}" style="max-height:150px; overflow-y:auto;">
 
-            @forelse($options as $key => $value)
-                <li>
-                    <a class="dropdown-item py-1" data-value="{{ $key }}">
-                        {{ $value }}
-                    </a>
-                </li>
-            @empty
-                <li><span class="dropdown-item-text text-muted">Tidak ada data</span></li>
-            @endforelse
-        </div>
-    </ul>
-    <input type="hidden" name="{{ $name }}" id="{{ $id }}" value="{{ $selected }}"
-        @if ($required) required @endif>
-    <div id="error-{{ $id }}" class="invalid-feedback" style="display:none;">
-        {{ $label }} wajib dipilih.
-    </div>
+			@forelse($options as $key => $value)
+				<li>
+					<a class="dropdown-item py-1" data-value="{{ $key }}">
+						{{ $value }}
+					</a>
+				</li>
+			@empty
+				<li><span class="dropdown-item-text text-muted">Tidak ada data</span></li>
+			@endforelse
+		</div>
+	</ul>
+	<input type="hidden" name="{{ $name }}" id="{{ $id }}" value="{{ $selected }}"
+		@if ($required) required @endif>
+	<div id="error-{{ $id }}" class="invalid-feedback" style="display:none;">
+		{{ $label }} wajib dipilih.
+	</div>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+	document.addEventListener("DOMContentLoaded", function() {
 
-        function attachEventItems() {
-            document.querySelectorAll("#list-{{ $id }} .dropdown-item").forEach(item => {
-                item.addEventListener("click", function() {
-                    const value = this.getAttribute("data-value");
+		function attachEventItems() {
+			document.querySelectorAll("#list-{{ $id }} .dropdown-item").forEach(item => {
+				item.addEventListener("click", function() {
+					const value = this.getAttribute("data-value");
+					const hiddenInput = document.getElementById("{{ $id }}");
+					const button = document.getElementById("btn-{{ $id }}");
+					hiddenInput.value = value;
+					button.querySelector('.dropdown-label').textContent = this.textContent;
+					button.classList.remove('is-invalid');
+					hiddenInput.dispatchEvent(new Event('change'));
+				});
+			});
+		}
 
-                    const hiddenInput = document.getElementById("{{ $id }}");
-                    const button = document.getElementById("btn-{{ $id }}");
+		attachEventItems(); // panggil awal
 
-                    hiddenInput.value = value;
+		// Search
+		@if ($searchable)
+			const searchInput = document.getElementById("search-{{ $id }}");
 
-                    button.textContent = this.textContent;
+			searchInput.addEventListener("input", function() {
+				const keyword = this.value.toLowerCase();
 
-                    hiddenInput.dispatchEvent(new Event('change'));
-                });
-            });
-        }
+				// ambil ulang karena list bisa berubah saat AJAX
+				const items = document.querySelectorAll("#list-{{ $id }} .dropdown-item");
 
-        attachEventItems(); // panggil awal
+				items.forEach(item => {
+					const text = item.textContent.toLowerCase();
+					item.style.display = text.includes(keyword) ? "" : "none";
+				});
+			});
+		@endif
 
-        // Search
-        @if ($searchable)
-            const searchInput = document.getElementById("search-{{ $id }}");
-
-            searchInput.addEventListener("input", function() {
-                const keyword = this.value.toLowerCase();
-
-                // ambil ulang karena list bisa berubah saat AJAX
-                const items = document.querySelectorAll("#list-{{ $id }} .dropdown-item");
-
-                items.forEach(item => {
-                    const text = item.textContent.toLowerCase();
-                    item.style.display = text.includes(keyword) ? "" : "none";
-                });
-            });
-        @endif
-
-        // Validasi required saat submit form
-        if ({{ $required ? 'true' : 'false' }}) {
-            const form = document.getElementById("{{ $id }}").closest('form');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    const hiddenInput = document.getElementById("{{ $id }}");
-                    const button = document.getElementById("btn-{{ $id }}");
-                    const errorDiv = document.getElementById("error-{{ $id }}");
-                    if (!hiddenInput.value.trim()) {
-                        button.classList.add('is-invalid');
-                        errorDiv.style.display = '';
-                        e.preventDefault();
-                    } else {
-                        button.classList.remove('is-invalid');
-                        errorDiv.style.display = 'none';
-                    }
-                });
-
-                // Hilangkan error saat memilih
-                document.querySelectorAll("#list-{{ $id }} .dropdown-item").forEach(item => {
-                    item.addEventListener("click", function() {
-                        const button = document.getElementById("btn-{{ $id }}");
-                        const errorDiv = document.getElementById("error-{{ $id }}");
-                        button.classList.remove('is-invalid');
-                        errorDiv.style.display = 'none';
-                    });
-                });
-            }
-        }
-    });
+		// Validasi required saat submit form
+		if ({{ $required ? 'true' : 'false' }}) {
+			const form = document.getElementById("{{ $id }}").closest('form');
+			if (form) {
+				form.addEventListener('submit', function(e) {
+					const hiddenInput = document.getElementById("{{ $id }}");
+					const button = document.getElementById("btn-{{ $id }}");
+					const errorDiv = document.getElementById("error-{{ $id }}");
+					if (!hiddenInput.value.trim()) {
+						button.classList.add('is-invalid');
+						button.style.borderColor = '#dc3545';
+						errorDiv.style.display = '';
+						e.preventDefault();
+					} else {
+						button.classList.remove('is-invalid');
+						button.style.borderColor = '#d9dee3';
+						errorDiv.style.display = 'none';
+					}
+				});
+			}
+		}
+	});
 </script>

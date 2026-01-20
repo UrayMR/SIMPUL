@@ -23,6 +23,7 @@ class Course extends Model
         'teacher_id',
         'category_id',
         'thumbnail_path',
+        'hero_path',
         'title',
         'description',
         'price',

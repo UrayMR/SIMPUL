@@ -13,6 +13,7 @@ return new class extends Migration
             $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('thumbnail_path')->nullable();
+            $table->string('hero_path');
             $table->string('title');
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2)->default(0);

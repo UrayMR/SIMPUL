@@ -20,6 +20,7 @@ class CourseFactory extends Factory
             'teacher_id' => fn() => \App\Models\Teacher::factory(),
             'category_id' => fn() => \App\Models\Category::factory(),
             'thumbnail_path' => $this->faker->optional()->imageUrl(),
+            'hero_path' => $this->faker->imageUrl(),
             'title' => $this->faker->sentence(3),
             'description' => $this->faker->optional()->paragraph(),
             'price' => $this->faker->randomFloat(2, 0, 1000000),
