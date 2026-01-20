@@ -156,11 +156,11 @@
 					<div class="d-flex justify-content-end mt-4">
 						<button type="submit" class="btn btn-primary" id="submitUserBtn">
 							<span class="button-content">
-								<i class="bi bi-save me-2"></i> Simpan Pengguna
+								Simpan
 							</span>
 							<span class="spinner-content d-none">
 								<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-								Sedang Menyimpan Pengguna
+								Sedang Menyimpan...
 							</span>
 						</button>
 					</div>

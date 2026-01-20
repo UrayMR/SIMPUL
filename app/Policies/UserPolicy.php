@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
@@ -58,7 +57,7 @@ class UserPolicy
     public function restore(User $user, User $model): bool
     {
         // Only admin can restore users
-        return $user->role === 'admin';
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
@@ -67,6 +66,6 @@ class UserPolicy
     public function forceDelete(User $user, User $model): bool
     {
         // Only admin can force delete users
-        return $user->role === 'admin';
+        return $user->role === User::ROLE_ADMIN;
     }
 }

@@ -34,17 +34,17 @@
 				<span class="menu-header-text">Master Data</span>
 			</li>
 
-			<li class="menu-item {{ request()->is(ltrim('admin/users*', '/')) ? 'active' : '' }}">
+			<li class="menu-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
 				<a href="{{ route('admin.users.index') }}" class="menu-link text-decoration-none">
 					<i class="menu-icon tf-icons bx bx-user"></i>
 					<div>Data Pengguna</div>
 				</a>
 			</li>
 
-			<li class="menu-item {{ request()->is(ltrim('admin/sekolah*', '/')) ? 'active' : '' }}">
-				<a href="" class="menu-link text-decoration-none">
-					<i class="menu-icon tf-icons bx bx-building"></i>
-					<div>Data Sekolah</div>
+			<li class="menu-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
+				<a href="{{ route('admin.categories.index') }}" class="menu-link text-decoration-none">
+					<i class="menu-icon tf-icons bx bx-tag"></i>
+					<div>Data Kategori</div>
 				</a>
 			</li>
 

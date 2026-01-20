@@ -11,7 +11,7 @@
 		<!-- Card: User Aktif/Nonaktif -->
 		<div class="card shadow-sm border-0 mb-4 p-3">
 			<div class="card-header bg-white border-0 mb-2">
-				<h5 class="card-title fw-semibold mb-4">Daftar Data Pengguna</h5>
+				<h5 class="card-title fw-semibold mb-4 fs-4">Daftar Data Pengguna</h5>
 				<div class="row g-2 align-items-center">
 					<!-- Search -->
 					<div class="col-12 col-md-6">
@@ -20,7 +20,13 @@
 								<span class="input-group-text"><i class="bx bx-search"></i></span>
 								<input type="text" name="search" value="{{ $search ?? '' }}" class="form-control"
 									placeholder="Cari nama atau email...">
-								<button class="btn btn-outline-secondary border" type="submit">Cari</button>
+								<button class="btn btn-outline-secondary border btn-search-user" type="submit">
+									<span class="button-content">Cari</span>
+									<span class="spinner-content d-none">
+										<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+										Mencari
+									</span>
+								</button>
 							</div>
 							<a href="{{ url()->current() }}"
 								class="btn btn-secondary border d-flex align-items-center gap-1 {{ request('search') ? '' : 'd-none' }}">
@@ -84,8 +90,8 @@
 							@empty
 								<tr>
 									<td colspan="6" class="text-center text-muted py-4">
-										<i class="bi bi-person-x fs-4 d-block mb-2"></i>
-										Tidak ada data user.
+										<i class="bi bi-folder-x fs-4 d-block mb-2"></i>
+										Tidak ada data ditemukan.
 									</td>
 								</tr>
 							@endforelse
@@ -149,10 +155,16 @@
 		<div class="card shadow-sm border-0 mb-4 p-3">
 			<div class="card-header bg-white border-0 mb-2">
 				<button class="w-100 d-flex align-items-center justify-content-between border-0 bg-transparent p-0" type="button"
-					data-bs-toggle="collapse" data-bs-target="#pendingAccordion" aria-expanded="false" aria-controls="pendingAccordion"
-					id="pendingAccordionBtn" style="outline:none;">
-					<h5 class="card-title fw-semibold mb-0">Daftar Data Pengajuan Akun Guru<span
-							class="badge bg-warning text-dark ms-2">{{ $pendingCount }}</span></h5>
+					data-bs-toggle="collapse" data-bs-target="#pendingAccordion" aria-expanded="false"
+					aria-controls="pendingAccordion" id="pendingAccordionBtn" style="outline:none;">
+					<h5 class="card-title fw-semibold mb-0 d-flex align-items-center gap-2">
+						Daftar Data Pengajuan Akun Guru
+						<span
+							class="badge bg-warning text-dark d-flex align-items-center justify-content-center shadow-sm border border-warning-subtle"
+							style="width:1.8rem; height:1.8rem; border-radius:50%; font-size:0.85rem; font-weight:600; letter-spacing:0.5px; padding:0;">
+							{{ $pendingCount }}
+						</span>
+					</h5>
 					<i class="bi bi-chevron-down ms-auto"></i>
 				</button>
 			</div>
@@ -184,6 +196,21 @@
 					}
 				});
 			});
+
+			document.querySelectorAll('form input[name="search"]').forEach(function(input) {
+				var form = input.closest('form');
+				if (form) {
+					form.addEventListener('submit', function(e) {
+						var btn = form.querySelector('.btn-search-user');
+						if (btn) {
+							btn.disabled = true;
+							btn.querySelector('.button-content').classList.add('d-none');
+							btn.querySelector('.spinner-content').classList.remove('d-none');
+						}
+					});
+				}
+			});
+
 			let loaded = false;
 			const pendingAccordion = document.getElementById('pendingAccordion');
 			const pendingTableContainer = document.getElementById('pending-table-container');
@@ -200,40 +227,62 @@
 
 			function renderTable(users, meta) {
 				if (!users.length) {
-					return `<div class="text-center text-muted py-4"><i class="bi bi-person-x fs-4 d-block mb-2"></i>Tidak ada data pengajuan akun.</div>`;
+					return `
+<div class="table-responsive text-nowrap">
+	<table class="table table-hover">
+		<thead>
+			<tr class="text-start">
+				<th>#</th>
+				<th>Nama</th>
+				<th>Email</th>
+				<th>Peran</th>
+				<th class="text-center">Status</th>
+				<th class="text-center">Aksi</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan="6" class="text-center text-muted py-4">
+					<i class="bi bi-folder-x fs-4 d-block mb-2"></i>
+					Tidak ada data tersedia.
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>`;
 				}
 				return `
-						<div class="table-responsive text-nowrap">
-							<table class="table table-hover">
-								<thead>
-									<tr class="text-start">
-										<th>#</th>
-										<th>Nama</th>
-										<th>Email</th>
-										<th>Peran</th>
-										<th class="text-center">Status</th>
-										<th class="text-center">Aksi</th>
-									</tr>
-								</thead>
-								<tbody>
-									${users.map((user, idx) => {
-										let badgeClass = user.status === 'pending' ? 'bg-warning text-dark' : (user.status === 'rejected' ? 'bg-danger' : 'bg-secondary');
-										let number = meta && meta.from ? (meta.from + idx) : (idx + 1);
-										return `
-																																					<tr>
-																																						<td>${number}</td>
-																																						<td>${user.name}</td>
-																																						<td>${user.email}</td>
-																																						<td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
-																																						<td><span class="badge w-100 ${badgeClass}">${user.status}</span></td>
-																																						<td class="d-flex justify-content-center gap-2">${renderActions(user)}</td>
-																																					</tr>
-																																				`;
-									}).join('')}
-								</tbody>
-							</table>
-						</div>
-					`;
+<div class="table-responsive text-nowrap">
+	<table class="table table-hover">
+		<thead>
+			<tr class="text-start">
+				<th>#</th>
+				<th>Nama</th>
+				<th>Email</th>
+				<th>Peran</th>
+				<th class="text-center">Status</th>
+				<th class="text-center">Aksi</th>
+			</tr>
+		</thead>
+		<tbody>
+			${users.map((user, idx) => {
+				let badgeClass = user.status === 'pending' ? 'bg-warning text-dark' : (user.status === 'rejected' ? 'bg-danger' : 'bg-secondary');
+				let number = meta && meta.from ? (meta.from + idx) : (idx + 1);
+				return `
+																	<tr>
+																		<td>${number}</td>
+																		<td>${user.name}</td>
+																		<td>${user.email}</td>
+																		<td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+																		<td><span class="badge w-100 ${badgeClass}">${user.status}</span></td>
+																		<td class="d-flex justify-content-center gap-2">${renderActions(user)}</td>
+																	</tr>
+																	`;
+			}).join('')}
+		</tbody>
+	</table>
+</div>
+`;
 			}
 
 			function renderPagination(meta, links) {
