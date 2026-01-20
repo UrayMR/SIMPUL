@@ -30,7 +30,7 @@
 							    'teacher' => 'Teacher',
 							    'student' => 'Student',
 							    'admin' => 'Admin',
-							]" :selected="old('role')" :searchable="false"
+							]" :selected="old('role', 'student')" :searchable="false"
 								required />
 						</div>
 
@@ -41,7 +41,7 @@
 							    'inactive' => 'Nonaktif',
 							    'pending' => 'Pending',
 							    'rejected' => 'Ditolak',
-							]" :selected="old('status')" :searchable="false"
+							]" :selected="old('status', 'active')" :searchable="false"
 								required />
 						</div>
 					</div>
@@ -107,9 +107,9 @@
 						@enderror
 					</div>
 
-					{{-- FOTO PROFIL --}}
+					{{-- FOTO PROFIL (TEACHER ONLY) --}}
 					<div class="mb-3" id="photoForm" style="display:none;">
-						<label for="profile_picture_file" class="form-label">Foto Profil <span class="text-muted">(Opsional)</span></label>
+						<label for="profile_picture_file" class="form-label">Foto Profil <span class="text-danger">*</span></label>
 						<div class="text-center mb-3" id="photo-preview-container" style="display:none;">
 							<img id="photo-preview" src="#" alt="Preview Foto Profil" class="img-thumbnail rounded"
 								style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
@@ -175,9 +175,13 @@
 			if (roleSelect.value === 'teacher') {
 				photoForm.style.display = 'block';
 				teacherFields.style.display = 'block';
+				photoInput.required = true;
 			} else {
 				photoForm.style.display = 'none';
 				teacherFields.style.display = 'none';
+				photoInput.required = false;
+				photoInput.value = '';
+				previewContainer.style.display = 'none';
 			}
 		}
 		// Initial check on page load

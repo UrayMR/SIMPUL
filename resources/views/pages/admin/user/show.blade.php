@@ -19,27 +19,28 @@
 			<div class="card-body">
 				<div class="row mb-2">
 					{{-- FOTO KIRI --}}
-					<div class="col-md-3 text-center mb-3">
-						@php
-							$name = $user->name ?? 'User';
-							$defaultAvatar =
-							    'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&color=000&size=300';
-							$photoPath = null;
-							if ($user->role === 'teacher' && $user->teacher && $user->teacher->profile_picture_path) {
-							    $fullPath = public_path('storage/' . $user->teacher->profile_picture_path);
-							    if (file_exists($fullPath)) {
-							        $photoPath = asset('storage/' . $user->teacher->profile_picture_path);
-							    }
-							}
-						@endphp
-						@if ($photoPath)
-							<img src="{{ $photoPath }}" class="img-thumbnail rounded shadow-sm"
-								style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
-						@else
-							<img src="{{ $defaultAvatar }}" class="img-thumbnail rounded shadow-sm"
-								style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
-						@endif
-					</div>
+					@if ($user->role === 'teacher')
+						<div class="col-md-3 text-center mb-3">
+							@php
+								$name = $user->name ?? 'User';
+								$defaultAvatar =
+								    'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=random&color=000&size=300';
+								$photoPath = null;
+								if ($user->teacher && $user->teacher->profile_picture_path) {
+								    $fullPath = public_path('storage/' . $user->teacher->profile_picture_path);
+								    if (file_exists($fullPath)) {
+								        $photoPath = asset('storage/' . $user->teacher->profile_picture_path);
+								    }
+								}
+							@endphp
+							@if ($photoPath)
+								<img src="{{ $photoPath }}" class="img-thumbnail rounded shadow-sm"
+									style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
+							@else
+								<span class="text-danger">Foto profil belum diunggah</span>
+							@endif
+						</div>
+					@endif
 					{{-- FORM KANAN (LABEL TETAP RATA KIRI) --}}
 					<div class="col-md-9">
 						{{-- PERAN & STATUS --}}

@@ -105,9 +105,9 @@
 						@enderror
 					</div>
 
-					{{-- FOTO --}}
-					<div class="mb-3" id="photoForm">
-						<label for="profile_picture_file" class="form-label">Foto Profil <span class="text-muted">(Opsional)</span></label>
+					{{-- FOTO (TEACHER ONLY) --}}
+					<div class="mb-3" id="photoForm" style="display:none;">
+						<label for="profile_picture_file" class="form-label">Foto Profil <span class="text-danger">*</span></label>
 						@php
 							$name = old('name', $user->name ?? 'User');
 							$defaultAvatar =
@@ -124,7 +124,7 @@
 							<img id="photo-preview" src="#" alt="Preview Foto Profil" class="img-thumbnail rounded"
 								style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
 						</div>
-						<input type="file" class="form-control @error('profile_photo_file') is-invalid @enderror"
+						<input type="file" class="form-control @error('profile_picture_file') is-invalid @enderror"
 							id="profile_picture_file" name="profile_picture_file" accept="image/*">
 						<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 2MB. Ukuran pas foto: 3x4.</small>
 						@error('profile_picture_file')
@@ -185,9 +185,14 @@
 				if (roleSelect.value === 'teacher') {
 					photoForm.style.display = 'block';
 					teacherFields.style.display = 'block';
+					photoInput.required = true;
 				} else {
 					photoForm.style.display = 'none';
 					teacherFields.style.display = 'none';
+					photoInput.required = false;
+					photoInput.value = '';
+					previewContainer.style.display = 'none';
+					if (oldPhoto) oldPhoto.style.display = 'none';
 				}
 			}
 			// Initial check on page load

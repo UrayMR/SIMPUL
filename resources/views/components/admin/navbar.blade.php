@@ -86,7 +86,7 @@
     }
 @endphp
 
-<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+<nav class="layout-navbar container-fluid navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
     id="layout-navbar">
     <!-- Toggle Sidebar (tampil hanya di layar kecil) -->
 
