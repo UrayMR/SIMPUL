@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CourseUserController extends Controller
 {
@@ -13,6 +15,8 @@ class CourseUserController extends Controller
         $search = trim((string) $request->query('search', ''));
         // Support both 'category[]' and legacy 'categories' query keys
         $categoryIds = (array) $request->query('category', $request->query('categories', []));
+
+        $ownership = $request->query('ownership', null);
 
         $categories = Category::all();
 
@@ -28,7 +32,17 @@ class CourseUserController extends Controller
                   ->orWhere('description', 'like', "%{$search}%");
             });
         }
-
+        // if($ownership === 'true') {
+        //     // Courses owned by the authenticated user
+        //     $query->whereHas('enrollments', function ($q) {
+        //         $q->where('user_id', Auth::id());
+        //     });
+        // } elseif ($ownership === 'false') {
+        //     // Courses not owned by the authenticated user
+        //     $query->whereDoesntHave('enrollments', function ($q) {
+        //         $q->where('user_id', Auth::id());
+        //     });
+        // }
         $courses = $query->orderBy('created_at')->paginate(12)->withQueryString();
 
         return view('pages.guest.course.index', compact('categories', 'courses'));
@@ -37,7 +51,17 @@ class CourseUserController extends Controller
     public function show(Course $course)
     {
         $course->load('category', 'teacher.user');
+
+        $enrollment = Enrollment::where('course_id', $course->id)
+            ->where('user_id', Auth::id() ?? '')
+            ->first();
+
+        $enrolled = false;
+        
+        if(isset($enrollment)) {
+             $enrolled = true;
+        } 
         // $course = Course::with('category', 'teacher')->findOrFail($id);
-        return view('pages.guest.course.show', compact('course'));
+        return view('pages.guest.course.show', compact('course', 'enrolled'));
     }
 }
