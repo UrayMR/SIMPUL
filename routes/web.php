@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseUserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,15 +20,22 @@ Route::middleware(['auth', 'role:admin'])
     ->as('admin.')
     ->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
         Route::get('/users/pending-list', [UserController::class, 'pendingList'])->name('users.pending-list');
         Route::patch('/users/{user}/approve-teacher', [UserController::class, 'approveTeacher'])->name('users.approve-teacher');
         Route::patch('/users/{user}/reject-teacher', [UserController::class, 'rejectTeacher'])->name('users.reject-teacher');
         Route::resource('/users', UserController::class);
+
         Route::resource('/categories', CategoryController::class);
+
         Route::get('/courses/pending-list', [CourseController::class, 'pendingList'])->name('courses.pending-list');
         Route::patch('/courses/{course}/approve', [CourseController::class, 'approveCourse'])->name('courses.approve');
         Route::patch('/courses/{course}/reject', [CourseController::class, 'rejectCourse'])->name('courses.reject');
         Route::resource('/courses', CourseController::class);
+
+        Route::patch('/transactions/{transaction}/approve', [TransactionController::class, 'approve'])->name('transactions.approve');
+        Route::patch('/transactions/{transaction}/reject', [TransactionController::class, 'reject'])->name('transactions.reject');
+        Route::resource('/transactions', TransactionController::class);
     });
 
 Route::middleware(['auth'])
