@@ -25,6 +25,7 @@ class CourseFactory extends Factory
             'price' => $this->faker->randomFloat(2, 0, 1000000),
             'video_url' => $this->faker->optional()->url(),
             'status' => $this->faker->randomElement(['pending', 'approved', 'rejected']),
+            'enrollments_count' => $this->faker->numberBetween(0, 1000),
         ];
     }
 }

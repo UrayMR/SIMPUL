@@ -269,15 +269,15 @@
 				let badgeClass = user.status === 'pending' ? 'bg-warning text-dark' : (user.status === 'rejected' ? 'bg-danger' : 'bg-secondary');
 				let number = meta && meta.from ? (meta.from + idx) : (idx + 1);
 				return `
-																	<tr>
-																		<td>${number}</td>
-																		<td>${user.name}</td>
-																		<td>${user.email}</td>
-																		<td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
-																		<td><span class="badge w-100 ${badgeClass}">${user.status}</span></td>
-																		<td class="d-flex justify-content-center gap-2">${renderActions(user)}</td>
-																	</tr>
-																	`;
+																			<tr>
+																				<td>${number}</td>
+																				<td>${user.name}</td>
+																				<td>${user.email}</td>
+																				<td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+																				<td><span class="badge w-100 ${badgeClass}">${user.status}</span></td>
+																				<td class="d-flex justify-content-center gap-2">${renderActions(user)}</td>
+																			</tr>
+																			`;
 			}).join('')}
 		</tbody>
 	</table>

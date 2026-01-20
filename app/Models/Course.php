@@ -28,6 +28,7 @@ class Course extends Model
         'price',
         'video_url',
         'status',
+        'enrollments_count',
     ];
 
     /**
@@ -41,6 +42,7 @@ class Course extends Model
             'category_id' => 'string',
             'price' => 'decimal:2',
             'status' => 'string',
+            'enrollments_count' => 'integer',
         ];
     }
 

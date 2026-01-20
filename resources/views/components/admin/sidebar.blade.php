@@ -53,10 +53,10 @@
 				<span class="menu-header-text">Pendataan</span>
 			</li>
 
-			<li class="menu-item {{ request()->is(ltrim('admin/berita*', '/')) ? 'active' : '' }}">
-				<a href="" class="menu-link text-decoration-none">
-					<i class="menu-icon tf-icons bx bx-news"></i>
-					<div>Data Berita</div>
+			<li class="menu-item {{ request()->routeIs('admin.courses.*') ? 'active' : '' }}">
+				<a href="{{ route('admin.courses.index') }}" class="menu-link text-decoration-none">
+					<i class="menu-icon tf-icons bx bx-book-content"></i>
+					<div>Data Kursus</div>
 				</a>
 			</li>
 			<li class="menu-item {{ request()->is(ltrim('admin/gereja*', '/')) ? 'active' : '' }}">

@@ -19,7 +19,7 @@
 		rel="stylesheet" />
 
 	<!-- Vite CSS -->
-	@vite(['resources/scss/app.scss', 'resources/js/app.js', 'resources/js/category-form-spinner.js'])
+	@vite(['resources/scss/app.scss', 'resources/js/app.js'])
 </head>
 
 <body data-auth-id="{{ auth()->id() }}">

@@ -59,20 +59,12 @@ class UserController extends Controller
     /**
      * Lazy: List user pending & rejected (for lazy load)
      */
-    public function pendingList(Request $request)
+    public function pendingList()
     {
         $this->authorize('viewAny', User::class);
 
-        $search = $request->query('search');
-
         $users = User::query()
             ->whereIn('status', [User::STATUS_PENDING, User::STATUS_REJECTED])
-            ->when($search, function ($query, $search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%")
-                        ->orWhere('email', 'like', "%{$search}%");
-                });
-            })
             ->orderByRaw("FIELD(status, 'pending', 'rejected')")
             ->orderByDesc('created_at')
             ->paginate(10);

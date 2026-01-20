@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,8 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('/users/pending-list', [UserController::class, 'pendingList'])->name('users.pending-list');
         Route::resource('/users', UserController::class);
         Route::resource('/categories', CategoryController::class);
+        Route::get('/courses/pending-list', [CourseController::class, 'pendingList'])->name('courses.pending-list');
+        Route::resource('/courses', CourseController::class);
     });
 
 Route::middleware(['auth'])

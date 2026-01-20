@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2)->default(0);
             $table->string('video_url')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->unsignedInteger('enrollments_count')->default(0);
             $table->timestamps();
         });
     }
