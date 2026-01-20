@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'phone_number',
         'status',
     ];
 
@@ -41,5 +42,10 @@ class User extends Authenticatable
             'status' => 'string',
             'email_verified_at' => 'datetime',
         ];
+    }
+
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
     }
 }

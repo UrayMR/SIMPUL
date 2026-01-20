@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -32,6 +32,7 @@ class UserController extends Controller
                         ->orWhere('email', 'like', "%{$search}%");
                 });
             })
+            ->orderByDesc('updated_at')
             ->paginate(10);
 
         $currentPage = $users->currentPage();
@@ -87,9 +88,11 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(User $user)
+    public function create()
     {
-        return view('pages.admin.user.create', compact('sekolahs', 'gerejas'));
+        $this->authorize('create', User::class);
+
+        return view('pages.admin.user.create');
     }
 
     /**
@@ -97,9 +100,43 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        Gate::authorize('create', User::class);
-        $user = $this->service->store($request->validated());
-        return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil ditambahkan.');
+        $this->authorize('create', User::class);
+
+        $data = $request->validated();
+
+        DB::beginTransaction();
+        try {
+            $profilePicturePath = null;
+            if ($request->hasFile('profile_picture_file')) {
+                $profilePicturePath = $request->file('profile_picture_file')->store('profile-pictures', 'public');
+            }
+
+            $data['password'] = bcrypt($data['password']);
+
+            unset($data['profile_picture_path']);
+
+            $user = User::query()->create($data);
+
+            if ($user->role === User::ROLE_TEACHER) {
+                $teacherData = [];
+                if (!empty($profilePicturePath)) {
+                    $teacherData['profile_picture_path'] = $profilePicturePath;
+                }
+                if (!empty($data['bio'])) {
+                    $teacherData['bio'] = $data['bio'];
+                }
+                if (!empty($data['expertise'])) {
+                    $teacherData['expertise'] = $data['expertise'];
+                }
+                $user->teacher()->create($teacherData);
+            }
+
+            DB::commit();
+            return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withErrors(['register' => 'Terjadi kesalahan saat menambah pengguna. Silakan coba lagi.']);
+        }
     }
 
     /**
@@ -107,16 +144,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        Gate::authorize('view', $user);
+        $this->authorize('view', $user);
 
-        $user->load(['guru.sekolah', 'staffGereja']);
+        $user->load('teacher');
 
-        $sekolahs = Sekolah::pluck('nama', 'id')
-            ->toArray();
-        $gerejas = Gereja::pluck('nama', 'id')
-            ->toArray();
-
-        return view('pages.admin.user.show', compact('user', 'sekolahs', 'gerejas'));
+        return view('pages.admin.user.show', compact('user'));
     }
 
     /**
@@ -124,16 +156,11 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        Gate::authorize('update', $user);
+        $this->authorize('update', $user);
 
-        $user->load(['guru.sekolah', 'staffGereja']);
+        $user->load('teacher');
 
-        $sekolahs = Sekolah::pluck('nama', 'id')
-            ->toArray();
-        $gerejas = Gereja::pluck('nama', 'id')
-            ->toArray();
-
-        return view('pages.admin.user.edit', compact('user', 'sekolahs', 'gerejas'));
+        return view('pages.admin.user.edit', compact('user'));
     }
 
     /**
@@ -141,9 +168,50 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        Gate::authorize('update', $user);
-        $this->service->update($user, $request->validated());
-        return redirect()->route('admin.users.index', $user)->with('success', ' Data Pengguna berhasil diperbarui.');
+        $this->authorize('update', $user);
+
+        $data = $request->validated();
+
+        DB::beginTransaction();
+        try {
+            $profilePicturePath = null;
+            if ($request->hasFile('profile_picture_file')) {
+                $profilePicturePath = $request->file('profile_picture_file')->store('profile-pictures', 'public');
+            }
+
+            // Only update password if provided
+            if (empty($data['password'])) {
+                unset($data['password']);
+            } else {
+                $data['password'] = bcrypt($data['password']);
+            }
+
+            unset($data['profile_picture_path']);
+
+            $user->update($data);
+
+            if ($user->role === User::ROLE_TEACHER && $user->teacher) {
+                $teacherData = [];
+                if (!empty($profilePicturePath)) {
+                    $teacherData['profile_picture_path'] = $profilePicturePath;
+                }
+                if (!empty($data['bio'])) {
+                    $teacherData['bio'] = $data['bio'];
+                }
+                if (!empty($data['expertise'])) {
+                    $teacherData['expertise'] = $data['expertise'];
+                }
+                if (!empty($teacherData)) {
+                    $user->teacher->update($teacherData);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withErrors(['register' => 'Terjadi kesalahan saat memperbarui pengguna. Silakan coba lagi.']);
+        }
     }
 
     /**
@@ -151,8 +219,18 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        Gate::authorize('delete', $user);
-        $this->service->delete($user);
+        $this->authorize('delete', $user);
+
+        if ($user->role === User::ROLE_TEACHER && $user->teacher) {
+            $user->teacher->delete();
+        }
+
+        if ($user->teacher->profile_picture_path) {
+            Storage::disk('public')->delete($user->teacher->profile_picture_path);
+        }
+
+        $user->delete();
+
         return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil dihapus.');
     }
 }
