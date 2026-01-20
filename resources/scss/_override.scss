@@ -67,26 +67,26 @@ $brand-gray: #6B7280; // Abu Gelap
     overflow-x: hidden !important;
 }
 
-// NEWS
-.news-title {
-    color: #003232;
-}
-.news-title:hover {
-    color: #008080;
-}
-.img-hover-slide {
-    overflow: hidden;
-    border-radius: 8px;
-}
+// // NEWS
+// .news-title {
+//     color: #003232;
+// }
+// .news-title:hover {
+//     color: #008080;
+// }
+// .img-hover-slide {
+//     overflow: hidden;
+//     border-radius: 8px;
+// }
 
-.img-hover-slide img {
-    transition: transform 1.2s ease;
-    transform: translateY(0);
-}
+// .img-hover-slide img {
+//     transition: transform 1.2s ease;
+//     transform: translateY(0);
+// }
 
-.img-hover-slide:hover img {
-    transform: translateY(-5%);
-}
+// .img-hover-slide:hover img {
+//     transform: translateY(-5%);
+// }
 
 /* ===============================
    TEXT (sesuai warna Sneat)
@@ -98,6 +98,7 @@ $brand-gray: #6B7280; // Abu Gelap
 .text-app-primary { color: var(--app-primary) !important; }
 .text-app-black { color: var(--app-black) !important; }
 .text-app-gray { color: var(--app-gray) !important; }
+.text-app-white { color: var(--app-white) !important; }
 
 .bg-app { background-color: var(--app-white) !important; }
 .bg-app-soft { background-color: var(--app-white-soft) !important; }

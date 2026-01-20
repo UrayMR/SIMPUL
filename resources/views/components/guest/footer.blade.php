@@ -1,6 +1,6 @@
 <style>
     .footer-section {
-        background: #f4f5f7;
+        /* background: #fffff; */
         color: #4a4a4a;
         font-family: "Inter", sans-serif;
     }
@@ -91,7 +91,7 @@
 </style>
 
 {{-- Footer --}}
-<footer class="footer-section pt-5 pb-2">
+<footer class="footer-section bg-white pt-5 pb-2 shadow">
     <div class="container">
 
         <div class="row justify-content-between align-items-start">
