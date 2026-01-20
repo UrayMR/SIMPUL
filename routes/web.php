@@ -21,6 +21,8 @@ Route::middleware(['auth', 'role:admin'])
         Route::resource('/users', UserController::class);
         Route::resource('/categories', CategoryController::class);
         Route::get('/courses/pending-list', [CourseController::class, 'pendingList'])->name('courses.pending-list');
+        Route::patch('/courses/{course}/approve', [CourseController::class, 'approveCourse'])->name('courses.approve');
+        Route::patch('/courses/{course}/reject', [CourseController::class, 'rejectCourse'])->name('courses.reject');
         Route::resource('/courses', CourseController::class);
     });
 

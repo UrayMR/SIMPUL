@@ -31,6 +31,7 @@ class CourseRequest extends FormRequest
       'description' => ['nullable', 'string', 'max:1000'],
       'video_url' => ['nullable', 'url'],
       'thumbnail_file' => ['nullable', 'image', 'max:2048'],
+      'status' => ['required', Rule::in(['pending', 'approved', 'rejected'])],
     ];
 
     if ($this->isMethod('post')) {

@@ -8,6 +8,7 @@ use App\Models\Teacher;
 use App\Http\Requests\CourseRequest;
 use App\Models\User;
 use App\Utils\ImageCompressor;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -117,7 +118,6 @@ class CourseController extends Controller
             unset($validated['hero_path']);
         }
 
-        $validated['status'] = Course::STATUS_PENDING;
         $validated['enrollments_count'] = 0;
 
         Course::create($validated);
@@ -130,7 +130,9 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        $this->authorize('view', $course);
+        $course->load(['category', 'teacher.user']);
+        return view('pages.admin.course.show', compact('course'));
     }
 
     /**
@@ -138,7 +140,17 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        $this->authorize('update', $course);
+        $course->load(['category', 'teacher.user']);
+        $categories = Category::query()->orderBy('name')->pluck('name', 'id')->toArray();
+        $teachers = Teacher::with('user')
+            ->whereHas('user', function ($q) {
+                $q->where('users.status', User::STATUS_ACTIVE);
+            })
+            ->get()
+            ->mapWithKeys(fn($t) => [$t->id => $t->user->name])
+            ->toArray();
+        return view('pages.admin.course.edit', compact('course', 'categories', 'teachers'));
     }
 
     /**
@@ -172,6 +184,45 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $this->authorize('delete', $course);
+
+        if ($course->thumbnail_path && Storage::disk('public')->exists($course->thumbnail_path)) {
+            Storage::disk('public')->delete($course->thumbnail_path);
+        }
+        if ($course->hero_path && Storage::disk('public')->exists($course->hero_path)) {
+            Storage::disk('public')->delete($course->hero_path);
+        }
+
+        $course->delete();
+
+        return redirect()->route('admin.courses.index')->with('success', 'Kursus berhasil dihapus.');
+    }
+
+    /**
+     * Approve course application.
+     */
+    public function approveCourse(Course $course)
+    {
+        $this->authorize('update', $course);
+        if ($course->status !== Course::STATUS_PENDING) {
+            return redirect()->back()->withErrors(['approve' => 'Aksi tidak valid.']);
+        }
+        $course->status = Course::STATUS_APPROVED;
+        $course->save();
+        return redirect()->route('admin.courses.show', $course)->with('success', 'Kursus berhasil di-approve.');
+    }
+
+    /**
+     * Reject course application.
+     */
+    public function rejectCourse(Course $course)
+    {
+        $this->authorize('update', $course);
+        if ($course->status !== Course::STATUS_PENDING) {
+            return redirect()->back()->withErrors(['reject' => 'Aksi tidak valid.']);
+        }
+        $course->status = Course::STATUS_REJECTED;
+        $course->save();
+        return redirect()->route('admin.courses.show', $course)->with('success', 'Kursus berhasil direject.');
     }
 }

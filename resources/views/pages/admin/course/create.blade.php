@@ -46,6 +46,16 @@
 							@enderror
 						</div>
 						<div class="col-md-6 mb-3">
+							<label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+							<x-select-input id="status" name="status" label="Status" :options="['approved' => 'Disetujui', 'pending' => 'Pending', 'rejected' => 'Ditolak']" :selected="old('status', 'pending')" :searchable="false"
+								required />
+							@error('status')
+								<div class="invalid-feedback">{{ $message }}</div>
+							@enderror
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12 mb-3">
 							<label for="price" class="form-label">Harga (Rp) <span class="text-danger">*</span></label>
 							<input type="number" name="price" id="price" class="form-control @error('price') is-invalid @enderror"
 								value="{{ old('price', 0) }}" min="0" step="1000" required placeholder="Masukkan harga kursus">
@@ -72,6 +82,10 @@
 					</div>
 					<div class="mb-3">
 						<label for="thumbnail_file" class="form-label">Thumbnail (Opsional)</label>
+						<div class="mb-3" id="thumbnail-preview-container" style="display:none;">
+							<img id="thumbnail-preview" src="#" alt="Preview Thumbnail" class="img-thumbnail"
+								style="max-width: 200px;">
+						</div>
 						<input type="file" name="thumbnail_file" id="thumbnail_file"
 							class="form-control @error('thumbnail_file') is-invalid @enderror" accept="image/*">
 						@error('thumbnail_file')
@@ -81,8 +95,11 @@
 					</div>
 					<div class="mb-3">
 						<label for="hero_file" class="form-label">Hero Image <span class="text-danger">*</span></label>
-						<input type="file" name="hero_file" id="hero_file" class="form-control @error('hero_file') is-invalid @enderror"
-							accept="image/*" required>
+						<div class="mb-3" id="hero-preview-container" style="display:none;">
+							<img id="hero-preview" src="#" alt="Preview Hero" class="img-thumbnail" style="max-width: 200px;">
+						</div>
+						<input type="file" name="hero_file" id="hero_file"
+							class="form-control @error('hero_file') is-invalid @enderror" accept="image/*" required>
 						@error('hero_file')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
@@ -115,6 +132,42 @@
 					submitCourseBtn.querySelector('.spinner-content').classList.remove('d-none');
 				});
 			}
+
+			// Preview Thumbnail
+			const thumbnailInput = document.getElementById('thumbnail_file');
+			const thumbnailPreviewContainer = document.getElementById('thumbnail-preview-container');
+			const thumbnailPreview = document.getElementById('thumbnail-preview');
+			thumbnailInput.addEventListener('change', function(event) {
+				const file = event.target.files[0];
+				if (file) {
+					const reader = new FileReader();
+					reader.onload = function(e) {
+						thumbnailPreview.src = e.target.result;
+						thumbnailPreviewContainer.style.display = 'block';
+					};
+					reader.readAsDataURL(file);
+				} else {
+					thumbnailPreviewContainer.style.display = 'none';
+				}
+			});
+
+			// Preview Hero Image
+			const heroInput = document.getElementById('hero_file');
+			const heroPreviewContainer = document.getElementById('hero-preview-container');
+			const heroPreview = document.getElementById('hero-preview');
+			heroInput.addEventListener('change', function(event) {
+				const file = event.target.files[0];
+				if (file) {
+					const reader = new FileReader();
+					reader.onload = function(e) {
+						heroPreview.src = e.target.result;
+						heroPreviewContainer.style.display = 'block';
+					};
+					reader.readAsDataURL(file);
+				} else {
+					heroPreviewContainer.style.display = 'none';
+				}
+			});
 		});
 	</script>
 @endpush
