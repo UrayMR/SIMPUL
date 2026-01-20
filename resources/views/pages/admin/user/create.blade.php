@@ -68,10 +68,10 @@
 
 					{{-- NOMOR TELEPON --}}
 					<div class="mb-3">
-						<label for="nomor_telepon" class="form-label">Nomor Telepon <span class="text-danger">*</span></label>
-						<input type="text" name="nomor_telepon" class="form-control" required placeholder="Masukkan nomor telepon"
-							value="{{ old('nomor_telepon') }}">
-						@error('nomor_telepon')
+						<label for="phone_number" class="form-label">Nomor Telepon <span class="text-danger">*</span></label>
+						<input type="text" name="phone_number" class="form-control" required placeholder="Masukkan nomor telepon"
+							value="{{ old('phone_number') }}">
+						@error('phone_number')
 							<div class="invalid-feedback d-block">{{ $message }}</div>
 						@enderror
 					</div>
@@ -109,17 +109,17 @@
 
 					{{-- FOTO PROFIL --}}
 					<div class="mb-3" id="photoForm" style="display:none;">
-						<label for="profile_photo_file" class="form-label">Foto Profil <span class="text-muted">(Opsional)</span></label>
+						<label for="profile_picture_file" class="form-label">Foto Profil <span class="text-muted">(Opsional)</span></label>
 
 						<div class="text-center mb-3" id="photo-preview-container" style="display:none;">
 							<img id="photo-preview" src="#" alt="Preview Foto Profil" class="img-thumbnail rounded"
 								style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
 						</div>
-						<input type="file" class="form-control @error('profile_photo_file') is-invalid @enderror"
-							id="profile_photo_file" name="profile_photo_file" accept="image/*">
+						<input type="file" class="form-control @error('profile_picture_file') is-invalid @enderror"
+							id="profile_picture_file" name="profile_picture_file" accept="image/*">
 						<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 2MB. Ukuran pas foto: 3x4.</small>
 
-						@error('profile_photo_file')
+						@error('profile_picture_file')
 							<div class="invalid-feedback">{{ $message }}</div>
 						@enderror
 					</div>
@@ -143,7 +143,7 @@
 
 @push('scripts')
 	<script>
-		const photoInput = document.getElementById('profile_photo_file');
+		const photoInput = document.getElementById('profile_picture_file');
 		const previewContainer = document.getElementById('photo-preview-container');
 		const previewImage = document.getElementById('photo-preview');
 		const photoForm = document.getElementById('photoForm');

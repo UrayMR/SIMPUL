@@ -23,7 +23,7 @@ class Teacher extends Model
         'user_id',
         'bio',
         'expertise',
-        'profile_image_path',
+        'profile_picture_path',
         'approved_at',
     ];
 

@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -104,11 +103,24 @@ class UserController extends Controller
 
         $data = $request->validated();
 
-        if ($request->hasFile('profile_photo_file')) {
-            $data['profile_photo_path'] = $request->file('profile_photo_file')->store('profile-photos', 'public');
+        $profilePicturePath = null;
+        if ($request->hasFile('profile_picture_file')) {
+            $profilePicturePath = $request->file('profile_picture_file')->store('profile-pictures', 'public');
         }
 
-        User::query()->create($data);
+        $data['password'] = bcrypt($data['password']);
+
+        unset($data['profile_picture_path']);
+
+        $user = User::query()->create($data);
+
+        if ($user->role === User::ROLE_TEACHER) {
+            $teacherData = [];
+            if (!empty($profilePicturePath)) {
+                $teacherData['profile_picture_path'] = $profilePicturePath;
+            }
+            $user->teacher()->create($teacherData);
+        }
 
         return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil ditambahkan.');
     }
@@ -118,16 +130,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        Gate::authorize('view', $user);
+        $this->authorize('view', $user);
 
-        $user->load(['guru.sekolah', 'staffGereja']);
+        $user->load('teacher');
 
-        $sekolahs = Sekolah::pluck('nama', 'id')
-            ->toArray();
-        $gerejas = Gereja::pluck('nama', 'id')
-            ->toArray();
-
-        return view('pages.admin.user.show', compact('user', 'sekolahs', 'gerejas'));
+        return view('pages.admin.user.show', compact('user'));
     }
 
     /**
@@ -135,16 +142,11 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        Gate::authorize('update', $user);
+        $this->authorize('update', $user);
 
-        $user->load(['guru.sekolah', 'staffGereja']);
+        $user->load('teacher');
 
-        $sekolahs = Sekolah::pluck('nama', 'id')
-            ->toArray();
-        $gerejas = Gereja::pluck('nama', 'id')
-            ->toArray();
-
-        return view('pages.admin.user.edit', compact('user', 'sekolahs', 'gerejas'));
+        return view('pages.admin.user.edit', compact('user'));
     }
 
     /**
@@ -152,9 +154,37 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        Gate::authorize('update', $user);
-        $this->service->update($user, $request->validated());
-        return redirect()->route('admin.users.index', $user)->with('success', ' Data Pengguna berhasil diperbarui.');
+        $this->authorize('update', $user);
+
+        $data = $request->validated();
+
+        $profilePicturePath = null;
+        if ($request->hasFile('profile_picture_file')) {
+            $profilePicturePath = $request->file('profile_picture_file')->store('profile-pictures', 'public');
+        }
+
+        // Only update password if provided
+        if (empty($data['password'])) {
+            unset($data['password']);
+        } else {
+            $data['password'] = bcrypt($data['password']);
+        }
+
+        unset($data['profile_picture_path']);
+
+        $user->update($data);
+
+        if ($user->role === User::ROLE_TEACHER && $user->teacher) {
+            $teacherData = [];
+            if (!empty($profilePicturePath)) {
+                $teacherData['profile_picture_path'] = $profilePicturePath;
+            }
+            if (!empty($teacherData)) {
+                $user->teacher->update($teacherData);
+            }
+        }
+
+        return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil diperbarui.');
     }
 
     /**
@@ -162,8 +192,18 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        Gate::authorize('delete', $user);
-        $this->service->delete($user);
+        $this->authorize('delete', $user);
+
+        if ($user->role === User::ROLE_TEACHER && $user->teacher) {
+            $user->teacher->delete();
+        }
+
+        if ($user->teacher->profile_picture_path) {
+            Storage::disk('public')->delete($user->teacher->profile_picture_path);
+        }
+
+        $user->delete();
+
         return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil dihapus.');
     }
 }

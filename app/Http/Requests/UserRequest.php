@@ -29,6 +29,7 @@ class UserRequest extends FormRequest
         $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user?->id)],
+            'phone_number' => ['required', 'string', 'max:15'],
             'role' => ['required', Rule::in([User::ROLE_ADMIN, User::ROLE_TEACHER, User::ROLE_STUDENT])],
             'status' => ['required', Rule::in([User::STATUS_ACTIVE, User::STATUS_INACTIVE, User::STATUS_PENDING, User::STATUS_REJECTED])],
         ];
@@ -43,7 +44,6 @@ class UserRequest extends FormRequest
         // RULES TEACHER
         if ($this->input('role') === User::ROLE_TEACHER) {
             $rules = array_merge($rules, [
-                'nomor_telepon' => ['required', 'string', 'max:15'],
                 'profile_photo_file' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
             ]);
         }

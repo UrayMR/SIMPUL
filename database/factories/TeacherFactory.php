@@ -20,7 +20,7 @@ class TeacherFactory extends Factory
             'user_id' => fn() => \App\Models\User::factory(),
             'bio' => $this->faker->optional()->paragraph(),
             'expertise' => $this->faker->optional()->word(),
-            'profile_image_path' => $this->faker->optional()->imageUrl(),
+            'profile_picture_path' => $this->faker->optional()->imageUrl(),
             'approved_at' => $this->faker->optional()->dateTime(),
         ];
     }
