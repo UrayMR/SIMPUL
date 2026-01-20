@@ -8,7 +8,7 @@ use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CourseUserController extends Controller
+class UserCourseController extends Controller
 {
     public function index(Request $request)
     {

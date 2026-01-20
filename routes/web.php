@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\CourseUserController;
+use App\Http\Controllers\UserCourseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TeacherCourseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -12,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/beranda', '/beranda');
 Route::view('/', 'pages.guest.home')->name('beranda');
 
-Route::get('/course', [CourseUserController::class, 'index'])->name('course.index');
-Route::get('/course/{course}', [CourseUserController::class, 'show'])->name('course.show');
+Route::get('/course', [UserCourseController::class, 'index'])->name('course.index');
+Route::get('/course/{course}', [UserCourseController::class, 'show'])->name('course.show');
 
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
@@ -36,6 +37,16 @@ Route::middleware(['auth', 'role:admin'])
         Route::patch('/transactions/{transaction}/approve', [TransactionController::class, 'approve'])->name('transactions.approve');
         Route::patch('/transactions/{transaction}/reject', [TransactionController::class, 'reject'])->name('transactions.reject');
         Route::resource('/transactions', TransactionController::class);
+    });
+
+Route::middleware(['auth', 'role:teacher'])
+    ->group(function () {
+        Route::get('/guru/kursus', [TeacherCourseController::class, 'index'])->name('teacher.courses.index');
+        Route::get('/guru/kursus/buat', [TeacherCourseController::class, 'create'])->name('teacher.courses.create');
+        Route::post('/guru/kursus', [TeacherCourseController::class, 'store'])->name('teacher.courses.store');
+        Route::get('/guru/kursus/{course}/edit', [TeacherCourseController::class, 'edit'])->name('teacher.courses.edit');
+        Route::put('/guru/kursus/{course}', [TeacherCourseController::class, 'update'])->name('teacher.courses.update');
+        Route::delete('/guru/kursus/{course}', [TeacherCourseController::class, 'destroy'])->name('teacher.courses.destroy');
     });
 
 Route::middleware(['auth'])

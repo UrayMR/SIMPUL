@@ -1,0 +1,136 @@
+@extends('layouts.app')
+
+@section('title', 'Manajemen Kursus Saya')
+
+@section('content')
+	<section class="bg-app-primary text-white py-5 py-lg-6 mb-0">
+		<div class="container">
+			<div class="row justify-content-center text-center">
+				<div class="col-lg-8">
+					<span class="badge bg-white text-app-primary px-3 py-2 rounded-pill mb-3 fw-semibold">
+						Kursus Saya
+					</span>
+					<h1 class="fw-extrabold display-5 mb-3 lh-sm text-white">
+						Kelola & Pantau Kursus Anda
+					</h1>
+					<p class="fs-5 opacity-75 mb-0">
+						Lihat statistik, tambah, edit, dan pantau performa kursus Anda secara efisien.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="py-5 bg-light">
+		<div class="container">
+			{{-- Statistik Pribadi --}}
+			<div class="row mb-5 g-4 justify-content-center">
+				<div class="col-md-4">
+					<div class="bg-white rounded-4 shadow-sm p-4 text-center h-100">
+						<div class="mb-2">
+							<i class="bi bi-cash-coin fs-1 text-success"></i>
+						</div>
+						<h6 class="fw-bold mb-1 fs-5">Total Pendapatan</h6>
+						<div class="fs-3 fw-bold text-success">Rp {{ number_format($totalIncome, 0, ',', '.') }}</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="bg-white rounded-4 shadow-sm p-4 text-center h-100">
+						<div class="mb-2">
+							<i class="bi bi-book fs-1 text-primary"></i>
+						</div>
+						<h6 class="fw-bold mb-1 fs-5">Total Kursus</h6>
+						<div class="fs-3 fw-bold text-primary">{{ $courses->count() }}</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="bg-white rounded-4 shadow-sm p-4 text-center h-100">
+						<div class="mb-2">
+							<i class="bi bi-people fs-1 text-info"></i>
+						</div>
+						<h6 class="fw-bold mb-1 fs-5">Total Peserta</h6>
+						<div class="fs-3 fw-bold text-info">{{ $courses->sum('enrollments_count') }}</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="d-flex justify-content-between align-items-center mb-4">
+				<h4 class="fw-bold mb-0">Daftar Kursus Saya</h4>
+				<a href="{{ route('teacher.courses.create') }}" class="btn btn-app-primary shadow">
+					<i class="bi bi-plus-circle me-1"></i> Tambah Kursus
+				</a>
+			</div>
+
+			<div class="row">
+				@forelse ($courses as $course)
+					<div class="col-12 col-md-6 col-lg-4 mb-4">
+						<div class="card border-1 h-100 position-relative overflow-hidden">
+							@if ($course->thumbnail_path)
+								<img src="{{ asset('storage/' . $course->thumbnail_path) }}" alt="Thumbnail {{ $course->title }}"
+									class="card-img-top object-fit-cover" style="height: 180px; min-height: 180px; max-height: 180px; width: 100%;">
+							@else
+								<div class="bg-light d-flex align-items-center justify-content-center" style="height: 180px;">
+									<span class="text-muted"><i class="bi bi-image fs-1"></i></span>
+								</div>
+							@endif
+							<div class="card-body pb-4">
+								<div class="d-flex align-items-center gap-2 mb-2">
+									<span class="badge bg-light text-dark border fw-normal">{{ $course->category->name ?? '-' }}</span>
+									@if ($course->status === 'approved')
+										<span class="badge bg-success">Aktif</span>
+									@elseif ($course->status === 'pending')
+										<span class="badge bg-warning text-dark">Pending</span>
+									@elseif ($course->status === 'rejected')
+										<span class="badge bg-danger">Rejected</span>
+									@else
+										<span class="badge bg-secondary">Nonaktif</span>
+									@endif
+								</div>
+								<h5 class="fw-bold mb-1 text-truncate" title="{{ $course->title }}">{{ $course->title }}</h5>
+								<div class="mb-2 small text-muted">Dibuat: {{ $course->created_at->format('d M Y') }}</div>
+								@if ($course->description)
+									<div class="mb-2 text-muted small" style="min-height: 38px; max-height: 38px; overflow: hidden;">
+										{{ Str::limit(strip_tags($course->description), 60) }}</div>
+								@endif
+								<div class="mb-2 d-flex gap-3 align-items-center">
+									<span class="fw-bold text-dark">Rp {{ number_format($course->price, 0, ',', '.') }}</span>
+									<span class="fw-semibold text-secondary"><i class="bi bi-people text-muted"></i>
+										{{ $course->enrollments_count }} peserta</span>
+								</div>
+							</div>
+							<div class="card-footer bg-white border-0 d-flex flex-column gap-2 pb-3 pt-0">
+								<div class="d-flex align-items-center justify-content-between mb-2">
+									<span class="text-muted small"><i class="bi bi-cash-coin text-success"></i> Total Pendapatan Kursus:</span>
+									<span class="fw-bold text-success">Rp
+										{{ number_format($course->transactions_sum_amount ?? 0, 0, ',', '.') }}</span>
+								</div>
+								<div class="d-flex justify-content-end gap-2">
+									<a href="{{ route('teacher.courses.edit', $course) }}" class="btn btn-app-outline-primary fw-semibold">
+										<i class="bi bi-pencil"></i> Edit
+									</a>
+									<form action="{{ route('teacher.courses.destroy', $course) }}" method="POST" class="d-inline"
+										onsubmit="return confirm('Yakin ingin menghapus kursus ini?')">
+										@csrf
+										@method('DELETE')
+										<button class="btn btn-outline-danger fw-semibold"><i class="bi bi-trash"></i> Hapus</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				@empty
+					<div class="col-12">
+						<div class="bg-white rounded-4 shadow-sm p-5 text-center">
+							<div class="mb-3 fs-1">📭</div>
+							<h5 class="fw-bold mb-2">Belum ada kursus yang Anda buat.</h5>
+							<p class="text-muted mb-4">Ayo mulai berbagi ilmu dengan membuat kursus pertamamu!</p>
+							<a href="{{ route('teacher.courses.create') }}" class="btn btn-app-primary">
+								<i class="bi bi-plus-circle me-1"></i> Buat Kursus
+							</a>
+						</div>
+					</div>
+				@endforelse
+			</div>
+		</div>
+	</section>
+@endsection

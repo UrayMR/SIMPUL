@@ -56,4 +56,14 @@ class Course extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
 }
