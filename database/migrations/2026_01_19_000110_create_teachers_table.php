@@ -13,7 +13,6 @@ return new class extends Migration
             $table->foreignUuid('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->text('bio')->nullable();
             $table->string('expertise')->nullable();
-            $table->string('phone_number')->nullable();
             $table->string('profile_image_path')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();

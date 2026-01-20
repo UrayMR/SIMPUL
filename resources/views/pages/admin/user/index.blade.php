@@ -152,29 +152,31 @@
 				</div>
 			</div>
 		</div>
+	</div>
+@endsection
 
-		@push('scripts')
-			<script>
-				document.addEventListener('DOMContentLoaded', function() {
-					let loaded = false;
-					const pendingAccordion = document.getElementById('pendingAccordion');
-					const pendingTableContainer = document.getElementById('pending-table-container');
-					const pendingLoading = document.getElementById('pending-loading');
-					const authId = parseInt(document.body.getAttribute('data-auth-id'));
+@push('scripts')
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			let loaded = false;
+			const pendingAccordion = document.getElementById('pendingAccordion');
+			const pendingTableContainer = document.getElementById('pending-table-container');
+			const pendingLoading = document.getElementById('pending-loading');
+			const authId = parseInt(document.body.getAttribute('data-auth-id'));
 
-					function renderActions(user) {
-						return `
+			function renderActions(user) {
+				return `
 						<a href="/admin/users/${user.id}" class="btn btn-sm btn-info"><i class="bx bx-info-circle"></i> Lihat</a>
 						<a href="/admin/users/${user.id}/edit" class="btn btn-sm btn-warning"><i class="bx bx-pencil"></i> Ubah</a>
 						${authId !== user.id ? `<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalCenter${user.id}"><i class="bx bx-trash"></i> Hapus</button>` : `<button type="button" class="btn btn-secondary btn-sm" disabled title="Tidak dapat menghapus akun sendiri"><i class="bx bx-trash"></i> Hapus</button>`}
 					`;
-					}
+			}
 
-					function renderTable(users, meta) {
-						if (!users.length) {
-							return `<div class="text-center text-muted py-4"><i class="bi bi-person-x fs-4 d-block mb-2"></i>Tidak ada data pengajuan akun.</div>`;
-						}
-						return `
+			function renderTable(users, meta) {
+				if (!users.length) {
+					return `<div class="text-center text-muted py-4"><i class="bi bi-person-x fs-4 d-block mb-2"></i>Tidak ada data pengajuan akun.</div>`;
+				}
+				return `
 						<div class="table-responsive text-nowrap">
 							<table class="table table-hover">
 								<thead>
@@ -192,78 +194,76 @@
 										let badgeClass = user.status === 'pending' ? 'bg-warning text-dark' : (user.status === 'rejected' ? 'bg-danger' : 'bg-secondary');
 										let number = meta && meta.from ? (meta.from + idx) : (idx + 1);
 										return `
-																												<tr>
-																													<td>${number}</td>
-																													<td>${user.name}</td>
-																													<td>${user.email}</td>
-																													<td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
-																													<td><span class="badge w-100 ${badgeClass}">${user.status}</span></td>
-																													<td class="d-flex justify-content-center gap-2">${renderActions(user)}</td>
-																												</tr>
-																											`;
+																														<tr>
+																															<td>${number}</td>
+																															<td>${user.name}</td>
+																															<td>${user.email}</td>
+																															<td>${user.role.charAt(0).toUpperCase() + user.role.slice(1)}</td>
+																															<td><span class="badge w-100 ${badgeClass}">${user.status}</span></td>
+																															<td class="d-flex justify-content-center gap-2">${renderActions(user)}</td>
+																														</tr>
+																													`;
 									}).join('')}
 								</tbody>
 							</table>
 						</div>
 					`;
-					}
+			}
 
-					function renderPagination(meta, links) {
-						return `
+			function renderPagination(meta, links) {
+				return `
 						<div class='d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2'>
 							<div class='small text-muted'>Halaman <strong>${meta.current_page}</strong> dari <strong>${meta.last_page}</strong><br>Menampilkan <strong>${meta.per_page}</strong> data per halaman (total <strong>${meta.total}</strong> user)</div>
 							<div>${links}</div>
 						</div>
 					`;
-					}
+			}
 
-					function showLoading(show = true) {
-						if (show) {
-							pendingLoading.classList.remove('d-none');
-						} else {
-							pendingLoading.classList.add('d-none');
-						}
-					}
+			function showLoading(show = true) {
+				if (show) {
+					pendingLoading.classList.remove('d-none');
+				} else {
+					pendingLoading.classList.add('d-none');
+				}
+			}
 
-					function showError() {
-						pendingTableContainer.innerHTML = `<div class='text-danger text-center'>Gagal memuat data.</div>`;
-					}
+			function showError() {
+				pendingTableContainer.innerHTML = `<div class='text-danger text-center'>Gagal memuat data.</div>`;
+			}
 
-					function loadPendingTable(url = '/admin/users/pending-list') {
-						showLoading(true);
-						window.axios.get(url)
-							.then(function(response) {
-								const users = response.data.users.data;
-								const meta = response.data.users;
-								const links = response.data.links;
-								let html = renderTable(users, meta) + renderPagination(meta, links);
-								pendingTableContainer.innerHTML = html;
-							})
-							.catch(showError)
-							.finally(function() {
-								showLoading(false);
-								loaded = true;
-							});
-					}
-
-					// Event delegation for pagination
-					pendingTableContainer.addEventListener('click', function(e) {
-						const target = e.target.closest('.pagination a');
-						if (target) {
-							e.preventDefault();
-							const url = target.getAttribute('href');
-							if (url) {
-								loadPendingTable(url);
-							}
-						}
+			function loadPendingTable(url = '/admin/users/pending-list') {
+				showLoading(true);
+				window.axios.get(url)
+					.then(function(response) {
+						const users = response.data.users.data;
+						const meta = response.data.users;
+						const links = response.data.links;
+						let html = renderTable(users, meta) + renderPagination(meta, links);
+						pendingTableContainer.innerHTML = html;
+					})
+					.catch(showError)
+					.finally(function() {
+						showLoading(false);
+						loaded = true;
 					});
+			}
 
-					pendingAccordion.addEventListener('show.bs.collapse', function() {
-						if (loaded) return;
-						loadPendingTable();
-					});
-				});
-			</script>
-		@endpush
-	</div>
-@endsection
+			// Event delegation for pagination
+			pendingTableContainer.addEventListener('click', function(e) {
+				const target = e.target.closest('.pagination a');
+				if (target) {
+					e.preventDefault();
+					const url = target.getAttribute('href');
+					if (url) {
+						loadPendingTable(url);
+					}
+				}
+			});
+
+			pendingAccordion.addEventListener('show.bs.collapse', function() {
+				if (loaded) return;
+				loadPendingTable();
+			});
+		});
+	</script>
+@endpush

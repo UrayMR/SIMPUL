@@ -32,6 +32,7 @@ class UserController extends Controller
                         ->orWhere('email', 'like', "%{$search}%");
                 });
             })
+            ->orderByDesc('updated_at')
             ->paginate(10);
 
         $currentPage = $users->currentPage();
@@ -87,9 +88,11 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(User $user)
+    public function create()
     {
-        return view('pages.admin.user.create', compact('sekolahs', 'gerejas'));
+        $this->authorize('create', User::class);
+
+        return view('pages.admin.user.create');
     }
 
     /**
@@ -97,8 +100,16 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        Gate::authorize('create', User::class);
-        $user = $this->service->store($request->validated());
+        $this->authorize('create', User::class);
+
+        $data = $request->validated();
+
+        if ($request->hasFile('profile_photo_file')) {
+            $data['profile_photo_path'] = $request->file('profile_photo_file')->store('profile-photos', 'public');
+        }
+
+        User::query()->create($data);
+
         return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil ditambahkan.');
     }
 
