@@ -68,7 +68,7 @@
     }
 
     .footer-links a:hover {
-        color: #008080;
+        color: #1E3A8A;
     }
 
     /* GARIS PEMBATAS */
@@ -98,9 +98,9 @@
 
             <!-- About -->
             <div class="col-lg-4 col-md-12 mb-4">
-                <a href="" class="text-decoration-none fs-4 text-primary fw-bold">
-                    <img src="{{ asset('assets/img/logo.png') }}" height="64" alt="kemenag" class="mb-2">
-                    SILAYANKRIS
+                <a href="" class="text-decoration-none fs-4 text-app-primary fw-bold">
+                    <img src="{{ asset('assets/img/logo/Logo Simpul.svg') }}" height="64" alt="kemenag" class="mb-2">
+                    SIMPUL
                 </a>
 
                 <div class="mt-4">
@@ -108,10 +108,10 @@
                     <!-- Alamat -->
                     <div class="footer-info-item">
                         <div class="footer-icon">
-                            <i class="bi bi-geo-alt-fill"></i>
+                            <i class="bi bi-geo-alt-fill text-app-secondary"></i>
                         </div>
                         <div class="footer-info-text">
-                            Jl. Masjid Agung Timur No. 4
+                            Jl. Tunjungan 14
                             <br>Surabaya, Jawa Timur
                         </div>
                     </div>
@@ -119,20 +119,20 @@
                     <!-- Telepon -->
                     <div class="footer-info-item">
                         <div class="footer-icon">
-                            <i class="bi bi-telephone-fill"></i>
+                            <i class="bi bi-telephone-fill text-app-secondary"></i>
                         </div>
                         <div class="footer-info-text">
-                            (031) 828-5319
+                            0853-3558-9526
                         </div>
                     </div>
 
                     <!-- Email -->
                     <div class="footer-info-item">
                         <div class="footer-icon">
-                            <i class="bi bi-envelope-fill"></i>
+                            <i class="bi bi-envelope-fill text-app-secondary"></i>
                         </div>
                         <div class="footer-info-text">
-                            penyelenggarakristen.sby@kemenag.go.id
+                            simpul@gmail.com
                         </div>
                     </div>
 
@@ -171,7 +171,7 @@
         <hr class="footer-divider my-4">
 
         <p class="footer-bottom text-center">
-            &copy; 2025 <strong>SILAYANKRIS</strong> - Kementerian Agama Kota Surabaya.
+            &copy; 2026 <strong>SIMPUL</strong> - Sistem Informasi Manajemen Pembelajaran Unggul Lokal
             <br>Seluruh hak cipta dilindungi.
         </p>
 

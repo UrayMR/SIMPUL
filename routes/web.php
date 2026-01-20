@@ -15,8 +15,8 @@ use App\Http\Controllers\User\Periodik\PerTahunUserController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes
-Route::redirect('/', '/beranda');
-Route::view('/beranda', 'pages.guest.home')->name('beranda');
+Route::redirect('/beranda', '/beranda');
+Route::view('/', 'pages.guest.home')->name('beranda');
 
 Route::middleware(['auth', 'role:admin'])
     ->group(function () {
