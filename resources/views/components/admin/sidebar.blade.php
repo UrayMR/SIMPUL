@@ -59,35 +59,11 @@
 					<div>Data Kursus</div>
 				</a>
 			</li>
-			<li class="menu-item {{ request()->is(ltrim('admin/gereja*', '/')) ? 'active' : '' }}">
-				<a href="" class="menu-link text-decoration-none">
-					<i class="menu-icon tf-icons bi bi-hospital"></i>
-					<div>Data Gereja</div>
+			<li class="menu-item {{ request()->routeIs('admin.transactions.*') ? 'active' : '' }}">
+				<a href="{{ route('admin.transactions.index') }}" class="menu-link text-decoration-none">
+					<i class="menu-icon tf-icons bi bi-credit-card"></i>
+					<div>Data Transaksi</div>
 				</a>
-			</li>
-			<li
-				class="menu-item {{ request()->is('admin/per-bulan*') || request()->is('admin/per-semester*') || request()->is('admin/per-tahun*') ? 'open' : '' }}">
-				<a href="" class="menu-link menu-toggle text-decoration-none">
-					<i class="menu-icon tf-icons bx bx-folder"></i>
-					<div data-i18n="Berkas TPG Guru">Berkas TPG Guru</div>
-				</a>
-				<ul class="menu-sub">
-					<li class="menu-item {{ request()->is('admin/per-bulan*') ? 'active' : '' }}">
-						<a href="" class="menu-link text-decoration-none">
-							<div>Perbulan</div>
-						</a>
-					</li>
-					<li class="menu-item {{ request()->is('admin/per-semester*') ? 'active' : '' }}">
-						<a href="" class="menu-link text-decoration-none">
-							<div>Persemester</div>
-						</a>
-					</li>
-					<li class="menu-item {{ request()->is('admin/per-tahun*') ? 'active' : '' }}">
-						<a href="" class="menu-link text-decoration-none">
-							<div>Pertahun</div>
-						</a>
-					</li>
-				</ul>
 			</li>
 
 			<!-- PROFIL PENGGUNA -->

@@ -13,7 +13,7 @@ class TransactionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
@@ -21,7 +21,7 @@ class TransactionPolicy
      */
     public function view(User $user, Transaction $transaction): bool
     {
-        return false;
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
@@ -37,7 +37,7 @@ class TransactionPolicy
      */
     public function update(User $user, Transaction $transaction): bool
     {
-        return false;
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
@@ -45,7 +45,7 @@ class TransactionPolicy
      */
     public function delete(User $user, Transaction $transaction): bool
     {
-        return false;
+        return $user->role === User::ROLE_ADMIN;
     }
 
     /**
