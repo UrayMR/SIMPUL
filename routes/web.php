@@ -16,6 +16,8 @@ Route::middleware(['auth', 'role:admin'])
     ->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/users/pending-list', [UserController::class, 'pendingList'])->name('users.pending-list');
+        Route::patch('/users/{user}/approve-teacher', [UserController::class, 'approveTeacher'])->name('users.approve-teacher');
+        Route::patch('/users/{user}/reject-teacher', [UserController::class, 'rejectTeacher'])->name('users.reject-teacher');
         Route::resource('/users', UserController::class);
         Route::resource('/categories', CategoryController::class);
         Route::get('/courses/pending-list', [CourseController::class, 'pendingList'])->name('courses.pending-list');

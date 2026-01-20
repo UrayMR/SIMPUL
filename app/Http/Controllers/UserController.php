@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-
     public function __construct() {}
 
     /**
@@ -224,5 +223,33 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil dihapus.');
+    }
+
+    /**
+     * Approve teacher application.
+     */
+    public function approveTeacher(User $user)
+    {
+        $this->authorize('update', $user);
+        if ($user->role !== User::ROLE_TEACHER || $user->status !== User::STATUS_PENDING) {
+            return redirect()->back()->withErrors(['approve' => 'Aksi tidak valid.']);
+        }
+        $user->status = User::STATUS_ACTIVE;
+        $user->save();
+        return redirect()->route('admin.users.show', $user)->with('success', 'Pengajuan guru di-approve.');
+    }
+
+    /**
+     * Reject teacher application.
+     */
+    public function rejectTeacher(User $user)
+    {
+        $this->authorize('update', $user);
+        if ($user->role !== User::ROLE_TEACHER || $user->status !== User::STATUS_PENDING) {
+            return redirect()->back()->withErrors(['reject' => 'Aksi tidak valid.']);
+        }
+        $user->status = User::STATUS_REJECTED;
+        $user->save();
+        return redirect()->route('admin.users.show', $user)->with('success', 'Pengajuan guru ditolak.');
     }
 }
