@@ -15,6 +15,7 @@ use App\Http\Controllers\ProfileSettingController;
 // Guest routes
 Route::redirect('/beranda', '/beranda');
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
+
 Route::view('/lowongan-karir', 'pages.guest.career')->name('lowongan-karir');
 Route::get('/kategori-kursus', [HomeController::class, 'categories'])->name('kategori-kursus');
 Route::get('/kursus', [UserCourseController::class, 'index'])->name('course.index');

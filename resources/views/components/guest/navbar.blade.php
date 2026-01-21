@@ -278,7 +278,7 @@
 			<ul class="navbar-nav mx-auto gap-lg-4 align-items-lg-center">
 
 				<li class="nav-item">
-					<a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
+					<a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Beranda</a>
 				</li>
 
 				<li class="nav-item">
