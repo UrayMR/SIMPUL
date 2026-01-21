@@ -193,13 +193,14 @@
 </style>
 
 @php
-	$profilePictureUrl = null;
+	$profilePicture = null;
+	$initials = null;
 	if (auth()->check()) {
-	    $profilePicture = auth()->user()->profile_picture_path ?? null;
-	    if ($profilePicture) {
-	        $profilePictureUrl = asset('storage/' . $profilePicture);
+	    $user = auth()->user();
+	    if (!empty($user->profile_photo_path) && file_exists(public_path('storage/' . $user->profile_photo_path))) {
+	        $profilePicture = asset('storage/' . $user->profile_photo_path);
 	    }
-	    $nameParts = preg_split('/\s+/', trim(auth()->user()->name));
+	    $nameParts = preg_split('/\s+/', trim($user->name));
 	    $initials = strtoupper(collect($nameParts)->filter()->map(fn($p) => mb_substr($p, 0, 1))->take(2)->implode(''));
 	}
 @endphp
@@ -229,8 +230,8 @@
 				<div class="dropdown">
 					<a data-bs-toggle="dropdown">
 						<div class="avatar avatar-online">
-							@if (!empty($profilePictureUrl))
-								<img src="{{ $profilePictureUrl }}" class="rounded-circle" style="width:40px;height:40px;object-fit:cover;">
+							@if (!empty($profilePicture))
+								<img src="{{ $profilePicture }}" class="rounded-circle" style="width:40px;height:40px;object-fit:cover;">
 							@else
 								<div class="d-flex align-items-center justify-content-center rounded-circle text-white"
 									style="width:40px;height:40px;font-weight:600;background: var(--primary);">
@@ -242,8 +243,8 @@
 
 					<ul class="dropdown-menu dropdown-menu-end dropdown-user-menu shadow">
 						<li class="dropdown-user-header">
-							@if (!empty($profilePictureUrl))
-								<img src="{{ $profilePictureUrl }}">
+							@if (!empty($profilePicture))
+								<img src="{{ $profilePicture }}">
 							@else
 								<div class="d-flex align-items-center justify-content-center rounded-circle text-white"
 									style="width:42px;height:42px;font-weight:600;background: var(--primary);">
@@ -252,16 +253,23 @@
 							@endif
 							<div>
 								<strong>{{ auth()->user()->name }}</strong>
-								<div style="font-size: 0.8rem; color:#777;">
-									{{ auth()->user()->email }}
-								</div>
+								{{-- <div style="font-size: 0.8rem; color:#777;">
+                                    Admin
+                                </div> --}}
 							</div>
 						</li>
+						@auth
+							@if (auth()->user()->role === 'admin')
+								<li><a class="dropdown-item dropdown-user-item" href="{{ route('admin.dashboard') }}">
+
+										<i class="bi bi-speedometer2"></i> Kembali ke Dashboard</a></li>
+							@endif
+						@endauth
 						<li><a class="dropdown-item dropdown-user-item" href="/kursus?search=&sort_price=&ownership=true">
 								<i class="bi bi-book"></i> Kursus Saya</a></li>
 						<li><a class="dropdown-item dropdown-user-item" href="{{ route('history.index') }}">
 								<i class="bi bi-receipt"></i> Riwayat Transaksi</a></li>
-						<li><a class="dropdown-item dropdown-user-item" href="{{ route('settings.index') }}"><i class="bx bx-cog"></i>
+						<li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}"><i class="bx bx-cog"></i>
 								Pengaturan Akun</a></li>
 						<li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}">
 								<i class="bx bx-power-off"></i> Keluar</a>
@@ -290,7 +298,7 @@
 						href="/lowongan-karir">Lowongan Karir</a>
 				</li>
 				@auth
-					@if (auth()->user()->role !== 'student')
+					@if (auth()->user()->role === 'teacher')
 						<li class="nav-item">
 							<a class="nav-link {{ request()->is(patterns: 'guru*') ? 'active' : '' }}"
 								href="{{ route('teacher.courses.index') }}">Kelola Kursus</a>
@@ -307,8 +315,8 @@
 					<li class="nav-item dropdown d-none d-lg-block">
 						<a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
 							<div class="avatar avatar-online">
-								@if (!empty($profilePictureUrl))
-									<img src="{{ $profilePictureUrl }}" class="rounded-circle" style="width:40px;height:40px;object-fit:cover;">
+								@if (!empty($profilePhotoUrl))
+									<img src="{{ $profilePhotoUrl }}" class="rounded-circle" style="width:40px;height:40px;object-fit:cover;">
 								@else
 									<div class="d-flex align-items-center justify-content-center rounded-circle text-white"
 										style="width:40px;height:40px;font-weight:600;background: var(--primary);">
@@ -323,12 +331,18 @@
 								<strong>{{ auth()->user()->name }}</strong>
 								{{-- <div style="font-size: 0.8rem; color:#777;">Admin</div> --}}
 							</li>
+							@auth
+								@if (auth()->user()->role === 'admin')
+									<li><a class="dropdown-item dropdown-user-item" href="{{ route('admin.dashboard') }}">
+											<i class="bi bi-speedometer2"></i> Kembali ke Dashboard</a></li>
+								@endif
+							@endauth
 
 							<li><a class="dropdown-item dropdown-user-item" href="/kursus?search=&sort_price=&ownership=true">
 									<i class="bi bi-book"></i> Kursus Saya</a></li>
 							<li><a class="dropdown-item dropdown-user-item" href="{{ route('history.index') }}">
 									<i class="bi bi-receipt"></i> Riwayat Transaksi</a></li>
-							<li><a class="dropdown-item dropdown-user-item" href="{{ route('settings.index') }}">
+							<li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}">
 									<i class="bx bx-cog"></i> Pengaturan Akun</a></li>
 							<li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}">
 									<i class="bx bx-power-off"></i> Keluar</a></li>
@@ -344,7 +358,6 @@
 						</a>
 
 					</li>
-					{{-- "btn btn-primary px-4 py-2 rounded-3 fw-semibold " --}}
 				@endguest
 
 			</ul>

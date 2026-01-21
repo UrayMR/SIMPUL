@@ -3,13 +3,14 @@
 @section('title', 'Riwayat Transaksi')
 
 @section('content')
-    <div class="container py-5">
+<section class="bg-white">
+    <div class="container py-5 ">
 
         {{-- HEADER --}}
-        <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center justify-content-center mb-4 ">
             <div>
-                <h3 class="fw-bold mb-1">Riwayat Transaksi</h3>
-                <p class="text-muted mb-0">
+                <h3 class="fw-bold mb-1 text-center">Riwayat Transaksi</h3>
+                <p class="text-muted mb-0 text-center">
                     Daftar transaksi pembelian kelas yang pernah Anda lakukan
                 </p>
             </div>
@@ -21,8 +22,8 @@
 
                 {{-- TABLE --}}
                 <div class="table-responsive">
-                    <table class="table align-middle mb-0">
-                        <thead class="table-light">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="">
                             <tr>
                                 <th>No</th>
                                 <th>Kelas</th>
@@ -37,7 +38,7 @@
                             {{-- CONTOH DATA --}}
                             @forelse ($transactions as $trx)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $transactions->firstItem() + $loop->index }}</td>
 
                                     <td>
                                         <div class="fw-semibold">{{ $trx->course->title }}</div>
@@ -99,31 +100,33 @@
                         </tbody>
                     </table>
                 </div>
-                 @if ($transactions->count() > 0)
-    <div class="d-flex flex-column flex-md-row
+                @if ($transactions->count() > 0)
+                    <div
+                        class="d-flex flex-column flex-md-row
                 justify-content-between align-items-center
                 gap-3 mt-4">
 
-        {{-- INFO --}}
-        <div class="pagination-info ">
-            Menampilkan
-            {{ $transactions->firstItem() }}–{{ $transactions->lastItem() }}
-            dari
-            {{ $transactions->total() }}
-            data
-        </div>
+                        {{-- INFO --}}
+                        <div class="pagination-info ">
+                            Menampilkan
+                            {{ $transactions->firstItem() }}–{{ $transactions->lastItem() }}
+                            dari
+                            {{ $transactions->total() }}
+                            data
+                        </div>
 
-        {{-- PAGINATION --}}
-        <div>
-            {{ $transactions->links('pagination::bootstrap-4') }}
-        </div>
+                        {{-- PAGINATION --}}
+                        <div>
+                            {{ $transactions->links('pagination::bootstrap-4') }}
+                        </div>
 
-    </div>
-@endif
+                    </div>
+                @endif
 
 
             </div>
         </div>
 
     </div>
+    </section>
 @endsection

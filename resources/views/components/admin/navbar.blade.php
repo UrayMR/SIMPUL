@@ -1,6 +1,6 @@
 <style>
 	:root {
-		--primary: #008080;
+		--primary: #1e3a8a;
 	}
 
 	/* USER DROPDOWN */
@@ -66,19 +66,20 @@
 	.dropdown-menu .dropdown-item:hover,
 	.dropdown-menu .dropdown-item:focus,
 	.dropdown-menu .dropdown-item.active {
-		background-color: #E9F5F4 !important;
+		background-color: #c1d9ff !important;
 		color: var(--primary) !important;
 	}
 </style>
 
 @php
-	$profilePictureUrl = null;
+	$profilePicture = null;
+	$initials = null;
 	if (auth()->check()) {
-	    $profilePicture = auth()->user()->profile_picture_path ?? null;
-	    if ($profilePicture) {
-	        $profilePictureUrl = asset('storage/' . $profilePicture);
+	    $user = auth()->user();
+	    if (!empty($user->profile_photo_path) && file_exists(public_path('storage/' . $user->profile_photo_path))) {
+	        $profilePicture = asset('storage/' . $user->profile_photo_path);
 	    }
-	    $nameParts = preg_split('/\s+/', trim(auth()->user()->name));
+	    $nameParts = preg_split('/\s+/', trim($user->name));
 	    $initials = strtoupper(collect($nameParts)->filter()->map(fn($p) => mb_substr($p, 0, 1))->take(2)->implode(''));
 	}
 @endphp
@@ -86,6 +87,7 @@
 <nav class="layout-navbar container-fluid navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
 	id="layout-navbar">
 	<!-- Toggle Sidebar (tampil hanya di layar kecil) -->
+
 	<div class="navbar-nav-right d-flex align-items-center w-100" id="navbar-collapse">
 		<div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none ">
 			<a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
@@ -108,8 +110,8 @@
 			<li class="nav-item navbar-dropdown dropdown-user dropdown">
 				<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
 					<div class="avatar avatar-online">
-						@if (!empty($profilePictureUrl))
-							<img src="{{ $profilePictureUrl }}" class="rounded-circle" style="width:40px;height:40px;object-fit:cover;">
+						@if (!empty($profilePicture))
+							<img src="{{ $profilePicture }}" class="rounded-circle" style="width:40px;height:40px;object-fit:cover;">
 						@else
 							<div class="d-flex align-items-center justify-content-center rounded-circle text-white"
 								style="width:40px;height:40px;font-weight:600;background: var(--primary);">
@@ -120,8 +122,8 @@
 				</a>
 				<ul class="dropdown-menu dropdown-menu-end dropdown-user-menu shadow">
 					<li class="dropdown-user-header">
-						@if (!empty($profilePictureUrl))
-							<img src="{{ $profilePictureUrl }}">
+						@if (!empty($profilePicture))
+							<img src="{{ $profilePicture }}">
 						@else
 							<div class="d-flex align-items-center justify-content-center rounded-circle text-white"
 								style="width:42px;height:42px;font-weight:600;background: var(--primary);">
@@ -136,10 +138,6 @@
 						</div>
 					</li>
 
-					<li><a class="dropdown-item dropdown-user-item" href="{{ route('admin.settings.index') }}"><i
-								class="bx bx-cog"></i>Pengaturan
-							Akun</a>
-					</li>
 					<li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}">
 							<i class="bx bx-power-off"></i> Keluar</a>
 					</li>

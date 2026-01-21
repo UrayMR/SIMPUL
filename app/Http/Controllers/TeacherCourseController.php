@@ -41,17 +41,19 @@ class TeacherCourseController extends Controller
   {
     $this->authorize('view', $course);
 
-    $course->load(['category']);
+    $course->load(['category', 'teacher.user']);
 
     if (!isset($course->enrollments_count)) {
       $course->enrollments_count = $course->enrollments()->count();
     }
-    if (!isset($course->transactions_sum_amount)) {
-      $course->transactions_sum_amount = $course->transactions()->where('status', Transaction::STATUS_APPROVED)->sum('amount');
-    }
-
+    // Compute total approved transaction amount for this course
+    $transactionsSumAmount = $course->transactions()
+      ->where('status', Transaction::STATUS_APPROVED)
+      ->sum('amount');
+  
     return view('pages.teacher.course.show', [
       'course' => $course,
+      'transactionsSumAmount' => $transactionsSumAmount,
     ]);
   }
 
