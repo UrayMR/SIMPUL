@@ -3,7 +3,11 @@
 @section('title', 'Karir Pengajar')
 
 @section('content')
-
+<style>
+    html, body {
+        overflow-x: hidden;
+    }
+</style>
     {{-- HERO SECTION --}}
     <section class="py-5 bg-app-primary text-white">
         <div class="container">
@@ -99,33 +103,33 @@
 
             <div class="row align-items-center g-5">
 
-                <div class="col-lg-6">
+                <div class="col-lg-6" data-aos="fade-right">
                     <h3 class="fw-bold mb-4">
                         Benefit Menjadi Pengajar
                     </h3>
 
                     <ul class="list-unstyled">
-                        <li class="d-flex align-items-start mb-3">
+                        <li class="d-flex align-items-start mb-3" data-aos="fade-up" data-aos-delay="100">
                             <i class="bi bi-check-circle-fill text-app-primary me-3 mt-1"></i>
                             <span>Manajemen kursus yang mudah dan terstruktur</span>
                         </li>
-                        <li class="d-flex align-items-start mb-3">
+                        <li class="d-flex align-items-start mb-3" data-aos="fade-up" data-aos-delay="100">
                             <i class="bi bi-check-circle-fill text-app-primary me-3 mt-1"></i>
                             <span>Fleksibel mengatur waktu dan materi ajar</span>
                         </li>
-                        <li class="d-flex align-items-start mb-3">
+                        <li class="d-flex align-items-start mb-3" data-aos="fade-up" data-aos-delay="100">
                             <i class="bi bi-check-circle-fill text-app-primary me-3 mt-1"></i>
                             <span>Dukungan tim SIMPUL untuk pengelolaan kursus</span>
                         </li>
-                        <li class="d-flex align-items-start">
+                        <li class="d-flex align-items-start mb-3" data-aos="fade-up" data-aos-delay="100">
                             <i class="bi bi-check-circle-fill text-app-primary me-3 mt-1"></i>
                             <span>Kesempatan membangun personal branding sebagai pendidik</span>
                         </li>
                     </ul>
                 </div>
 
-                <div class="col-lg-6 text-center">
-                    <img src="{{ asset('assets/img/benefit-teacher.svg') }}" alt="Benefit Pengajar" class="img-fluid"
+                <div class="col-lg-6 text-center" data-aos="fade-left">
+                    <img src="{{ asset('assets/img/background/2.png') }}" alt="Benefit Pengajar" class="img-fluid"
                         style="max-height: 320px;">
                 </div>
 
@@ -134,20 +138,20 @@
     </section>
 
     {{-- CTA DAFTAR --}}
-    <section id="daftar" class="pt-1 pb-5 bg-light ">
+    <section id="daftar" class="pt-1 pb-5 bg-light">
         <div class="container ">
-            <div class="card border rounded-4 ">
+            <div class="card border rounded-4" data-aos="zoom-in" data-aos-delay="150">
                 <div class="card-body p-5 text-center">
 
                     <h3 class="fw-bold mb-2">
                         Siap Bergabung Bersama SIMPUL?
                     </h3>
-                    <p class="text-muted mb-4">
+                    <p class="text-muted mb-4"> 
                         Daftarkan dirimu sebagai pengajar dan mulai berbagi ilmu hari ini.
                     </p>
 
                     <a href="{{ route('register.teacher.index') }}"
-                        class="btn btn-app-primary px-5 py-2 fw-semibold rounded-3">
+                        class="btn btn-app-primary px-5 py-2 fw-semibold rounded-3" data-aos="zoom-in" data-aos-delay="300">
                         Daftar Menjadi Pengajar
                     </a>
 

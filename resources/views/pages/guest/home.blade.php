@@ -5,6 +5,12 @@
 {{-- Landing Page --}}
 @section('content')
     <style>
+        /* Prevent horizontal scrollbar root-level */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
         /* --- Foto Profil 3:4 --- */
         .profil-photo-wrapper {
             width: 100%;
@@ -63,6 +69,7 @@
             background-repeat: no-repeat;
             display: flex;
             align-items: center;
+            overflow-x: hidden; /* ensure no child causes overflow */
         }
 
         .hero-overlay {
@@ -179,23 +186,23 @@
 
     <main>
         {{-- HERO SECTION --}}
-        <section class="hero-section">
+        <section class="hero-section" data-aos="fade">
             <div class="hero-overlay"></div>
             <div class="container hero-content">
                 <div class="row justify-content-center text-center">
                     <div class="col-lg-9">
 
-                        <h1 class="hero-title mb-3">
+                        <h1 class="hero-title mb-3" data-aos="fade-up" data-aos-delay="200">
                             Belajar Terarah<br>
                             <span class="hero-highlight">Bertemu di Satu SIMPUL</span>
                         </h1>
 
-                        <p class="hero-subtitle mb-4">
+                        <p class="hero-subtitle mb-4" data-aos="fade-up" data-aos-delay="350">
                             Platform pembelajaran terintegrasi bagi pendidik dan <br> peserta didik
                             dengan materi berkualitas dan terarah
                         </p>
 
-                        <a href="/kursus" class="btn btn-app-primary btn-lg px-5">
+                        <a href="/kursus" class="btn btn-app-primary btn-lg px-5" data-aos="zoom-in" data-aos-delay="500">
                             Jelajahi Kursus
                         </a>
 
@@ -207,12 +214,13 @@
 
 
         {{-- DAFTAR STUDENT BANNER SECTION --}}
-        <section class="profil-section bg-app-primary text-app-">
+        <section class="profil-section bg-app-primary">
             <div class="container">
                 <div class="row align-items-center">
 
                     {{-- KIRI: IMAGE --}}
-                    <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="col-lg-5 mb-4 mb-lg-0" data-aos="fade-right">
+
                         <div class="profil-image">
                             <img src="{{ asset('assets/img/background/1.png') }}" alt="Profil"
                                 class="img-fluid rounded-4">
@@ -220,7 +228,7 @@
                     </div>
 
                     {{-- KANAN: KONTEN --}}
-                    <div class="col-lg-7 profil-content ps-lg-5">
+                    <div class="col-lg-7 profil-content ps-lg-5" data-aos="fade-left">
                         <h1 class="fw-bold  text-app-white mb-3 ">
                             Temukan Kursus Sesuai Kebutuhanmu
                         </h1>
@@ -243,11 +251,11 @@
 
 
         {{-- COURSE SECTION --}}
-        <section class="pelayanan-section bg-white" data-aos="fade-up"data-aos-delay="400">
+        <section class="pelayanan-section bg-white" data-aos="fade-up">
             <div class="container py-5 ">
 
                 {{-- Header konsisten --}}
-                <div class="text-center mb-3">
+                <div class="text-center mb-3" data-aos="fade-up" data-aos-delay="100">
                     {{-- <h6 class="fw-bold text-secondary mb-1">KURSUS UNGGULAN</h6> --}}
                     <h2 class="fw-bold text-app-primary mb-2">KURSUS UNGGULAN</h2>
                     <div class="partner-divider mx-auto mb-3 bg-app-primary"></div>
@@ -256,19 +264,21 @@
                     </p>
                 </div>
                 {{-- LINK LIHAT LEBIH BANYAK --}}
-                <div class="d-flex justify-content-center justify-content-lg-end mb-3">
+                <div class="d-flex justify-content-center justify-content-lg-end mb-3" data-aos="fade-left"
+                    data-aos-delay="200">
                     <a href="/kursus" class="fw-semibold text-app-primary text-decoration-none see-more-link">
                         Lihat Lebih Banyak →
                     </a>
                 </div>
                 <div class="row">
-                    @foreach ($courses as $course)
-                        <div class="col-12 col-md-6 col-lg-3 mb-4 fade-up">
+                    @foreach ($courses as $index => $course)
+                        <div class="col-12 col-md-6 col-lg-3 mb-4" data-aos="fade-up"
+                            data-aos-delay="{{ 100 + $index * 100 }}">
                             <x-card title="{{ $course->title }}" category="{{ $course->category->name }}"
-                                    price="{{ $course->price }}" teacher="{{ $course->teacher->user->name }}"
-                                    id="{{ $course->id }}" image="{{ $course->thumbnail_path }}" count="{{ $course->enrollments_count }}" 
-                                    owned="{{ $course->isOwnedBy(auth()->user()) }}"
-                                     />
+                                price="{{ $course->price }}" teacher="{{ $course->teacher->user->name }}"
+                                id="{{ $course->id }}" image="{{ $course->thumbnail_path }}"
+                                count="{{ $course->enrollments_count }}"
+                                owned="{{ $course->isOwnedBy(auth()->user()) }}" />
                         </div>
                     @endforeach
 
@@ -281,12 +291,13 @@
         </section>
 
         {{-- DAFTAR GURU SECTION --}}
-        <section class="profil-section bg-white pt-1 pb-4">
+        <section class="profil-section bg-white pt-1 pb-4" data-aos="fade-up">
             <div class="container ">
-                <div class="row align-items-center bg-app-primary rounded p-4 p-lg-5">
+                <div class="row align-items-center bg-app-primary rounded p-4 p-lg-5" style="overflow:hidden;">
 
                     {{-- KIRI: KONTEN --}}
-                    <div class="col-lg-7 profil-content">
+                    <div class="col-lg-7 profil-content" data-aos="fade-right">
+
                         <h1 class="fw-bold  text-app-white  mb-3">
                             Tertarik untuk jadi Guru untuk Penghasilan Tambahan?
                         </h1>
@@ -302,7 +313,8 @@
                     </div>
 
                     {{-- KANAN: IMAGE --}}
-                    <div class="col-lg-5 text-center">
+                    <div class="col-lg-5 text-center" data-aos="fade-left">
+
                         <div class="profil-image">
                             <img src="{{ asset('assets/img/background/2.png') }}" alt="Profil"
                                 class="img-fluid rounded-4">
