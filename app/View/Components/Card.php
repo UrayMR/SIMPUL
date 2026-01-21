@@ -19,8 +19,10 @@ class Card extends Component
     public $count;
     public $id;
 
+    public $owned;
 
-    public function __construct($title ="TITLE", $category = 'IT', $image = 'kemenag2.jpg', $price = 0, $teacher = "Teacher", $count = 0,$id = null)
+
+    public function __construct($title ="TITLE", $category = 'IT', $image = 'kemenag2.jpg', $price = 0, $teacher = "Teacher", $count = 0,$id = null, $owned = false)
     {
         $this->title = $title;
         $this->category = $category;
@@ -29,6 +31,7 @@ class Card extends Component
         $this->teacher = $teacher;
         $this->count = $count;
         $this->id = $id;
+        $this->owned = $owned;
     }
 
     /**

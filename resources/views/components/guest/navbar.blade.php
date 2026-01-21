@@ -288,7 +288,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ request()->is('course*') ? 'active' : '' }}" href="/course">Kelas</a>
+            <a class="nav-link {{ request()->is('kursus*') ? 'active' : '' }}" href="/kursus">Kelas</a>
         </li>
 
             <li class="nav-item">

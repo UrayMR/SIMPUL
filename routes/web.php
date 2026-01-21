@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserCourseController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeacherCourseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -11,10 +12,9 @@ use Illuminate\Support\Facades\Route;
 
 // Guest routes
 Route::redirect('/beranda', '/beranda');
-Route::view('/', 'pages.guest.home')->name('beranda');
-
-Route::get('/course', [UserCourseController::class, 'index'])->name('course.index');
-Route::get('/course/{course}', [UserCourseController::class, 'show'])->name('course.show');
+Route::get('/', [HomeController::class, 'index'])->name('beranda');
+Route::get('/kursus', [UserCourseController::class, 'index'])->name('course.index');
+Route::get('/kursus/{course}', [UserCourseController::class, 'show'])->name('course.show');
 
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')

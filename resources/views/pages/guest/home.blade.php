@@ -195,7 +195,7 @@
                             dengan materi berkualitas dan terarah
                         </p>
 
-                        <a href="/courses" class="btn btn-app-primary btn-lg px-5">
+                        <a href="/kursus" class="btn btn-app-primary btn-lg px-5">
                             Jelajahi Course
                         </a>
 
@@ -214,7 +214,8 @@
                     {{-- KIRI: IMAGE --}}
                     <div class="col-lg-5 mb-4 mb-lg-0">
                         <div class="profil-image">
-                            <img src="{{ asset('assets/img/kemenag2.jpg') }}" alt="Profil" class="img-fluid rounded-4">
+                            <img src="{{ asset('assets/img/background/1.png') }}" alt="Profil"
+                                class="img-fluid rounded-4">
                         </div>
                     </div>
 
@@ -246,7 +247,7 @@
             <div class="container py-5 ">
 
                 {{-- Header konsisten --}}
-                <div class="text-center mb-5">
+                <div class="text-center mb-3">
                     {{-- <h6 class="fw-bold text-secondary mb-1">KELAS UNGGULAN</h6> --}}
                     <h2 class="fw-bold text-app-primary mb-2">KELAS UNGGULAN</h2>
                     <div class="partner-divider mx-auto mb-3 bg-app-primary"></div>
@@ -256,27 +257,22 @@
                 </div>
                 {{-- LINK LIHAT LEBIH BANYAK --}}
                 <div class="d-flex justify-content-center justify-content-lg-end mb-3">
-                    <a href="/courses" class="fw-semibold text-app-primary text-decoration-none see-more-link">
+                    <a href="/kursus" class="fw-semibold text-app-primary text-decoration-none see-more-link">
                         Lihat Lebih Banyak →
                     </a>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-6 col-lg-3 mb-4 fade-up">
-                        <x-card title="Kelas Dasar Agama Kristen" price="3000" />
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-3 mb-4 fade-up">
-                        <x-card title="Kelas Dasar Agama Kristen " price="2000000000" />
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-3 mb-4 fade-up">
-                        <x-card title="Internet of Things (IoT) Project - Building Health Monitoring Systemssssssss"
-                            category="IT" price="0" link="/courses/1" />
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-3 mb-4 fade-up">
-                        <x-card title="Kelas Dasar Agama Kristen" price="0" />
-                    </div>
+                    @foreach ($courses as $course)
+                        <div class="col-12 col-md-6 col-lg-3 mb-4 fade-up">
+                            <x-card title="{{ $course->title }}" category="{{ $course->category->name }}"
+                                    price="{{ $course->price }}" teacher="{{ $course->teacher->user->name }}"
+                                    id="{{ $course->id }}" image="{{ $course->thumbnail_path }}" count="{{ $course->enrollments_count }} " />
+                        </div>
+                    @endforeach
+
                 </div>
 
-                
+
 
 
             </div>
@@ -294,7 +290,8 @@
                         </h1>
 
                         <p class="mb-4">
-                            Dosen, guru, atau praktisi di bidang tertentu dapat<br> berkontribusi dalam ekosistem pembelajaran.
+                            Dosen, guru, atau praktisi di bidang tertentu dapat<br> berkontribusi dalam ekosistem
+                            pembelajaran.
                         </p>
 
                         <a href="#" class="btn btn-light text-app-primary fw-semibold">
@@ -305,7 +302,8 @@
                     {{-- KANAN: IMAGE --}}
                     <div class="col-lg-5 text-center">
                         <div class="profil-image">
-                            <img src="{{ asset('assets/img/kemenag2.jpg') }}" alt="Profil" class="img-fluid rounded-4">
+                            <img src="{{ asset('assets/img/background/2.png') }}" alt="Profil"
+                                class="img-fluid rounded-4">
                         </div>
                     </div>
 

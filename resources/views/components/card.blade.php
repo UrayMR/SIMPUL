@@ -102,48 +102,47 @@
      }
 
      /* FOOTER */
-.course-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+     .course-footer {
+         display: flex;
+         flex-direction: column;
+         gap: 10px;
+     }
 
-/* USER + PRICE ROW */
-.course-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-}
+     /* USER + PRICE ROW */
+     .course-meta {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         gap: 10px;
+     }
 
-/* USER NAME */
-.course-user {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #555;
-    max-width: 60%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+     /* USER NAME */
+     .course-user {
+         font-size: 0.9rem;
+         font-weight: 500;
+         color: #555;
+         max-width: 60%;
+         white-space: nowrap;
+         overflow: hidden;
+         text-overflow: ellipsis;
+     }
 
-/* PRICE */
-.course-price {
-    font-weight: 700;
-    font-size: 1rem;
-    white-space: nowrap;
-    color: #111;
-}
-
+     /* PRICE */
+     .course-price {
+         font-weight: 700;
+         font-size: 1rem;
+         white-space: nowrap;
+         color: #111;
+     }
  </style>
 
- <a href="/course/{{ $id }}" class="course-card-link text-decoration-none text-dark d-block">
+ <a href="/kursus/{{ $id }}" class="course-card-link text-decoration-none text-dark d-block">
 
      <div class="card course-card shadow-sm border-0">
          <!-- IMAGE / HEADER -->
          <div class="course-header">
              <div class="course-image-wrapper">
-                 <img src="{{ asset('assets/img/' . $image) }}" alt="{{ $title }}" class="course-image">
+                 <img src="{{ asset('storage/' . $image) }}" alt="{{ $title }}" class="course-image">
              </div>
          </div>
 
@@ -156,7 +155,7 @@
              <div class="d-flex justify-content-between align-items-center">
                  <div class="text-muted small"><i class="bx bi-bookmark-fill me-1"></i>{{ $category }}</div>
                  <div class="text-muted small">
-                    <i class="bi bi-people-fill me-1"></i>{{$count}} terjual
+                     <i class="bi bi-people-fill me-1"></i>{{ $count }} terjual
                  </div>
              </div>
 
@@ -164,18 +163,29 @@
 
                  <div class="course-meta">
                      <div class="course-user">
-                        {{ Str::limit($teacher, 20, '...') }}
+                         {{ Str::limit($teacher, 20, '...') }}
                      </div>
 
-                     <div class="course-price {{ (float) $price === 0.0 ? 'text-app-primary' : 'text-dark' }}">
-                         {{ (float) $price === 0.0 ? 'GRATIS' : 'Rp ' . number_format((float) $price, 0, ',', '.') }}
-                     </div>
+                     @if ($owned)
+                         <div class="course-price text-app-primary fw-semibold">
+                             ✔ Sudah Dimiliki
+                         </div>
+                     @else
+                         <div class="course-price {{ (float) $price === 0.0 ? 'text-app-primary' : 'text-dark' }}">
+                             {{ (float) $price === 0.0 ? 'GRATIS' : 'Rp ' . number_format((float) $price, 0, ',', '.') }}
+                         </div>
+                     @endif
+
                  </div>
-
-                 <button class="btn btn-app-secondary w-100">
-                     Beli
-                 </button>
-
+                 @if ($owned)
+                     <button class="btn btn-app-secondary w-100">
+                         Lihat Kelas
+                     </button>
+                 @else
+                     <button class="btn btn-app-secondary w-100">
+                         Beli
+                     </button>
+                 @endif
              </div>
 
 
