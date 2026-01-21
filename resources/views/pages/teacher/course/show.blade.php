@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $course->title ?? 'Detail Kursus Saya')
+@section('title', 'Detail Kursus Saya')
 
 @section('content')
 	<style>

@@ -8,7 +8,7 @@
 			<div class="row justify-content-center text-center">
 				<div class="col-lg-8">
 					<span class="badge bg-white text-app-primary px-3 py-2 rounded-pill mb-3 fw-semibold">
-						🗂️ Kursus Saya
+						Kursus Saya
 					</span>
 					<h1 class="fw-extrabold display-5 mb-3 lh-sm text-white">
 						Buat Kursus Baru

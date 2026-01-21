@@ -6,11 +6,11 @@ use App\Http\Controllers\CoursePaymentController;
 use App\Http\Controllers\UserCourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\StudentPaymentController;
 use App\Http\Controllers\TeacherCourseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileSettingController;
 
 // Guest routes
 Route::redirect('/beranda', '/beranda');
@@ -54,157 +54,16 @@ Route::middleware(['auth', 'role:teacher'])
         Route::delete('/guru/kursus/{course}', [TeacherCourseController::class, 'destroy'])->name('teacher.courses.destroy');
     });
 
-Route::middleware(['auth', 'role:student'])
-    ->group(function () {});
-
 Route::middleware(['auth'])
     ->group(function () {
         Route::get('/payment', [CoursePaymentController::class, 'index'])->name('student.payment.index');
         Route::post('/payment', [CoursePaymentController::class, 'store'])->name('student.payment.store');
         Route::post('/payment/apply', [CoursePaymentController::class, 'apply'])->name('student.payment.apply');
         Route::get('/riwayat-transaksi', [TransactionController::class, 'history'])->name('history.index');
-    });
 
-
-Route::middleware(['auth'])
-    ->prefix('user/pengaturan-akun')
-    ->as('user.settings.')
-    ->group(function () {
-        Route::get('/', function () {
-            return view('pages.user.pengaturan-akun');
-        })->name('index');
-
-        Route::put('/photo', function (\Illuminate\Http\Request $request) {
-            $request->validate([
-                'profile_photo' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            ],           [
-                'profile_photo.mimes' => 'Format gambar harus berupa jpg, jpeg, atau png.',
-                'profile_photo.max' => 'Ukuran gambar maksimal adalah 2MB.',
-            ]);
-
-            /** @var \App\Models\User $user */
-            $user = \Illuminate\Support\Facades\Auth::user();
-
-            // Delete old photo if exists 
-            if ($user->profile_photo_path) {
-                try {
-                    if (\Illuminate\Support\Facades\Storage::exists('public/' . $user->profile_photo_path)) {
-                        \Illuminate\Support\Facades\Storage::delete('public/' . $user->profile_photo_path);
-                    }
-                } catch (\Exception $e) {
-                    // Ignore deletion errors
-                }
-            }
-
-            // Store new photo
-            $file = $request->file('profile_photo');
-            $filename = 'profile_' . \Illuminate\Support\Facades\Auth::id() . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('profiles', $filename, 'public');
-
-            if ($path) {
-                $user->profile_photo_path = $path;
-                $user->save();
-                return back()->with('success', 'Foto profil berhasil diperbarui.');
-            }
-
-            return back()->with('error', 'Gagal menyimpan foto profil.');
-        })->name('update-photo');
-
-        Route::put('/password', function (\Illuminate\Http\Request $request) {
-            $request->validate([
-                'old_password' => 'required',
-                'new_password' => 'required|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).+$/', // At least one uppercase, one lowercase, and one digit
-            ],           [
-                'old_password.required' => 'Password lama wajib diisi.',
-                'new_password.required' => 'Kata sandi baru wajib diisi.',
-                'new_password.min' => 'Kata sandi baru harus terdiri dari minimal 8 karakter.',
-                'new_password.confirmed' => 'Konfirmasi kata sandi baru tidak sesuai.',
-                'new_password.regex' => 'Kata sandi baru harus mengandung setidaknya satu huruf besar, satu huruf kecil, dan satu angka.',
-            ]);
-
-
-            /** @var \App\Models\User $user */
-            $user = \Illuminate\Support\Facades\Auth::user();
-
-            if (!\Illuminate\Support\Facades\Hash::check($request->old_password, $user->password)) {
-                return back()->withErrors(['old_password' => 'Password lama tidak sesuai.']);
-            }
-
-            $user->password = \Illuminate\Support\Facades\Hash::make($request->new_password);
-            $user->save();
-
-            return back()->with('success', 'Password berhasil diperbarui.');
-        })->name('update-password');
-    });
-
-Route::middleware(['auth', 'role:admin'])
-    ->prefix('admin/pengaturan-akun')
-    ->as('admin.settings.')
-    ->group(function () {
-        Route::get('/', function () {
-            return view('pages.admin.pengaturan-akun');
-        })->name('index');
-
-        Route::put('/photo', function (\Illuminate\Http\Request $request) {
-            $request->validate([
-                'profile_photo' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            ],           [
-                'profile_photo.mimes' => 'Format gambar harus berupa jpg, jpeg, atau png.',
-                'profile_photo.max' => 'Ukuran gambar maksimal adalah 2MB.',
-            ]);
-
-            /** @var \App\Models\User $user */
-            $user = \Illuminate\Support\Facades\Auth::user();
-
-            // Delete old photo if exists
-            if ($user->profile_photo_path) {
-                try {
-                    if (\Illuminate\Support\Facades\Storage::exists('public/' . $user->profile_photo_path)) {
-                        \Illuminate\Support\Facades\Storage::delete('public/' . $user->profile_photo_path);
-                    }
-                } catch (\Exception $e) {
-                    // Ignore deletion errors
-                }
-            }
-
-            // Store new photo
-            $file = $request->file('profile_photo');
-            $filename = 'profile_' . \Illuminate\Support\Facades\Auth::id() . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('profiles', $filename, 'public');
-
-            if ($path) {
-                $user->profile_photo_path = $path;
-                $user->save();
-                return back()->with('success', 'Foto profil berhasil diperbarui.');
-            }
-
-            return back()->with('error', 'Gagal menyimpan foto profil.');
-        })->name('update-photo');
-
-        Route::put('/password', function (\Illuminate\Http\Request $request) {
-            $request->validate([
-                'old_password' => 'required',
-                'new_password' => 'required|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).+$/', // At least one uppercase, one lowercase, and one digit
-            ],           [
-                'old_password.required' => 'Password lama wajib diisi.',
-                'new_password.required' => 'Kata sandi baru wajib diisi.',
-                'new_password.min' => 'Kata sandi baru harus terdiri dari minimal 8 karakter.',
-                'new_password.confirmed' => 'Konfirmasi kata sandi baru tidak sesuai.',
-                'new_password.regex' => 'Kata sandi baru harus mengandung setidaknya satu huruf besar, satu huruf kecil, dan satu angka.',
-            ]);
-
-            /** @var \App\Models\User $user */
-            $user = \Illuminate\Support\Facades\Auth::user();
-
-            if (!\Illuminate\Support\Facades\Hash::check($request->old_password, $user->password)) {
-                return back()->withErrors(['old_password' => 'Password lama tidak sesuai.']);
-            }
-
-            $user->password = \Illuminate\Support\Facades\Hash::make($request->new_password);
-            $user->save();
-
-            return back()->with('success', 'Password berhasil diperbarui.');
-        })->name('update-password');
+        Route::get('/settings', [ProfileSettingController::class, 'index'])->name('settings.index');
+        Route::put('/settings', [ProfileSettingController::class, 'update'])->name('settings.update');
+        Route::put('/settings/password', [ProfileSettingController::class, 'updatePassword'])->name('settings.update-password');
     });
 
 require __DIR__ . '/auth.php';

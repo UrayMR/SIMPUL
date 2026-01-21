@@ -515,6 +515,11 @@ a.layout-menu-toggle.sidebar-toggle:hover .bx {
     background: rgba(30, 58, 138, 0.1) !important; /* app-primary 10% */
 }
 
+.form-check-input:checked {
+    background-color: var(--app-primary) !important;
+    border-color: var(--app-primary) !important;
+}
+
 #pending-loading {
     position: absolute;
     top: 0;
@@ -522,16 +527,11 @@ a.layout-menu-toggle.sidebar-toggle:hover .bx {
     right: 0;
     bottom: 0;
     z-index: 10;
-    display: flex !important;
+    display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.7);
     min-height: 100%;
     width: 100%;
     pointer-events: all;
-}
-
-.form-check-input:checked {
-    background-color: var(--app-primary) !important;
-    border-color: var(--app-primary) !important;
 }
