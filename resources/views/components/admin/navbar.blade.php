@@ -76,11 +76,15 @@
 	$initials = null;
 	if (auth()->check()) {
 	    $user = auth()->user();
-	    if (!empty($user->profile_photo_path) && file_exists(public_path('storage/' . $user->profile_photo_path))) {
-	        $profilePicture = asset('storage/' . $user->profile_photo_path);
-	    }
 	    $nameParts = preg_split('/\s+/', trim($user->name));
 	    $initials = strtoupper(collect($nameParts)->filter()->map(fn($p) => mb_substr($p, 0, 1))->take(2)->implode(''));
+
+	    if ($user->role === 'teacher' && $user->teacher && !empty($user->teacher->profile_picture_path)) {
+	        $teacherPicturePath = $user->teacher->profile_picture_path;
+	        if (file_exists(storage_path('app/public/' . $teacherPicturePath))) {
+	            $profilePicture = asset('storage/' . $teacherPicturePath);
+	        }
+	    }
 	}
 @endphp
 

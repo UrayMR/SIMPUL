@@ -28,6 +28,15 @@
 		border-bottom-color: var(--primary);
 	}
 
+	.navbar .nav-link.profile-dropdown:hover,
+	.navbar .nav-link.profile-dropdown.active {
+		border-bottom-color: transparent !important;
+	}
+
+	.dropdown-toggle:hover::after {
+		background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' fill='none' stroke='%23333' stroke-width='2' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+	}
+
 	/* ===== MOBILE FIX ===== */
 	@media (max-width: 991px) {
 		.navbar {
@@ -59,6 +68,16 @@
 			background: white;
 			padding: 15px;
 			z-index: 10;
+			max-height: 0;
+			overflow: hidden;
+			opacity: 0;
+			transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		.navbar-collapse.show-animated {
+			max-height: 1000px;
+			opacity: 1;
+			transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 		}
 	}
 
@@ -187,7 +206,7 @@
 
 	@media (max-width: 991px) {
 		.navbar-collapse {
-			transition: transform .25s ease, opacity .25s ease;
+			/* transition handled above for max-height and opacity */
 		}
 	}
 </style>
@@ -197,11 +216,15 @@
 	$initials = null;
 	if (auth()->check()) {
 	    $user = auth()->user();
-	    if (!empty($user->profile_photo_path) && file_exists(public_path('storage/' . $user->profile_photo_path))) {
-	        $profilePicture = asset('storage/' . $user->profile_photo_path);
-	    }
 	    $nameParts = preg_split('/\s+/', trim($user->name));
 	    $initials = strtoupper(collect($nameParts)->filter()->map(fn($p) => mb_substr($p, 0, 1))->take(2)->implode(''));
+
+	    if ($user->role === 'teacher' && $user->teacher && !empty($user->teacher->profile_picture_path)) {
+	        $teacherPicturePath = $user->teacher->profile_picture_path;
+	        if (file_exists(storage_path('app/public/' . $teacherPicturePath))) {
+	            $profilePicture = asset('storage/' . $teacherPicturePath);
+	        }
+	    }
 	}
 @endphp
 
@@ -253,9 +276,9 @@
 							@endif
 							<div>
 								<strong>{{ auth()->user()->name }}</strong>
-								{{-- <div style="font-size: 0.8rem; color:#777;">
-                                    Admin
-                                </div> --}}
+								<div style="font-size: 0.8rem; color:#777;">
+									{{ auth()->user()->email }}
+								</div>
 							</div>
 						</li>
 						@auth
@@ -313,10 +336,10 @@
 
 				@auth
 					<li class="nav-item dropdown d-none d-lg-block">
-						<a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+						<a class="nav-link dropdown-toggle d-flex align-items-center profile-dropdown" data-bs-toggle="dropdown">
 							<div class="avatar avatar-online">
-								@if (!empty($profilePhotoUrl))
-									<img src="{{ $profilePhotoUrl }}" class="rounded-circle" style="width:40px;height:40px;object-fit:cover;">
+								@if (!empty($profilePicture))
+									<img src="{{ $profilePicture }}" class="rounded-circle" style="width:40px;height:40px;object-fit:cover;">
 								@else
 									<div class="d-flex align-items-center justify-content-center rounded-circle text-white"
 										style="width:40px;height:40px;font-weight:600;background: var(--primary);">
@@ -327,9 +350,9 @@
 						</a>
 
 						<ul class="dropdown-menu dropdown-menu-end dropdown-user-menu shadow">
-							<li class="dropdown-user-header">
+							<li class="dropdown-user-header d-flex flex-column" style="gap: 1px; align-items: start;">
 								<strong>{{ auth()->user()->name }}</strong>
-								{{-- <div style="font-size: 0.8rem; color:#777;">Admin</div> --}}
+								<div style="font-size: 0.8rem; color:#777;">{{ auth()->user()->email }}</div>
 							</li>
 							@auth
 								@if (auth()->user()->role === 'admin')
@@ -399,5 +422,62 @@
 			navbar.classList.add("show");
 			navbar.classList.remove("hide");
 		}, 200);
+	});
+	// Navbar collapse animation for mobile
+	document.addEventListener('DOMContentLoaded', function() {
+		const collapse = document.getElementById('navbarLanding');
+		if (!collapse) return;
+
+		// Helper to set max-height dynamically for smooth open
+		function setMaxHeight() {
+			if (window.innerWidth > 991) return;
+			collapse.style.maxHeight = collapse.scrollHeight + 'px';
+		}
+
+		function resetMaxHeight() {
+			if (window.innerWidth > 991) return;
+			collapse.style.maxHeight = '';
+		}
+
+		// Listen for Bootstrap collapse events
+		collapse.addEventListener('show.bs.collapse', function() {
+			if (window.innerWidth <= 991) {
+				collapse.classList.add('show-animated');
+				setTimeout(setMaxHeight, 10); // allow class to apply first
+			}
+		});
+		collapse.addEventListener('shown.bs.collapse', function() {
+			if (window.innerWidth <= 991) {
+				setMaxHeight();
+			}
+		});
+		collapse.addEventListener('hide.bs.collapse', function() {
+			if (window.innerWidth <= 991) {
+				// animate close by setting max-height to 0
+				collapse.style.maxHeight = collapse.scrollHeight + 'px';
+				setTimeout(() => {
+					collapse.style.maxHeight = '0px';
+				}, 10);
+				collapse.classList.remove('show-animated');
+			}
+		});
+		collapse.addEventListener('hidden.bs.collapse', function() {
+			if (window.innerWidth <= 991) {
+				resetMaxHeight();
+			}
+		});
+		// If already open on load (e.g. after resize), ensure class is set
+		if (collapse.classList.contains('show') && window.innerWidth <= 991) {
+			collapse.classList.add('show-animated');
+			setMaxHeight();
+		}
+		// Reset max-height on window resize
+		window.addEventListener('resize', function() {
+			if (window.innerWidth > 991) {
+				resetMaxHeight();
+			} else if (collapse.classList.contains('show')) {
+				setMaxHeight();
+			}
+		});
 	});
 </script>
