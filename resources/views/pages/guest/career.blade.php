@@ -23,7 +23,7 @@
                     melalui platform pembelajaran unggulan lokal.
                 </p>
 
-                <a href="/register/teacher" class="btn btn-light text-app-primary fw-semibold px-4 py-2 rounded-3">
+                <a href="{{ route('register.teacher.index') }}" class="btn btn-light text-app-primary fw-semibold px-4 py-2 rounded-3">
                     Daftar Menjadi Pengajar
                 </a>
             </div>
@@ -72,7 +72,7 @@
                         <i class="bi bi-cash-coin fs-1 text-app-primary mb-3"></i>
                         <h5 class="fw-semibold mb-2">Pendapatan Tambahan</h5>
                         <p class="text-muted mb-0">
-                            Dapatkan penghasilan dari kelas yang kamu kelola dan kembangkan.
+                            Dapatkan penghasilan dari kursus yang kamu kelola dan kembangkan.
                         </p>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                 <ul class="list-unstyled">
                     <li class="d-flex align-items-start mb-3">
                         <i class="bi bi-check-circle-fill text-app-primary me-3 mt-1"></i>
-                        <span>Manajemen kelas yang mudah dan terstruktur</span>
+                        <span>Manajemen kursus yang mudah dan terstruktur</span>
                     </li>
                     <li class="d-flex align-items-start mb-3">
                         <i class="bi bi-check-circle-fill text-app-primary me-3 mt-1"></i>
@@ -116,7 +116,7 @@
                     </li>
                     <li class="d-flex align-items-start mb-3">
                         <i class="bi bi-check-circle-fill text-app-primary me-3 mt-1"></i>
-                        <span>Dukungan tim SIMPUL untuk pengelolaan kelas</span>
+                        <span>Dukungan tim SIMPUL untuk pengelolaan kursus</span>
                     </li>
                     <li class="d-flex align-items-start">
                         <i class="bi bi-check-circle-fill text-app-primary me-3 mt-1"></i>
@@ -149,7 +149,7 @@
                     Daftarkan dirimu sebagai pengajar dan mulai berbagi ilmu hari ini.
                 </p>
 
-                <a href="" class="btn btn-app-primary px-5 py-2 fw-semibold rounded-3">
+                <a href="{{ route('register.teacher.index') }}" class="btn btn-app-primary px-5 py-2 fw-semibold rounded-3">
                     Daftar Menjadi Pengajar
                 </a>
 

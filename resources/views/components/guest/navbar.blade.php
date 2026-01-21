@@ -265,6 +265,8 @@
                         </li>
                         <li><a class="dropdown-item dropdown-user-item" href="/kursus?search=&sort_price=&ownership=true">
                                 <i class="bi bi-book"></i> Kursus Saya</a></li>
+                                <li><a class="dropdown-item dropdown-user-item" href="{{ route('history.index') }}">
+                                    <i class="bi bi-receipt"></i> Riwayat Transaksi</a></li>
                         <li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}"><i
                                     class="bx bx-cog"></i>
                                 Pengaturan Akun</a></li>
@@ -291,9 +293,17 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is(patterns: 'lowongan-karir*') ? 'active' : '' }}"
+                    <a class="nav-link {{ request()->is(patterns: 'lowongan-karir') ? 'active' : '' }}"
                         href="/lowongan-karir">Lowongan Karir</a>
                 </li>
+                @auth
+                @if(auth()->user()->role !== 'student')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is(patterns: 'guru*') ? 'active' : '' }}"
+                        href="{{ route('teacher.courses.index') }}">Kelola Kursus</a>
+                </li>
+                @endif
+                @endauth
 
 
 
@@ -326,6 +336,8 @@
 
                             <li><a class="dropdown-item dropdown-user-item" href="/kursus?search=&sort_price=&ownership=true">
                                     <i class="bi bi-book"></i> Kursus Saya</a></li>
+                            <li><a class="dropdown-item dropdown-user-item" href="{{ route('history.index') }}">
+                                    <i class="bi bi-receipt"></i> Riwayat Transaksi</a></li>
                             <li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}">
                                     <i class="bx bx-cog"></i> Pengaturan Akun</a></li>
                             <li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}">

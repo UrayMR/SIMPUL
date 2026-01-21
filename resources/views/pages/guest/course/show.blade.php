@@ -24,7 +24,7 @@
         .teacher-avatar {
             width: 120px;
             height: 120px;
-            border-radius: 50%;
+            border-radius: 1.25rem;
             overflow: hidden;
             background: #f3f4f6;
             flex-shrink: 0;
@@ -39,7 +39,6 @@
         .teacher-name {
             font-size: 1.25rem;
             font-weight: 700;
-            color: #111827;
         }
 
         .teacher-badge {
@@ -65,6 +64,10 @@
             line-height: 1.7;
         }
 
+        .teacher-avatar-wrapper {
+            min-width: 140px;
+        }
+
         .badge.bg-success-subtle {
             background-color: #e6f7f1;
         }
@@ -80,12 +83,14 @@
 
     @if ($enrolled)
         {{-- Section Video --}}
-        <section class="course-preview py-5 bg-white ">
+        <section class="course-preview py-5 bg-white">
             <div class="container border-bottom p-5">
-                <div class="row g-5 align-items-center">
+
+                {{-- ROW 1 : VIDEO + TITLE --}}
+                <div class="row g-5 align-items-start">
 
                     <!-- LEFT : VIDEO -->
-                    <div class="col-lg-7 order-1 order-lg-1">
+                    <div class="col-lg-7">
                         <div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-sm">
                             <iframe src="https://www.youtube.com/embed/{{ $course->video_url }}" title="Preview Kursus"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -94,37 +99,85 @@
                         </div>
                     </div>
 
-                    <!-- RIGHT : TEXT -->
-                    <div class="col-lg-5 order-2 order-lg-2">
-                        <h3 class="fw-bold mb-3">
+                    <!-- RIGHT : TITLE & DESCRIPTION -->
+                    <div class="col-lg-5">
+                        <h3 class="fw-bold text-app-gray mb-3">
                             {{ $course->title }}
                         </h3>
 
-                        <p class="text-muted mb-4">
+                        <p class="text-app-gray mb-0">
                             {{ $course->description }}
                         </p>
-
-                        <ul class="list-unstyled text-muted">
-                            <li class="mb-2">
-                                <i class="bi bi-bookmark-fill text-app-primary me-2"></i>
-                                {{ $course->category->name }}
-                            </li>
-                            <li class="mb-2">
-                                <i class="bi bi-people-fill text-app-primary me-2"></i>
-                                {{ $course->enrollments_count }} Terjual
-                            </li>
-                            <li>
-                                <i class="bx bx-calendar text-app-primary me-2"></i>
-                              {{ $course->created_at->translatedFormat('l, d F Y H:i') }} WIB
-                            </li>
-                            <li>
-                                <i class="bi bi-person-fill text-app-primary me-2"></i>
-                                {{ $course->teacher->user->name }}
-                            </li>
-                        </ul>
                     </div>
 
                 </div>
+
+                <hr class="my-5">
+
+                {{-- ROW 2 : META + CONTACT --}}
+                <div class="row g-5 align-items-start">
+
+                    <!-- LEFT : CATEGORY - AUTHOR -->
+                    <div class="col-lg-7">
+                        <h6 class="fw-bold mb-3 text-app-primary">
+                            Informasi Kursus
+                        </h6>
+                        <div class="d-flex flex-wrap gap-3 gap-lg-5">
+
+                            {{-- META GROUP 1 --}}
+                            <ul class="list-unstyled text-muted mb-0">
+                                <li class="mb-2 d-flex align-items-center text-app-primary">
+                                    <i class="bi bi-bookmark-fill text-app-primary me-2"></i>
+                                    {{ $course->category->name }}
+                                </li>
+
+                                <li class="mb-2 d-flex align-items-center text-app-primary">
+                                    <i class="bi bi-people-fill text-app-primary me-2"></i>
+                                    {{ $course->enrollments_count }} Terjual
+                                </li>
+                            </ul>
+
+                            {{-- META GROUP 2 --}}
+                            <ul class="list-unstyled text-muted mb-0">
+                                <li class="mb-2 d-flex align-items-center text-app-primary">
+                                    <i class="bx bx-calendar text-app-primary me-2"></i>
+                                    {{ $course->created_at->translatedFormat('l, d F Y H:i') }} WIB
+                                </li>
+
+                                <li class="d-flex align-items-center text-app-primary">
+                                    <i class="bi bi-person-fill text-app-primary me-2"></i>
+                                    {{ $course->teacher->user->name }}
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <!-- RIGHT : CONTACT -->
+                    <div class="col-lg-5">
+                        <h6 class="fw-bold mb-3 text-app-primary">
+                            Hubungi Pengajar
+                        </h6>
+
+                        <div class="mb-2 d-flex align-items-center">
+                            <i class="bi bi-envelope-fill text-app-primary me-2"></i>
+                            <a href="mailto:{{ $course->teacher->user->email }}"
+                                class="text-decoration-none text-app-primary">
+                                {{ $course->teacher->user->email }}
+                            </a>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-whatsapp text-app-primary  me-2"></i>
+                            <a href="https://wa.me/6285335589526?text={{ urlencode('Halo, saya ingin bertanya terkait kursus ' . $course->title) }}"
+                                target="_blank" class="text-decoration-none  text-app-primary ">
+                                Chat via WhatsApp
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </section>
     @else
@@ -135,7 +188,7 @@
 
                     <!-- LEFT CONTENT -->
                     <div class="col-lg-6">
-                        <h1 class="fw-bold mb-3">
+                        <h1 class="fw-bold text-app-primary mb-3">
                             {{ $course->title ?? 'C++ Dasar' }}
                         </h1>
 
@@ -146,24 +199,24 @@
                         <!-- META INFO -->
                         <div class="d-flex flex-wrap align-items-center gap-4 mb-4">
 
-                            <div class="d-flex align-items-center gap-1 text-app-primary">
+                            <div class="d-flex align-items-center gap-1 text-app-gray">
                                 <i class="bi bi-bookmark-fill me-1"></i>
                                 <span> {{ $course->category->name }}</span>
                             </div>
-                            <div class="d-flex align-items-center gap-1 text-app-primary">
+                            <div class="d-flex align-items-center gap-1 text-app-gray">
                                 <i class="bi bi-people-fill me-1"></i>
                                 <span>0 Terjual</span>
                             </div>
-                            <div class="d-flex align-items-center gap-1 text-app-primary">
+                            <div class="d-flex align-items-center gap-1 text-app-gray">
                                 <i class="bx bx-calendar me-2"></i>
                                 {{ $course->created_at->translatedFormat('l, d F Y H:i') }} WIB
                             </div>
-                            <div class="d-flex align-items-center gap-1 text-app-primary">
+                            <div class="d-flex align-items-center gap-1 text-app-gray">
                                 <i class="bi bi-person-fill me-1"></i>
                                 <span>{{ $course->teacher->user->name }}</span>
                             </div>
 
-                            <div class="d-flex align-items-center gap-1 text-app-primary">
+                            <div class="d-flex align-items-center gap-1 text-app-gray">
                                 <i class="bi bi-cash "></i>
                                 <div
                                     class="course-price {{ (float) $course->price === 0.0 ? 'text-app-primary' : 'text-dark' }}">
@@ -198,27 +251,30 @@
         <div class="container">
             <div class="row justify-content-center">
 
-                <div class="col-lg-10">
-                    <h4 class="fw-bold mb-4">
+                <div class="col-lg-12">
+                    <h4 class="fw-bold text-app-gray mb-4 text-center">
                         Tentang Pengajar
                     </h4>
-
                     <div class="card teacher-card shadow-sm">
                         <div class="card-body p-4">
 
                             <div class="d-flex flex-column flex-md-row gap-4">
 
                                 <!-- AVATAR -->
-                                <div class="teacher-avatar">
-                                    <img src="{{ asset('assets/img/foto bu ester fix_34.svg') }}"
-                                        alt="{{ $course->teacher->user->name }}">
+                                <div class="teacher-avatar-wrapper d-flex justify-content-center justify-content-md-start">
+                                    <div class="teacher-avatar">
+                                        <img src="{{ asset('storage/' . ($course->teacher->profile_picture_path ?? '')) }}"
+                                            alt="{{ $course->teacher->user->name }}">
+                                    </div>
                                 </div>
+
+
 
                                 <!-- INFO -->
                                 <div class="flex-grow-1">
 
                                     <div class="d-flex align-items-center gap-2 mb-2">
-                                        <div class="teacher-name">
+                                        <div class="teacher-name text-app-gray">
                                             {{ $course->teacher->user->name }}
                                         </div>
 
@@ -229,16 +285,20 @@
                                         @endif
                                     </div>
 
-                                    <div class="teacher-meta mb-3">
+                                    <div class="teacher-meta mb-1">
                                         <span>
                                             <i class="bi bi-award"></i>
                                             Keahlian: {{ $course->teacher->expertise }}
                                         </span>
                                     </div>
+                                    <div class="teacher-bio mb-0">
+                                        <span>
+                                            {{-- <i class="bi bi-award"></i> --}}
+                                            Biografi: {{ $course->teacher->bio }}
 
-                                    <p class="teacher-bio mb-0">
-                                        {{ $course->teacher->bio }}
-                                    </p>
+                                        </span>
+                                    </div>
+                                 
 
                                 </div>
 

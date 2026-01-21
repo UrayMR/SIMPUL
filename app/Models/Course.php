@@ -66,4 +66,19 @@ class Course extends Model
     {
         return $this->hasMany(Enrollment::class);
     }
+
+    public function isOwnedBy(?User $user): bool
+{
+    if (!$user) return false;
+
+    // Guru pemilik kursus
+    if ($this->teacher && $this->teacher->user_id === $user->id) {
+        return true;
+    }
+
+    // Peserta kursus
+    return $this->enrollments()
+        ->where('user_id', $user->id)
+        ->exists();
+}
 }

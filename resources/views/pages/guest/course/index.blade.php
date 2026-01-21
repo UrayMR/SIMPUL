@@ -2,23 +2,23 @@
 
 @section('title', 'Kursus')
 
-<style>
-    .card:hover {
-        transform: translateY(-4px);
-        transition: 0.3s ease;
-    }
-
-    input.form-control-lg {
-        border-radius: 12px 0 0 12px;
-    }
-
-    .input-group .btn {
-        border-radius: 0 12px 12px 0;
-    }
-</style>
-
 {{-- Landing Page --}}
 @section('content')
+
+    <style>
+        .card:hover {
+            transform: translateY(-4px);
+            transition: 0.3s ease;
+        }
+
+        input.form-control-lg {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .input-group .btn {
+            border-radius: 0 12px 12px 0;
+        }
+    </style>
     <section class="bg-app-primary text-white py-5 py-lg-6">
         <div class="container">
             <div class="row justify-content-center text-center">
@@ -155,10 +155,9 @@
                             <div class="col-12 col-md-6 col-lg-4 mb-4">
                                 <x-card title="{{ $course->title }}" category="{{ $course->category->name }}"
                                     price="{{ $course->price }}" teacher="{{ $course->teacher->user->name }}"
-                                    id="{{ $course->id }}" image="{{ $course->thumbnail_path }}" count="{{ $course->enrollments_count }}"
-									owned="{{ $course->is_owned }}"  />
-                                
-
+                                    id="{{ $course->id }}" image="{{ $course->thumbnail_path }}"
+                                    count="{{ $course->enrollments_count }}"
+                                    owned="{{ $course->isOwnedBy(auth()->user()) }}" />
                             </div>
                         @empty
                             <div class="col-12">
@@ -180,15 +179,17 @@
                             </div>
                         @endforelse
                         @if ($courses->count() > 0)
-                            <div class="d-flex justify-content-between align-items-center ">
-                                <div class="pagination-info">
-                                    Menampilkan halaman {{ $courses->firstItem() }} ke {{ $courses->lastItem() }} dari
-                                    {{ $courses->total() }}
-                                    halaman
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="pagination-info text-muted">
+                                    Menampilkan {{ $courses->firstItem() }}–{{ $courses->lastItem() }} dari
+                                    {{ $courses->total() }} data
+
                                 </div>
+
                                 {{ $courses->links('pagination::bootstrap-4') }}
                             </div>
                         @endif
+
                     </div>
                 </div>
             </div>

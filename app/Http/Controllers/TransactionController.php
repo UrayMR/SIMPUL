@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class TransactionController extends Controller
@@ -133,5 +134,15 @@ class TransactionController extends Controller
 
     public function payment(){
         return view('pages.guest.transaction.payment');
+    }
+
+
+    public function history(){
+        $transactions = Transaction::where('user_id', Auth::id())
+            ->with('course')
+            ->orderByDesc('created_at')
+            ->paginate(5);
+        return view('pages.guest.transaction.history', compact('transactions'));
+        
     }
 }

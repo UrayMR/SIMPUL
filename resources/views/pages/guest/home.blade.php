@@ -196,7 +196,7 @@
                         </p>
 
                         <a href="/kursus" class="btn btn-app-primary btn-lg px-5">
-                            Jelajahi Course
+                            Jelajahi Kursus
                         </a>
 
                     </div>
@@ -231,7 +231,7 @@
 
                         </p>
 
-                        <a href="#" class="btn btn-light text-app-primary fw-semibold">
+                        <a href="{{ route('kategori-kursus') }}" class="btn btn-light text-app-primary fw-semibold">
                             Jelajahi Semua Kategori →
                         </a>
                     </div>
@@ -266,7 +266,9 @@
                         <div class="col-12 col-md-6 col-lg-3 mb-4 fade-up">
                             <x-card title="{{ $course->title }}" category="{{ $course->category->name }}"
                                     price="{{ $course->price }}" teacher="{{ $course->teacher->user->name }}"
-                                    id="{{ $course->id }}" image="{{ $course->thumbnail_path }}" count="{{ $course->enrollments_count }} " />
+                                    id="{{ $course->id }}" image="{{ $course->thumbnail_path }}" count="{{ $course->enrollments_count }}" 
+                                    owned="{{ $course->isOwnedBy(auth()->user()) }}"
+                                     />
                         </div>
                     @endforeach
 
@@ -294,8 +296,8 @@
                             pembelajaran.
                         </p>
 
-                        <a href="#" class="btn btn-light text-app-primary fw-semibold">
-                            Daftar sebagai Pendidik →
+                        <a href="{{ route('lowongan-karir') }}" class="btn btn-light text-app-primary fw-semibold">
+                            Daftar sebagai Pengajar →
                         </a>
                     </div>
 
