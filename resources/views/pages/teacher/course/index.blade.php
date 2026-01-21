@@ -3,6 +3,27 @@
 @section('title', 'Manajemen Kursus Saya')
 
 @section('content')
+	<style>
+		.course-card-hover {
+			transition: transform 0.28s cubic-bezier(.33, 1, .68, 1), box-shadow 0.28s cubic-bezier(.33, 1, .68, 1);
+		}
+
+		.course-card-link {
+			cursor: pointer;
+			display: block;
+		}
+
+		.course-card-hover:hover {
+			transform: scale(1.015);
+			box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.10);
+			z-index: 2;
+		}
+
+		.course-card-link:active .course-card-hover {
+			transform: scale(1.015);
+		}
+	</style>
+
 	<section class="bg-app-primary text-white py-5 py-lg-6 mb-0">
 		<div class="container">
 			<div class="row justify-content-center text-center">
@@ -63,59 +84,63 @@
 			<div class="row">
 				@forelse ($courses as $course)
 					<div class="col-12 col-md-6 col-lg-4 mb-4">
-						<div class="card border-1 h-100 position-relative overflow-hidden">
-							@if ($course->thumbnail_path)
-								<img src="{{ asset('storage/' . $course->thumbnail_path) }}" alt="Thumbnail {{ $course->title }}"
-									class="card-img-top object-fit-cover" style="height: 180px; min-height: 180px; max-height: 180px; width: 100%;">
-							@else
-								<div class="bg-light d-flex align-items-center justify-content-center" style="height: 180px;">
-									<span class="text-muted"><i class="bi bi-image fs-1"></i></span>
-								</div>
-							@endif
-							<div class="card-body pb-4">
-								<div class="d-flex align-items-center gap-2 mb-2">
-									<span class="badge bg-light text-dark border fw-normal">{{ $course->category->name ?? '-' }}</span>
-									@if ($course->status === 'approved')
-										<span class="badge bg-success">Aktif</span>
-									@elseif ($course->status === 'pending')
-										<span class="badge bg-warning text-dark">Pending</span>
-									@elseif ($course->status === 'rejected')
-										<span class="badge bg-danger">Rejected</span>
-									@else
-										<span class="badge bg-secondary">Nonaktif</span>
-									@endif
-								</div>
-								<h5 class="fw-bold mb-1 text-truncate" title="{{ $course->title }}">{{ $course->title }}</h5>
-								<div class="mb-2 small text-muted">Dibuat: {{ $course->created_at->format('d M Y') }}</div>
-								@if ($course->description)
-									<div class="mb-2 text-muted small" style="min-height: 38px; max-height: 38px; overflow: hidden;">
-										{{ Str::limit(strip_tags($course->description), 60) }}</div>
+						<a href="{{ route('teacher.courses.show', $course) }}" class="text-decoration-none course-card-link">
+							<div class="card border-1 h-100 position-relative overflow-hidden course-card-hover">
+								@if ($course->thumbnail_path)
+									<img src="{{ asset('storage/' . $course->thumbnail_path) }}" alt="Thumbnail {{ $course->title }}"
+										class="card-img-top object-fit-cover"
+										style="height: 180px; min-height: 180px; max-height: 180px; width: 100%;">
+								@else
+									<div class="bg-light d-flex align-items-center justify-content-center" style="height: 180px;">
+										<span class="text-muted"><i class="bi bi-image fs-1"></i></span>
+									</div>
 								@endif
-								<div class="mb-2 d-flex gap-3 align-items-center">
-									<span class="fw-bold text-dark">Rp {{ number_format($course->price, 0, ',', '.') }}</span>
-									<span class="fw-semibold text-secondary"><i class="bi bi-people text-muted"></i>
-										{{ $course->enrollments_count }} peserta</span>
+								<div class="card-body pb-4">
+									<div class="d-flex align-items-center gap-2 mb-2">
+										<span class="badge bg-light text-dark border fw-normal">{{ $course->category->name ?? '-' }}</span>
+										@if ($course->status === 'approved')
+											<span class="badge bg-success">Aktif</span>
+										@elseif ($course->status === 'pending')
+											<span class="badge bg-warning text-dark">Pending</span>
+										@elseif ($course->status === 'rejected')
+											<span class="badge bg-danger">Rejected</span>
+										@else
+											<span class="badge bg-secondary">Nonaktif</span>
+										@endif
+									</div>
+									<h5 class="fw-bold mb-1 text-truncate" title="{{ $course->title }}">{{ $course->title }}</h5>
+									<div class="mb-2 small text-muted">Dibuat: {{ $course->created_at->format('d M Y') }}</div>
+									@if ($course->description)
+										<div class="mb-2 text-muted small" style="min-height: 38px; max-height: 38px; overflow: hidden;">
+											{{ Str::limit(strip_tags($course->description), 60) }}</div>
+									@endif
+									<div class="mb-2 d-flex gap-3 align-items-center">
+										<span class="fw-bold text-dark">Rp {{ number_format($course->price, 0, ',', '.') }}</span>
+										<span class="fw-semibold text-secondary"><i class="bi bi-people text-muted"></i>
+											{{ $course->enrollments_count }} peserta</span>
+									</div>
+								</div>
+								<div class="card-footer bg-white border-0 d-flex flex-column gap-2 pb-3 pt-0">
+									<div class="d-flex align-items-center justify-content-between mb-2">
+										<span class="text-muted small"><i class="bi bi-cash-coin text-success"></i> Total Pendapatan Kursus:</span>
+										<span class="fw-bold text-success">Rp
+											{{ number_format($course->transactions_sum_amount ?? 0, 0, ',', '.') }}</span>
+									</div>
+									<div class="d-flex justify-content-end gap-2">
+										<a href="{{ route('teacher.courses.edit', $course) }}" class="btn btn-app-outline-primary fw-semibold"
+											onclick="event.stopPropagation(); event.preventDefault(); window.location.href=this.href;">
+											<i class="bi bi-pencil"></i> Edit
+										</a>
+										<form action="{{ route('teacher.courses.destroy', $course) }}" method="POST" class="d-inline"
+											onsubmit="event.stopPropagation(); return confirm('Yakin ingin menghapus kursus ini?')">
+											@csrf
+											@method('DELETE')
+											<button class="btn btn-outline-danger fw-semibold"><i class="bi bi-trash"></i> Hapus</button>
+										</form>
+									</div>
 								</div>
 							</div>
-							<div class="card-footer bg-white border-0 d-flex flex-column gap-2 pb-3 pt-0">
-								<div class="d-flex align-items-center justify-content-between mb-2">
-									<span class="text-muted small"><i class="bi bi-cash-coin text-success"></i> Total Pendapatan Kursus:</span>
-									<span class="fw-bold text-success">Rp
-										{{ number_format($course->transactions_sum_amount ?? 0, 0, ',', '.') }}</span>
-								</div>
-								<div class="d-flex justify-content-end gap-2">
-									<a href="{{ route('teacher.courses.edit', $course) }}" class="btn btn-app-outline-primary fw-semibold">
-										<i class="bi bi-pencil"></i> Edit
-									</a>
-									<form action="{{ route('teacher.courses.destroy', $course) }}" method="POST" class="d-inline"
-										onsubmit="return confirm('Yakin ingin menghapus kursus ini?')">
-										@csrf
-										@method('DELETE')
-										<button class="btn btn-outline-danger fw-semibold"><i class="bi bi-trash"></i> Hapus</button>
-									</form>
-								</div>
-							</div>
-						</div>
+						</a>
 					</div>
 				@empty
 					<div class="col-12">

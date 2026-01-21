@@ -44,6 +44,7 @@ Route::middleware(['auth', 'role:teacher'])
         Route::get('/guru/kursus', [TeacherCourseController::class, 'index'])->name('teacher.courses.index');
         Route::get('/guru/kursus/buat', [TeacherCourseController::class, 'create'])->name('teacher.courses.create');
         Route::post('/guru/kursus', [TeacherCourseController::class, 'store'])->name('teacher.courses.store');
+        Route::get('/guru/kursus/{course}', [TeacherCourseController::class, 'show'])->name('teacher.courses.show');
         Route::get('/guru/kursus/{course}/edit', [TeacherCourseController::class, 'edit'])->name('teacher.courses.edit');
         Route::put('/guru/kursus/{course}', [TeacherCourseController::class, 'update'])->name('teacher.courses.update');
         Route::delete('/guru/kursus/{course}', [TeacherCourseController::class, 'destroy'])->name('teacher.courses.destroy');
