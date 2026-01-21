@@ -15,28 +15,16 @@ class UserCourseController extends Controller
         $search = trim((string) $request->query('search', ''));
 
         // Support category[] & categories[]
-        $categoryIds = (array) $request->query(
-            'category',
-            $request->query('categories', [])
-        );
+        $categoryIds = (array) $request->query('category', $request->query('categories', []));
 
         $ownership = $request->query('ownership'); // 'true' | 'false' | null
-        $sortPrice = $request->query('sort_price'); // 'asc' | 'desc' | null
+
+        $sortPrice = $request->query('sort_price', null);
 
         $categories = Category::all();
 
-        /* ======================
-     | BASE QUERY
-     ====================== */
         $query = Course::query()
-            ->with(['category', 'teacher.user'])
-
-            // 🔑 TAMBAHAN PENTING: FLAG is_owned
-            ->withExists([
-                'enrollments as is_owned' => function ($q) {
-                    $q->where('user_id', Auth::id());
-                }
-            ]);
+            ->with(['category', 'teacher']);
 
         /* ======================
      | FILTER CATEGORY
@@ -58,33 +46,43 @@ class UserCourseController extends Controller
         /* ======================
      | FILTER OWNERSHIP
      ====================== */
+
         if (Auth::check()) {
 
             if ($ownership === 'true') {
-                // Kursus yang SUDAH DIMILIKI user
-                $query->whereHas('enrollments', function ($q) {
-                    $q->where('user_id', Auth::id());
+                // SUDAH DIMILIKI (teacher OR enrolled)
+                $query->where(function ($q) {
+                    $q->whereHas('enrollments', function ($q2) {
+                        $q2->where('user_id', Auth::id());
+                    })
+                        ->orWhereHas('teacher', function ($q2) {
+                            $q2->where('user_id', Auth::id());
+                        });
                 });
             } elseif ($ownership === 'false') {
-                // Kursus yang BELUM DIMILIKI user
+                // BELUM DIMILIKI
                 $query->whereDoesntHave('enrollments', function ($q) {
                     $q->where('user_id', Auth::id());
-                });
+                })
+                    ->whereDoesntHave('teacher', function ($q) {
+                        $q->where('user_id', Auth::id());
+                    });
             }
         } elseif ($ownership === 'true') {
-            // Guest + pilih "Sudah Dimiliki" → kosongkan hasil
+            // Guest + pilih "Sudah Dimiliki"
             $query->whereRaw('0 = 1');
         }
 
+
+
         /* ======================
-     | SORT PRICE
+     | FILTER OWNERSHIP
      ====================== */
         if ($sortPrice === 'asc') {
             $query->orderBy('price', 'asc');
         } elseif ($sortPrice === 'desc') {
             $query->orderBy('price', 'desc');
         } else {
-            // Default
             $query->orderBy('created_at', 'desc');
         }
 
@@ -92,6 +90,7 @@ class UserCourseController extends Controller
      | PAGINATION
      ====================== */
         $courses = $query
+            ->latest()
             ->paginate(12)
             ->withQueryString();
 
@@ -103,16 +102,28 @@ class UserCourseController extends Controller
     {
         $course->load('category', 'teacher.user');
 
-        $enrollment = Enrollment::where('course_id', $course->id)
-            ->where('user_id', Auth::id() ?? '')
-            ->first();
+        $isOwned = false;
 
-        $enrolled = false;
+        if (Auth::check()) {
 
-        if (isset($enrollment)) {
-            $enrolled = true;
+            // 1️⃣ cek apakah user adalah teacher pembuat kursus
+            if ($course->teacher && $course->teacher->user_id === Auth::id()) {
+                $isOwned = true;
+            }
+
+            // 2️⃣ cek apakah user sudah enroll
+            elseif (
+                $course->enrollments()
+                ->where('user_id', Auth::id())
+                ->exists()
+            ) {
+                $isOwned = true;
+            }
         }
-        // $course = Course::with('category', 'teacher')->findOrFail($id);
-        return view('pages.guest.course.show', compact('course', 'enrolled'));
+
+        return view('pages.guest.course.show', [
+            'course'   => $course,
+            'enrolled' => $isOwned
+        ]);
     }
 }

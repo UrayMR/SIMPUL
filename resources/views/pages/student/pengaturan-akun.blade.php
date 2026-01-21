@@ -6,7 +6,7 @@
 
     <style>
         :root {
-            --primary: #008080;
+            --primary: #1e3a8a;
             --light-teal: #e9f5f4;
         }
 
@@ -61,13 +61,13 @@
 
         .settings-tabs a:hover {
             color: var(--primary);
-            background: var(--light-teal);
+            /* background: var(--light-blue); */
         }
 
         .settings-tabs a.active {
             color: var(--primary);
             border-bottom-color: var(--primary);
-            background: var(--light-teal);
+            /* background: var(--light-blue); */
         }
 
         /* CONTENT CARD */
@@ -248,19 +248,12 @@
         }
     </style>
 
-    <!-- Breadcrumb -->
-    <div class="container-fluid pt-3 text-dark border-bottom">
-        <div class="container pb-3">
-            <a href="/home" class="text-dark text-decoration-none">Home</a>
-            <span class="mx-2">></span>
-            <a href="#" class="text-dark text-decoration-none">Pengaturan Akun</a>
-        </div>
-    </div>
+   
 
     <!-- Header -->
-    <div class="container-fluid py-4 bg-primary text-light">
+    <div class="container-fluid py-5 bg-app-primary text-white">
         <div class="container">
-            <h1 class="fw-bold mb-0">Pengaturan Akun</h1>
+            <h1 class="fw-bold text-white mb-0">Pengaturan Akun</h1>
             <p class="mb-0">Lihat detail profil Anda dan ubah password untuk keamanan akun.</p>
         </div>
     </div>
@@ -342,7 +335,7 @@
                                             <i class="bx bx-upload"></i> Pilih Foto
                                         </button>
 
-                                        <button type="submit" class="btn btn-primary btn-sm" id="saveFotoBtn"
+                                        <button type="submit" class="btn btn-app-primary btn-sm" id="saveFotoBtn"
                                             style="display:none;">
                                             <i class="bx bx-save"></i> Simpan
                                         </button>

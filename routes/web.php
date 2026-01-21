@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/beranda', '/beranda');
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 Route::view('/lowongan-karir', 'pages.guest.career')->name('lowongan-karir');
+Route::get('/kategori-kursus', [HomeController::class, 'categories'])->name('kategori-kursus');
 Route::get('/kursus', [UserCourseController::class, 'index'])->name('course.index');
 Route::get('/kursus/{course}', [UserCourseController::class, 'show'])->name('course.show');
 
@@ -61,6 +62,7 @@ Route::middleware(['auth'])
         Route::get('/payment', [CoursePaymentController::class, 'index'])->name('student.payment.index');
         Route::post('/payment', [CoursePaymentController::class, 'store'])->name('student.payment.store');
         Route::post('/payment/apply', [CoursePaymentController::class, 'apply'])->name('student.payment.apply');
+        Route::get('/riwayat-transaksi', [TransactionController::class, 'history'])->name('history.index');
     });
 
 
