@@ -113,6 +113,13 @@ class TransactionController extends Controller
         }
         $transaction->status = Transaction::STATUS_APPROVED;
         $transaction->save();
+
+        $transaction->course->increment('enrollments_count');
+        $transaction->course->enrollments()->create([
+            'user_id' => $transaction->user_id,
+            'course_id' => $transaction->course_id,
+        ]);
+
         return redirect()->route('admin.transactions.show', $transaction)->with('success', 'Transaksi berhasil di-approve.');
     }
 
@@ -126,12 +133,10 @@ class TransactionController extends Controller
         if ($transaction->status !== Transaction::STATUS_PENDING) {
             return redirect()->back()->withErrors(['reject' => 'Aksi tidak valid.']);
         }
+
         $transaction->status = Transaction::STATUS_REJECTED;
         $transaction->save();
-        return redirect()->route('admin.transactions.show', $transaction)->with('success', 'Transaksi berhasil direject.');
-    }
 
-    public function payment(){
-        return view('pages.guest.transaction.payment');
+        return redirect()->route('admin.transactions.show', $transaction)->with('success', 'Transaksi berhasil direject.');
     }
 }

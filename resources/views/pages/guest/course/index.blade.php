@@ -157,8 +157,6 @@
                                     price="{{ $course->price }}" teacher="{{ $course->teacher->user->name }}"
                                     id="{{ $course->id }}" image="{{ $course->thumbnail_path }}" count="{{ $course->enrollments_count }}"
 									owned="{{ $course->is_owned }}"  />
-                                
-
                             </div>
                         @empty
                             <div class="col-12">

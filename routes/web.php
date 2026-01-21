@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CoursePaymentController;
 use App\Http\Controllers\UserCourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StudentPaymentController;
 use App\Http\Controllers\TeacherCourseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -51,10 +53,16 @@ Route::middleware(['auth', 'role:teacher'])
         Route::delete('/guru/kursus/{course}', [TeacherCourseController::class, 'destroy'])->name('teacher.courses.destroy');
     });
 
+Route::middleware(['auth', 'role:student'])
+    ->group(function () {});
+
 Route::middleware(['auth'])
     ->group(function () {
-      Route::get('/payment', [TransactionController::class, 'payment'])->name('payment.index');
+        Route::get('/payment', [CoursePaymentController::class, 'index'])->name('student.payment.index');
+        Route::post('/payment', [CoursePaymentController::class, 'store'])->name('student.payment.store');
+        Route::post('/payment/apply', [CoursePaymentController::class, 'apply'])->name('student.payment.apply');
     });
+
 
 Route::middleware(['auth'])
     ->prefix('user/pengaturan-akun')

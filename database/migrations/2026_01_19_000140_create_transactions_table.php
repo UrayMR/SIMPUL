@@ -15,6 +15,8 @@ return new class extends Migration
             $table->decimal('amount', 10, 2);
             $table->string('payment_proof_path')->nullable();
             $table->enum('status', ['approved', 'pending', 'rejected'])->default('pending');
+            $table->string('payment_token')->nullable();
+            $table->timestamp('payment_token_expires_at')->nullable();
             $table->timestamps();
         });
     }

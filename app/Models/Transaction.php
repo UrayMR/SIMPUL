@@ -26,6 +26,8 @@ class Transaction extends Model
         'amount',
         'payment_proof_path',
         'status',
+        'payment_token',
+        'payment_token_expires_at',
     ];
 
     /**
@@ -39,6 +41,8 @@ class Transaction extends Model
             'course_id' => 'string',
             'amount' => 'decimal:2',
             'status' => 'string',
+            'payment_token' => 'string',
+            'payment_token_expires_at' => 'datetime',
         ];
     }
 

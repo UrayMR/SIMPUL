@@ -22,6 +22,8 @@ class TransactionFactory extends Factory
             'amount' => $this->faker->randomFloat(2, 10000, 1000000),
             'payment_proof_path' => $this->faker->optional()->imageUrl(),
             'status' => $this->faker->randomElement(['approved', 'pending', 'rejected']),
+            'payment_token' => $this->faker->optional()->uuid(),
+            'payment_token_expires_at' => $this->faker->optional()->dateTimeBetween('now', '+15 minutes'),
         ];
     }
 }
