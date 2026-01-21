@@ -1,16 +1,30 @@
+<div class="app-overlay"></div>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 	<div class="app-brand demo">
 		<a href="{{ route('admin.dashboard') }}" class="app-brand-link d-flex align-items-center text-decoration-none">
 			<span class="app-brand-logo demo">
-				<img src="{{ asset('assets/img/logo/Logo Simpul.svg') }}" alt="Logo" style="height: 32px; width: auto; object-fit: contain;"
-					alt="Logo">
+				<img src="{{ asset('assets/img/logo/Logo Simpul.svg') }}" alt="Logo"
+					style="height: 32px; width: auto; object-fit: contain;" alt="Logo">
 			</span>
-			<span class="app-brand-text demo menu-text fw-bolder ms-2 fs-5" style="text-transform: none">{{ config('app.name') }}</span>
+			<span class="app-brand-text demo menu-text fw-bolder ms-2 fs-5"
+				style="text-transform: none">{{ config('app.name') }}</span>
 		</a>
 
-		<a href="" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none  sidebar-toggle">
-			<i class="bx bx-chevron-left bx-sm align-middle"></i>
+		<a href="#" class="layout-menu-toggle menu-link text-large ms-auto d-none d-xl-none" data-bs-toggle="sidebar"
+			data-target="#layout-menu" data-overlay="true">
 		</a>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+				var overlay = document.querySelector('.app-overlay');
+				var closeBtn = document.querySelector('.layout-menu-toggle[data-bs-toggle="sidebar"]');
+				if (overlay && closeBtn) {
+					overlay.addEventListener('click', function() {
+						closeBtn.click();
+					});
+				}
+			});
+		</script>
 	</div>
 
 	<div class="menu-inner">
@@ -65,21 +79,6 @@
 					<div>Data Transaksi</div>
 				</a>
 			</li>
-
-			<!-- PROFIL PENGGUNA -->
-			{{-- <div class="menu-footer w-100 border-top p-3 mt-auto">
-			<div class="d-flex align-items-center">
-				<div class="avatar flex-shrink-0 me-3">
-					<span class="avatar-initial rounded-circle bg-primary text-white fw-bold">
-						{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
-					</span>
-				</div>
-				<div class="d-flex flex-column">
-					<span class="fw-semibold">{{ Auth::user()->name ?? 'Admin' }}</span>
-					<small class="text-muted">{{ Auth::user()->role ?? 'Administrator' }}</small>
-				</div>
-			</div>
-		</div> --}}
 		</ul>
 	</div>
 

@@ -18,8 +18,15 @@ import "../sneat/js/main.js";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-// Inisialisasi AOS
+// Inisialisasi Sneat sidebar overlay dan AOS
 document.addEventListener("DOMContentLoaded", () => {
+    if (
+        typeof window.Helpers !== "undefined" &&
+        typeof window.Helpers.initSidebarToggle === "function"
+    ) {
+        window.Helpers.initSidebarToggle();
+    }
+
     AOS.init({
         duration: 800, // durasi animasi (ms)
         once: true, // animasi hanya sekali

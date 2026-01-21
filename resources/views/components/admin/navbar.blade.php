@@ -85,12 +85,10 @@
 @endphp
 
 <nav class="layout-navbar container-fluid navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-	id="layout-navbar">
-	<!-- Toggle Sidebar (tampil hanya di layar kecil) -->
-
+	id="layout-navbar" style="z-index: 1 !important">
 	<div class="navbar-nav-right d-flex align-items-center w-100" id="navbar-collapse">
 		<div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none ">
-			<a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+			<a class="nav-item nav-link px-0 me-xl-4" data-bs-toggle="sidebar" data-target="#layout-menu" data-overlay="true">
 				<i class="bx bx-menu bx-sm  mt-2"></i>
 			</a>
 		</div>

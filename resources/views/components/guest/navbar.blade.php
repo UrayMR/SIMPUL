@@ -269,7 +269,7 @@
 								<i class="bi bi-book"></i> Kursus Saya</a></li>
 						<li><a class="dropdown-item dropdown-user-item" href="{{ route('history.index') }}">
 								<i class="bi bi-receipt"></i> Riwayat Transaksi</a></li>
-						<li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}"><i class="bx bx-cog"></i>
+						<li><a class="dropdown-item dropdown-user-item" href="{{ route('settings.index') }}"><i class="bx bx-cog"></i>
 								Pengaturan Akun</a></li>
 						<li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}">
 								<i class="bx bx-power-off"></i> Keluar</a>
@@ -342,7 +342,7 @@
 									<i class="bi bi-book"></i> Kursus Saya</a></li>
 							<li><a class="dropdown-item dropdown-user-item" href="{{ route('history.index') }}">
 									<i class="bi bi-receipt"></i> Riwayat Transaksi</a></li>
-							<li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}">
+							<li><a class="dropdown-item dropdown-user-item" href="{{ route('settings.index') }}">
 									<i class="bx bx-cog"></i> Pengaturan Akun</a></li>
 							<li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}">
 									<i class="bx bx-power-off"></i> Keluar</a></li>

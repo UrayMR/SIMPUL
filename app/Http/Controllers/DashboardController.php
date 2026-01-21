@@ -11,49 +11,50 @@ class DashboardController extends Controller
 {
 
 
-public function index()
-{
-    $stats = [
-        // ======================
-        // PENGGUNA
-        // ======================
-        'teacher_active' => User::where('role', 'teacher')
-            ->where('status', 'active')
-            ->count(),
+    public function index()
+    {
+        $stats = [
+            // ======================
+            // PENGGUNA
+            // ======================
 
-        'student_active' => User::where('role', 'student')
-            ->where('status', 'active')
-            ->count(),
+            'teacher_active' => User::where('role', User::ROLE_TEACHER)
+                ->where('status', User::STATUS_ACTIVE)
+                ->count(),
 
-        'user_pending' => User::where('status', 'pending')
-            ->count(),
+            'student_active' => User::where('role', User::ROLE_STUDENT)
+                ->where('status', User::STATUS_ACTIVE)
+                ->count(),
 
-        // ======================
-        // KURSUS
-        // ======================
-        'total_course' => Course::count(),
+            'user_pending' => User::where('status', User::STATUS_PENDING)
+                ->count(),
 
-        'course_active' => Course::where('status', 'aktif')->count(),
+            // ======================
+            // KURSUS
+            // ======================
 
-        'course_pending' => Course::where('status', 'pending')->count(),
+            'total_course' => Course::count(),
 
-        // ======================
-        // TRANSAKSI
-        // ======================
-        'total_transaction' => Transaction::count(),
+            'course_active' => Course::where('status', Course::STATUS_APPROVED)->count(),
 
-        'transaction_pending' => Transaction::where('status', 'pending')->count(),
+            'course_pending' => Course::where('status', Course::STATUS_PENDING)->count(),
 
-        'today_income' => Transaction::where('status', 'approved')
-            ->whereDate('created_at', Carbon::today())
-            ->sum('amount'),
+            // ======================
+            // TRANSAKSI
+            // ======================
+            'total_transaction' => Transaction::count(),
 
-        'monthly_income' => Transaction::where('status', 'approved')
-            ->whereMonth('created_at', Carbon::now()->month)
-            ->whereYear('created_at', Carbon::now()->year)
-            ->sum('amount'),
-    ];
-    return view('pages.admin.dashboard', compact('stats'));
-}
+            'transaction_pending' => Transaction::where('status', Transaction::STATUS_PENDING)->count(),
 
+            'today_income' => Transaction::where('status', Transaction::STATUS_APPROVED)
+                ->whereDate('created_at', Carbon::today())
+                ->sum('amount'),
+
+            'monthly_income' => Transaction::where('status', Transaction::STATUS_APPROVED)
+                ->whereMonth('created_at', Carbon::now()->month)
+                ->whereYear('created_at', Carbon::now()->year)
+                ->sum('amount'),
+        ];
+        return view('pages.admin.dashboard', compact('stats'));
+    }
 }
