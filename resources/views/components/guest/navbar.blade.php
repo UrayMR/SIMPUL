@@ -288,7 +288,8 @@
 										<i class="bi bi-speedometer2"></i> Kembali ke Dashboard</a></li>
 							@endif
 						@endauth
-						<li><a class="dropdown-item dropdown-user-item" href="/kursus?search=&sort_price=&ownership=true">
+						<li><a class="dropdown-item dropdown-user-item"
+								href="{{ route('course.index', ['search' => '', 'sort_price' => '', 'ownership' => true]) }}">
 								<i class="bi bi-book"></i> Kursus Saya</a></li>
 						<li><a class="dropdown-item dropdown-user-item" href="{{ route('history.index') }}">
 								<i class="bi bi-receipt"></i> Riwayat Transaksi</a></li>
@@ -309,21 +310,21 @@
 			<ul class="navbar-nav mx-auto gap-lg-4 align-items-lg-center">
 
 				<li class="nav-item">
-					<a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Beranda</a>
+					<a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ route(name: 'beranda') }}">Beranda</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link {{ request()->is('kursus*') ? 'active' : '' }}" href="/kursus">Kursus</a>
+					<a class="nav-link {{ request()->is('kursus*') ? 'active' : '' }}" href="{{ route('course.index') }}">Kursus</a>
 				</li>
 
 				<li class="nav-item">
 					<a class="nav-link {{ request()->is(patterns: 'lowongan-karir') ? 'active' : '' }}"
-						href="/lowongan-karir">Lowongan Karir</a>
+						href="{{ route('lowongan-karir.index') }}">Lowongan Karir</a>
 				</li>
 				@auth
 					@if (auth()->user()->role === 'teacher')
 						<li class="nav-item">
-							<a class="nav-link {{ request()->is(patterns: 'guru*') ? 'active' : '' }}"
+							<a class="nav-link {{ request()->is(patterns: 'pengajar/kursus*') ? 'active' : '' }}"
 								href="{{ route('teacher.courses.index') }}">Kelola Kursus</a>
 						</li>
 					@endif
@@ -361,7 +362,8 @@
 								@endif
 							@endauth
 
-							<li><a class="dropdown-item dropdown-user-item" href="/kursus?search=&sort_price=&ownership=true">
+							<li><a class="dropdown-item dropdown-user-item"
+									href="{{ route('course.index', ['search' => '', 'sort_price' => '', 'ownership' => true]) }}">
 									<i class="bi bi-book"></i> Kursus Saya</a></li>
 							<li><a class="dropdown-item dropdown-user-item" href="{{ route('history.index') }}">
 									<i class="bi bi-receipt"></i> Riwayat Transaksi</a></li>
@@ -375,7 +377,7 @@
 
 				@guest
 					<li class="nav-item">
-						<a href="/login"
+						<a href="{{ route('login') }}"
 							class="btn btn-app-primary w-100 w-lg-auto px-4 py-2 rounded-3 fw-semibold mt-3 mt-lg-0 text-center">
 							Masuk
 						</a>

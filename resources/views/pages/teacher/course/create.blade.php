@@ -128,7 +128,7 @@
 							</div>
 
 							<div class="d-flex justify-content-end gap-2">
-								<a href="{{ route('teacher.courses.index') }}" class="btn btn-secondary">Batal</a>
+								<a href="{{ route('teacher.courses.index') }}" class="btn btn-light border">Batal</a>
 								<button type="submit" class="btn btn-app-primary fw-semibold" id="submitCourseBtn">
 									<span class="button-content">Tambah Kursus</span>
 									<span class="spinner-content d-none">

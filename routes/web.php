@@ -16,8 +16,8 @@ use App\Http\Controllers\ProfileSettingController;
 Route::redirect('/beranda', '/beranda');
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 
-Route::view('/lowongan-karir', 'pages.guest.career')->name('lowongan-karir');
-Route::get('/kategori-kursus', [HomeController::class, 'categories'])->name('kategori-kursus');
+Route::view('/lowongan-karir', 'pages.guest.career')->name('lowongan-karir.index');
+Route::get('/kategori-kursus', [HomeController::class, 'categories'])->name('kategori.index');
 Route::get('/kursus', [UserCourseController::class, 'index'])->name('course.index');
 Route::get('/kursus/{course}', [UserCourseController::class, 'show'])->name('course.show');
 
@@ -46,13 +46,13 @@ Route::middleware(['auth', 'role:admin'])
 
 Route::middleware(['auth', 'role:teacher'])
     ->group(function () {
-        Route::get('/guru/kursus', [TeacherCourseController::class, 'index'])->name('teacher.courses.index');
-        Route::get('/guru/kursus/buat', [TeacherCourseController::class, 'create'])->name('teacher.courses.create');
-        Route::post('/guru/kursus', [TeacherCourseController::class, 'store'])->name('teacher.courses.store');
-        Route::get('/guru/kursus/{course}', [TeacherCourseController::class, 'show'])->name('teacher.courses.show');
-        Route::get('/guru/kursus/{course}/edit', [TeacherCourseController::class, 'edit'])->name('teacher.courses.edit');
-        Route::put('/guru/kursus/{course}', [TeacherCourseController::class, 'update'])->name('teacher.courses.update');
-        Route::delete('/guru/kursus/{course}', [TeacherCourseController::class, 'destroy'])->name('teacher.courses.destroy');
+        Route::get('/pengajar/kursus', [TeacherCourseController::class, 'index'])->name('teacher.courses.index');
+        Route::get('/pengajar/kursus/buat', [TeacherCourseController::class, 'create'])->name('teacher.courses.create');
+        Route::post('/pengajar/kursus', [TeacherCourseController::class, 'store'])->name('teacher.courses.store');
+        Route::get('/pengajar/kursus/{course}', [TeacherCourseController::class, 'show'])->name('teacher.courses.show');
+        Route::get('/pengajar/kursus/{course}/edit', [TeacherCourseController::class, 'edit'])->name('teacher.courses.edit');
+        Route::put('/pengajar/kursus/{course}', [TeacherCourseController::class, 'update'])->name('teacher.courses.update');
+        Route::delete('/pengajar/kursus/{course}', [TeacherCourseController::class, 'destroy'])->name('teacher.courses.destroy');
     });
 
 Route::middleware(['auth'])

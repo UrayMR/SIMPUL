@@ -180,7 +180,6 @@
 					</div>
 
 					<!-- RIGHT : CONTACT -->
-					<!-- RIGHT : CONTACT -->
 					<div class="col-lg-5">
 						<h6 class="fw-bold mb-4 text-app-primary fs-5">
 							Hubungi Pengajar
@@ -232,11 +231,11 @@
 					<!-- LEFT CONTENT -->
 					<div class="col-lg-6">
 						<h1 class="fw-bold text-app-primary mb-3">
-							{{ $course->title ?? 'C++ Dasar' }}
+							{{ $course->title }}
 						</h1>
 
 						<p class="text-app-gray mb-4">
-							{{ $course->description ?? 'Sebagai bahasa pemrograman yang sangat populer dan bisa diandalkan dari sisi performa, C++ banyak digunakan di berbagai industri seperti software, game development, IoT, VR, robotik, scientific computing, hingga machine learning.' }}
+							{{ $course->description }}
 						</p>
 
 						<!-- META INFO -->
@@ -258,8 +257,7 @@
 								<span>{{ $course->teacher->user->name }}</span>
 							</div>
 
-							<div class="d-flex align-items-center gap-1 text-app-gray">
-								<i class="bi bi-cash "></i>
+							<div class="d-flex align-items-center gap-1 text-app-gray fw-bold">
 								<div class="course-price {{ (float) $course->price === 0.0 ? 'text-app-primary' : 'text-dark' }}">
 									<span>
 										{{ (float) $course->price === 0.0 ? 'GRATIS' : 'Rp ' . number_format((float) $course->price, 0, ',', '.') }}</span>
@@ -285,7 +283,6 @@
 								class="img-fluid w-100">
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</section>
@@ -301,85 +298,68 @@
 					</h4>
 					<div class="card teacher-card shadow-sm">
 						<div class="card-body p-4">
-							<div class="d-flex flex-column flex-md-row gap-4">
-								<!-- AVATAR -->
-								<div class="teacher-avatar-wrapper d-flex justify-content-center justify-content-md-start">
-									<div class="teacher-avatar">
-										<img src="{{ asset('storage/' . ($course->teacher->profile_picture_path ?? '')) }}"
-											alt="{{ $course->teacher->user->name }}">
+							<div class="d-flex align-items-center gap-2 mb-2">
+								<div class="d-flex flex-column flex-md-row gap-4">
+
+									<!-- AVATAR -->
+									<div class="teacher-avatar-wrapper d-flex justify-content-center justify-content-md-start">
+										<div class="teacher-avatar">
+											<img src="{{ asset('storage/' . ($course->teacher->profile_picture_path ?? '')) }}"
+												alt="{{ $course->teacher->user->name }}">
+										</div>
 									</div>
-								</div>
 
-								<!-- INFO -->
-								<div class="flex-grow-1">
+									<!-- INFO -->
+									<div class="flex-grow-1">
 
-									<div class="d-flex align-items-center gap-2 mb-2">
-										<div class="teacher-name text-app-gray">
-											{{ $course->teacher->user->name }}
+										<div class="d-flex align-items-center gap-2 mb-2">
+											<div class="teacher-name text-app-gray">
+												{{ $course->teacher->user->name }}
+											</div>
+
+											@if ($course->teacher->approved_at)
+												<span class="badge bg-success teacher-badge">
+													Terverifikasi
+												</span>
+											@endif
 										</div>
 
-										<div class="d-flex flex-column flex-md-row gap-4">
+										<div class="teacher-meta mb-1">
+											<span>
+												<i class="bi bi-award"></i>
+												Keahlian: {{ $course->teacher->expertise }}
+											</span>
+										</div>
+										<div class="teacher-bio mb-0">
+											<span>
+												{{-- <i class="bi bi-award"></i> --}}
+												Biografi: {{ $course->teacher->bio }}
 
-											<!-- AVATAR -->
-											<div class="teacher-avatar-wrapper d-flex justify-content-center justify-content-md-start">
-												<div class="teacher-avatar">
-													<img src="{{ asset('storage/' . ($course->teacher->profile_picture_path ?? '')) }}"
-														alt="{{ $course->teacher->user->name }}">
-												</div>
-											</div>
-
-											<!-- INFO -->
-											<div class="flex-grow-1">
-
-												<div class="d-flex align-items-center gap-2 mb-2">
-													<div class="teacher-name text-app-gray">
-														{{ $course->teacher->user->name }}
-													</div>
-
-													@if ($course->teacher->approved_at)
-														<span class="badge bg-success teacher-badge">
-															Terverifikasi
-														</span>
-													@endif
-												</div>
-
-												<div class="teacher-meta mb-1">
-													<span>
-														<i class="bi bi-award"></i>
-														Keahlian: {{ $course->teacher->expertise }}
-													</span>
-												</div>
-												<div class="teacher-bio mb-0">
-													<span>
-														{{-- <i class="bi bi-award"></i> --}}
-														Biografi: {{ $course->teacher->bio }}
-
-													</span>
-												</div>
-
-											</div>
-
+											</span>
 										</div>
 
 									</div>
+
 								</div>
 
 							</div>
-
 						</div>
-					</div>
-					{{-- ACTION BUTTONS --}}
-					<div class="container py-4">
-						<div
-							class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3  pt-4">
 
-							{{-- LEFT : BACK --}}
-							<a href="{{ route('course.index') }}" class="btn btn-outline-secondary rounded px-4">
-								<i class="bi bi-arrow-left me-2"></i>
-								Kembali
-							</a>
-
-						</div>
 					</div>
+
+				</div>
+			</div>
+			{{-- ACTION BUTTONS --}}
+			<div class="container py-4">
+				<div
+					class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3  pt-4">
+
+					{{-- LEFT : BACK --}}
+					<a href="{{ route('course.index') }}" class="btn btn-app-outline-secondary rounded px-4">
+						Kembali
+					</a>
+
+				</div>
+			</div>
 	</section>
 @endsection

@@ -154,15 +154,44 @@
 									</div>
 
 									@if ($status !== 'approved')
-										<button type="submit" class="btn btn-app-primary w-100 py-2 fw-semibold">
+										<button type="submit" class="btn btn-app-primary w-100 py-2">
 											Bayar Sekarang
 										</button>
 									@endif
 
 									@if (!empty($payment->payment_token_expires_at))
 										<div class="mt-3 text-end text-muted small">
-											Waktu Kadaluarsa Pembayaran : {{ $payment->payment_token_expires_at->format('d F Y H:i') }}
+											Waktu Kadaluarsa Pembayaran :
+											<span id="countdown-expiry"></span>
 										</div>
+										<script>
+											document.addEventListener('DOMContentLoaded', function() {
+												var expiry = @json($payment->payment_token_expires_at->format('Y-m-d H:i:s'));
+												var countdownEl = document.getElementById('countdown-expiry');
+
+												function updateCountdown() {
+													var now = new Date().getTime();
+													var expireTime = new Date(expiry.replace(/-/g, '/')).getTime();
+													var distance = expireTime - now;
+													if (distance <= 0) {
+														countdownEl.innerHTML = '<span class="text-danger">Kadaluarsa</span>';
+														clearInterval(timer);
+														return;
+													}
+													var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+													var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+													var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+													var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+													var str = '';
+													if (days > 0) str += days + ' hari ';
+													str += hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + seconds
+														.toString().padStart(2, '0');
+													countdownEl.textContent = str;
+												}
+												updateCountdown();
+												var timer = setInterval(updateCountdown, 1000);
+											});
+										</script>
 									@endif
 								</form>
 							@endif

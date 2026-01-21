@@ -37,7 +37,7 @@
 			<div class="row justify-content-center text-center">
 				<div class="col-lg-8">
 					<span class="badge bg-white text-app-primary px-3 py-2 rounded-pill mb-3 fw-semibold">
-						🗂️ Kursus Saya
+						Kursus Saya
 					</span>
 					<h1 class="fw-extrabold display-5 mb-3 lh-sm text-white">
 						Kelola & Pantau Kursus Anda
@@ -135,11 +135,11 @@
 											{{ number_format($course->transactions_sum_amount ?? 0, 0, ',', '.') }}</span>
 									</div>
 									<div class="d-flex justify-content-end gap-2">
-										<a href="{{ route('teacher.courses.edit', $course) }}" class="btn btn-app-outline-primary fw-semibold"
+										<a href="{{ route('teacher.courses.edit', $course) }}" class="btn btn-app-outline-primary"
 											onclick="event.stopPropagation(); event.preventDefault(); window.location.href=this.href;">
 											<i class="bi bi-pencil"></i> Edit
 										</a>
-										<button type="button" class="btn btn-outline-danger fw-semibold" data-bs-toggle="modal"
+										<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
 											data-bs-target="#modalDeleteCourse{{ $course->id }}"
 											onclick="event.stopPropagation(); event.preventDefault();">
 											<i class="bi bi-trash"></i> Hapus
@@ -152,11 +152,11 @@
 				@empty
 					<div class="col-12">
 						<div class="bg-white rounded-4 shadow-sm p-5 text-center">
-							<div class="mb-3 fs-1">📭</div>
+							<i class="bi bi-folder-x fs-1 text-app-primary mb-3"></i>
 							<h5 class="fw-bold mb-2">Belum ada kursus yang Anda buat.</h5>
 							<p class="text-muted mb-4">Ayo mulai berbagi ilmu dengan membuat kursus pertamamu!</p>
 							<a href="{{ route('teacher.courses.create') }}" class="btn btn-app-primary">
-								<i class="bi bi-plus-circle me-1"></i> Buat Kursus
+								Buat Kursus
 							</a>
 						</div>
 					</div>

@@ -20,14 +20,8 @@
 </head>
 
 <body>
-
-	<!-- Wrapper full height -->
-	<div class="container-xxl">
-		<div class="authentication-wrapper authentication-basic container-p-y">
-			<div class="authentication-inner">
-				@yield('content')
-			</div>
-		</div>
+	<div class="d-flex justify-content-center align-items-center bg-light" style="min-height:100vh;">
+		@yield('content')
 	</div>
 </body>
 

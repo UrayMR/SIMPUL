@@ -3,13 +3,13 @@
 @section('title', 'Registrasi Guru')
 
 @section('content')
-	<div class="container py-5">
+	<div class="container-fluid bg-light pb-5 pt-4">
 		<div class="row justify-content-center">
 			<div class="col-md-10 col-lg-8 col-xl-7">
-				<div class="card border shadow rounded-4 bg-white" style="border-color: #e5e7eb;">
+				<div class="border-0 rounded-4 bg-white" style="border-color: #e5e7eb;">
 					<div class="card-body p-4 p-md-5 px-lg-5 py-lg-5">
 						<div class="mb-5 text-center">
-							<h2 class="fw-bold mb-2" style="letter-spacing:0.5px;">Daftar Sebagai Guru</h2>
+							<h2 class="fw-bold mb-2 text-app-primary" style="letter-spacing:0.5px;">Daftar Sebagai Pengajar</h2>
 							<div class="text-muted mb-1">Isi data di bawah dengan benar untuk mendaftar</div>
 						</div>
 						<form method="POST" action="{{ route('register.teacher.store') }}" enctype="multipart/form-data"
@@ -51,8 +51,13 @@
 								</div>
 								<div class="col-12 col-md-6">
 									<label for="password" class="form-label text-muted small">Password <span class="text-danger">*</span></label>
-									<input type="password" class="form-control rounded-3 @error('password') is-invalid @enderror" id="password"
-										name="password" required autocomplete="new-password">
+									<div class="d-flex align-items-center" style="position:relative;">
+										<input type="password" class="form-control rounded-3 @error('password') is-invalid @enderror" id="password"
+											name="password" required autocomplete="new-password">
+										<button type="button" tabindex="-1" class="toggle-password btn btn-link px-2" data-target="password"
+											style="color:#6b7280; position:absolute; right:0; top:50%; transform:translateY(-50%);"><i
+												class="bi bi-eye-slash"></i></button>
+									</div>
 									@error('password')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
@@ -60,8 +65,14 @@
 								<div class="col-12 col-md-6">
 									<label for="password_confirmation" class="form-label text-muted small">Konfirmasi Password <span
 											class="text-danger">*</span></label>
-									<input type="password" class="form-control rounded-3 @error('password_confirmation') is-invalid @enderror"
-										id="password_confirmation" name="password_confirmation" required autocomplete="new-password">
+									<div class="d-flex align-items-center" style="position:relative;">
+										<input type="password" class="form-control rounded-3 @error('password_confirmation') is-invalid @enderror"
+											id="password_confirmation" name="password_confirmation" required autocomplete="new-password">
+										<button type="button" tabindex="-1" class="toggle-password btn btn-link px-2"
+											data-target="password_confirmation"
+											style="color:#6b7280; position:absolute; right:0; top:50%; transform:translateY(-50%);"><i
+												class="bi bi-eye-slash"></i></button>
+									</div>
 									@error('password_confirmation')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
@@ -98,11 +109,11 @@
 								</div>
 							</div>
 							<div class="d-flex flex-column flex-md-row gap-3 mt-5">
-								<a href="{{ route('beranda') }}" class="btn btn-app-outline-secondary btn-lg fw-semibold flex-fill">
-									<i class="bi bi-arrow-left me-2"></i> Kembali
+								<a href="{{ route('beranda') }}" class="btn btn-light border btn-lg fw-semibold flex-fill">
+									Kembali
 								</a>
-								<button type="submit" class="btn btn-app-primary	 btn-lg fw-semibold flex-fill shadow-sm">
-									<span class="button-content"><i class="bi bi-person-plus me-2"></i> Daftar</span>
+								<button type="submit" class="btn btn-app-primary btn-lg fw-semibold flex-fill shadow-sm">
+									<span class="button-content">Daftar</span>
 									<span class="spinner-content d-none">
 										<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
 										Mendaftar...
@@ -148,5 +159,17 @@
 				}
 			});
 		}
+		document.querySelectorAll('.toggle-password').forEach(btn => {
+			btn.addEventListener('click', function() {
+				const target = document.getElementById(this.dataset.target);
+				if (target.type === "password") {
+					target.type = "text";
+					this.innerHTML = `<i class='bi bi-eye'></i>`;
+				} else {
+					target.type = "password";
+					this.innerHTML = `<i class='bi bi-eye-slash'></i>`;
+				}
+			});
+		});
 	</script>
 @endpush

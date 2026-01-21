@@ -50,7 +50,7 @@
 											<div id="profile-preview-wrapper" class="preview-wrapper position-absolute top-0 start-0 w-100 h-100"
 												style="display:none;">
 												<img id="photoPreview"
-													src="{{ auth()->user()->teacher->profile_picture_path ? asset('storage/' . auth()->user()->teacher->profile_picture_path) : asset('assets/img/default-profile.png') }}"
+													src="{{ auth()->user()->teacher?->profile_picture_path ? asset('storage/' . auth()->user()->teacher->profile_picture_path) : asset('assets/img/default-profile.png') }}"
 													alt="Foto Profil" class="w-100 object-fit-cover rounded-3" style="height: calc(100% + 24px)">
 												<button type="button" id="profile-remove-btn"
 													class="btn btn-sm btn-light preview-remove position-absolute end-0 m-2" style="top: -5px;"
@@ -115,7 +115,7 @@
 									@endif
 								</div>
 								<div class="d-flex justify-content-end gap-2 mt-4">
-									<button type="submit" class="btn btn-app-primary fw-semibold" id="submitSettingsBtn">
+									<button type="submit" class="btn btn-app-primary" id="submitSettingsBtn">
 										<span class="button-content">Simpan Perubahan</span>
 										<span class="spinner-content d-none">
 											<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
@@ -130,45 +130,54 @@
 								@csrf
 								@method('PUT')
 								<div class="row">
-									<div class="col-md-6 mb-3 position-relative">
+									<div class="col-md-6 mb-3">
 										<label for="old_password" class="form-label fw-semibold">Password Lama <span
 												class="text-danger">*</span></label>
-										<input type="password" class="form-control @error('old_password') is-invalid @enderror" id="old_password"
-											name="old_password" required placeholder="Masukkan password lama">
-										<span class="toggle-password position-absolute top-50 end-0 translate-middle-y pe-3"
-											data-target="old_password" style="cursor:pointer; color:#6b7280;"><i class="bi bi-eye-slash"></i></span>
+										<div class="d-flex align-items-center" style="position:relative;">
+											<input type="password" class="form-control @error('old_password') is-invalid @enderror" id="old_password"
+												name="old_password" required placeholder="Masukkan password lama">
+											<button type="button" tabindex="-1" class="toggle-password btn btn-link px-2" data-target="old_password"
+												style="color:#6b7280; position:absolute; right:0; top:50%; transform:translateY(-50%);"><i
+													class="bi bi-eye-slash"></i></button>
+										</div>
 										@error('old_password')
 											<div class="invalid-feedback">{{ $message }}</div>
 										@enderror
 									</div>
-									<div class="col-md-6 mb-3 position-relative">
+									<div class="col-md-6 mb-3">
 										<label for="new_password" class="form-label fw-semibold">Password Baru <span
 												class="text-danger">*</span></label>
-										<input type="password" class="form-control @error('new_password') is-invalid @enderror" id="new_password"
-											name="new_password" required placeholder="Masukkan password baru">
-										<span class="toggle-password position-absolute top-50 end-0 translate-middle-y pe-3"
-											data-target="new_password" style="cursor:pointer; color:#6b7280;"><i class="bi bi-eye-slash"></i></span>
+										<div class="d-flex align-items-center" style="position:relative;">
+											<input type="password" class="form-control @error('new_password') is-invalid @enderror" id="new_password"
+												name="new_password" required placeholder="Masukkan password baru">
+											<button type="button" tabindex="-1" class="toggle-password btn btn-link px-2" data-target="new_password"
+												style="color:#6b7280; position:absolute; right:0; top:50%; transform:translateY(-50%);"><i
+													class="bi bi-eye-slash"></i></button>
+										</div>
 										@error('new_password')
 											<div class="invalid-feedback">{{ $message }}</div>
 										@enderror
 									</div>
-									<div class="col-md-6 mb-3 position-relative">
+									<div class="col-md-6 mb-3">
 										<label for="new_password_confirmation" class="form-label fw-semibold">Konfirmasi Password Baru <span
 												class="text-danger">*</span></label>
-										<input type="password" class="form-control @error('new_password_confirmation') is-invalid @enderror"
-											id="new_password_confirmation" name="new_password_confirmation" required
-											placeholder="Konfirmasi password baru">
-										<span class="toggle-password position-absolute top-50 end-0 translate-middle-y pe-3"
-											data-target="new_password_confirmation" style="cursor:pointer; color:#6b7280;"><i
-												class="bi bi-eye-slash"></i></span>
+										<div class="d-flex align-items-center" style="position:relative;">
+											<input type="password" class="form-control @error('new_password_confirmation') is-invalid @enderror"
+												id="new_password_confirmation" name="new_password_confirmation" required
+												placeholder="Konfirmasi password baru">
+											<button type="button" tabindex="-1" class="toggle-password btn btn-link px-2"
+												data-target="new_password_confirmation"
+												style="color:#6b7280; position:absolute; right:0; top:50%; transform:translateY(-50%);"><i
+													class="bi bi-eye-slash"></i></button>
+										</div>
 										@error('new_password_confirmation')
 											<div class="invalid-feedback">{{ $message }}</div>
 										@enderror
 									</div>
 								</div>
 								<div class="d-flex justify-content-end gap-2 mt-4">
-									<button type="submit" class="btn btn-app-primary fw-semibold" id="submitPasswordBtn">
-										<span class="button-content"><i class="bi bi-lock me-2"></i> Ubah Password</span>
+									<button type="submit" class="btn btn-app-primary" id="submitPasswordBtn">
+										<span class="button-content">Ubah Password</span>
 										<span class="spinner-content d-none">
 											<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
 											Menyimpan...
@@ -293,7 +302,7 @@
 					reader.readAsDataURL(file);
 				} else {
 					profilePreview.src =
-						"{{ auth()->user()->teacher->profile_picture_path ? asset('storage/' . auth()->user()->teacher->profile_picture_path) : asset('assets/img/default-profile.png') }}";
+						"{{ auth()->user()->teacher?->profile_picture_path ? asset('storage/' . auth()->user()->teacher->profile_picture_path) : asset('assets/img/default-profile.png') }}";
 					setPreviewVisible(false);
 				}
 			}
@@ -338,7 +347,7 @@
 					updateProfilePreview(profileInput.files[0]);
 				} else {
 					// Show preview if user sudah punya foto
-					const hasPhoto = "{{ auth()->user()->teacher->profile_picture_path ? '1' : '' }}";
+					const hasPhoto = "{{ auth()->user()->teacher?->profile_picture_path ? '1' : '' }}";
 					setPreviewVisible(!!hasPhoto);
 				}
 			}

@@ -135,7 +135,7 @@
 						<div>
 							<strong>{{ auth()->user()->name }}</strong>
 							<div style="font-size: 0.8rem; color:#777;">
-								{{ auth()->user()->role }}
+								{{ auth()->user()->email }}
 							</div>
 						</div>
 					</li>

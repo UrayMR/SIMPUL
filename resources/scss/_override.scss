@@ -535,3 +535,7 @@ a.layout-menu-toggle.sidebar-toggle:hover .bx {
     width: 100%;
     pointer-events: all;
 }
+
+.link-underline-hover:hover {
+    text-decoration: underline !important;
+}

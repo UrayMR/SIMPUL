@@ -15,7 +15,7 @@
 
                 <div class="col-lg-7">
                     <span class="badge bg-white text-app-primary px-3 py-2 rounded-pill mb-3 fw-semibold">
-                        💼 Karir di SIMPUL
+                        Karir di SIMPUL
                     </span>
 
                     <h1 class="fw-bold text-white display-6 mb-3">

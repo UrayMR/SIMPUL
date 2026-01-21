@@ -25,7 +25,7 @@
                 <div class="col-lg-8">
 
                     <span class="badge bg-white text-app-primary px-3 py-2 rounded-pill mb-3 fw-semibold">
-                        🎓 Katalog Kursus
+                        Katalog Kursus
                     </span>
 
                     <h1 class="fw-extrabold display-5 mb-3 lh-sm text-white">
@@ -162,7 +162,7 @@
                         @empty
                             <div class="col-12">
                                 <div class="bg-white rounded-4 shadow-sm p-5 text-center">
-                                    <div class="mb-3 fs-1">🔍</div>
+                                    <i class="bi bi-folder-x fs-1 text-app-primary mb-3"></i>
 
                                     <h5 class="fw-bold mb-2">
                                         Kursus tidak ditemukan
