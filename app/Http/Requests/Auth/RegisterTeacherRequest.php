@@ -24,7 +24,7 @@ class RegisterTeacherRequest extends FormRequest
       'email' => ['required', 'email', 'max:255', 'unique:users,email'],
       'phone_number' => ['required', 'string', 'max:15'],
       'password' => ['required', 'string', 'min:8', 'confirmed'],
-      'profile_picture_file' => ['nullable', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+      'profile_picture_file' => ['required', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
       'bio' => ['nullable', 'string', 'max:1000'],
       'expertise' => ['nullable', 'string', 'max:255'],
     ];

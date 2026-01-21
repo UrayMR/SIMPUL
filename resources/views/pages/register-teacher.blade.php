@@ -67,9 +67,15 @@
 									@enderror
 								</div>
 								<div class="col-12">
-									<label for="profile_picture_file" class="form-label text-muted small">Foto Profil (Opsional)</label>
+									<label for="profile_picture_file" class="form-label text-muted small">Foto Profil <span
+											class="text-danger">*</span></label>
+									<div class="text-center mb-3" id="photo-preview-container" style="display:none;">
+										<img id="photo-preview" src="#" alt="Preview Foto Profil" class="img-thumbnail rounded"
+											style="width: 180px; height: 240px; object-fit: cover; border: 2px solid #dee2e6;">
+									</div>
 									<input type="file" class="form-control rounded-3 @error('profile_picture_file') is-invalid @enderror"
-										id="profile_picture_file" name="profile_picture_file" accept="image/*">
+										id="profile_picture_file" name="profile_picture_file" accept="image/*" required>
+									<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 2MB. Ukuran pas foto: 3x4.</small>
 									@error('profile_picture_file')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
@@ -92,10 +98,10 @@
 								</div>
 							</div>
 							<div class="d-flex flex-column flex-md-row gap-3 mt-5">
-								<a href="{{ route('beranda') }}" class="btn btn-outline-secondary btn-lg fw-semibold flex-fill">
+								<a href="{{ route('beranda') }}" class="btn btn-app-outline-secondary btn-lg fw-semibold flex-fill">
 									<i class="bi bi-arrow-left me-2"></i> Kembali
 								</a>
-								<button type="submit" class="btn btn-primary btn-lg fw-semibold flex-fill shadow-sm">
+								<button type="submit" class="btn btn-app-primary	 btn-lg fw-semibold flex-fill shadow-sm">
 									<span class="button-content"><i class="bi bi-person-plus me-2"></i> Daftar</span>
 									<span class="spinner-content d-none">
 										<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
@@ -115,11 +121,31 @@
 	<script>
 		const form = document.querySelector('form[action="{{ route('register.teacher.store') }}"]');
 		const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+		const photoInput = document.getElementById('profile_picture_file');
+		const previewContainer = document.getElementById('photo-preview-container');
+		const previewImage = document.getElementById('photo-preview');
+
 		if (form && submitBtn) {
 			form.addEventListener('submit', function() {
 				submitBtn.disabled = true;
 				submitBtn.querySelector('.button-content').classList.add('d-none');
 				submitBtn.querySelector('.spinner-content').classList.remove('d-none');
+			});
+		}
+
+		if (photoInput) {
+			photoInput.addEventListener('change', function(event) {
+				const file = event.target.files[0];
+				if (file) {
+					const reader = new FileReader();
+					reader.onload = function(e) {
+						previewImage.src = e.target.result;
+						previewContainer.style.display = 'block';
+					};
+					reader.readAsDataURL(file);
+				} else {
+					previewContainer.style.display = 'none';
+				}
 			});
 		}
 	</script>
