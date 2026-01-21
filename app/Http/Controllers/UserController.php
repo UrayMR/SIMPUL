@@ -236,6 +236,10 @@ class UserController extends Controller
         }
         $user->status = User::STATUS_ACTIVE;
         $user->save();
+
+        $teacherData['approved_at'] = now();
+        $user->teacher()->update($teacherData);
+
         return redirect()->route('admin.users.show', $user)->with('success', 'Pengajuan guru di-approve.');
     }
 

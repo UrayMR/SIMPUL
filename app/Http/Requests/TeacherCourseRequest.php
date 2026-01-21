@@ -26,10 +26,17 @@ class TeacherCourseRequest extends FormRequest
     $rules = [
       'title' => ['required', 'string', 'max:150'],
       'category_id' => ['required', 'exists:categories,id'],
-      'teacher_id' => ['required', 'exists:teachers,id'],
       'price' => ['required', 'numeric', 'min:0'],
       'description' => ['nullable', 'string', 'max:1000'],
-      'video_url' => ['nullable', 'url'],
+      'video_url' => [
+        'required',
+        'url',
+        function ($attribute, $value, $fail) {
+          if (!preg_match('/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//', $value)) {
+            $fail('URL video harus berupa link YouTube.');
+          }
+        },
+      ],
       'thumbnail_file' => ['nullable', 'image', 'max:2048'],
     ];
 

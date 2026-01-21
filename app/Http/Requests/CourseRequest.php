@@ -29,7 +29,15 @@ class CourseRequest extends FormRequest
       'teacher_id' => ['required', 'exists:teachers,id'],
       'price' => ['required', 'numeric', 'min:0'],
       'description' => ['nullable', 'string', 'max:1000'],
-      'video_url' => ['nullable', 'url'],
+      'video_url' => [
+        'required',
+        'url',
+        function ($attribute, $value, $fail) {
+          if (!preg_match('/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//', $value)) {
+            $fail('URL video harus berupa link YouTube.');
+          }
+        },
+      ],
       'thumbnail_file' => ['nullable', 'image', 'max:2048'],
       'status' => ['required', Rule::in(['pending', 'approved', 'rejected'])],
     ];

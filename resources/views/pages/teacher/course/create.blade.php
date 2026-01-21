@@ -56,10 +56,11 @@
 									@enderror
 								</div>
 								<div class="col-md-6 mb-3">
-									<label for="video_url" class="form-label">URL Video <span class="text-danger">*</span></label>
+									<label for="video_url" class="form-label fw-semibold">URL Video Youtube <span
+											class="text-danger">*</span></label>
 									<input type="url" name="video_url" id="video_url"
 										class="form-control @error('video_url') is-invalid @enderror" value="{{ old('video_url') }}"
-										placeholder="https://..." required>
+										placeholder="https://www.youtube.com/watch?v=..." required>
 									@error('video_url')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
@@ -106,10 +107,10 @@
 							<div class="d-flex justify-content-end gap-2">
 								<a href="{{ route('teacher.courses.index') }}" class="btn btn-secondary">Batal</a>
 								<button type="submit" class="btn btn-app-primary fw-semibold" id="submitCourseBtn">
-									<span class="button-content">Simpan Kursus</span>
+									<span class="button-content">Tambah Kursus</span>
 									<span class="spinner-content d-none">
 										<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-										Sedang Menyimpan...
+										Sedang Menambah...
 									</span>
 								</button>
 							</div>

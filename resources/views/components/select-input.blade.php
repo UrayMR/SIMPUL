@@ -44,7 +44,7 @@
 					</a>
 				</li>
 			@empty
-				<li><span class="dropdown-item-text text-muted">Tidak ada data</span></li>
+				<li class="no-data-message"><span class="dropdown-item-text text-muted">Tidak ada data bro</span></li>
 			@endforelse
 		</div>
 	</ul>
@@ -80,14 +80,26 @@
 
 			searchInput.addEventListener("input", function() {
 				const keyword = this.value.toLowerCase();
-
-				// ambil ulang karena list bisa berubah saat AJAX
 				const items = document.querySelectorAll("#list-{{ $id }} .dropdown-item");
-
+				let found = false;
 				items.forEach(item => {
 					const text = item.textContent.toLowerCase();
-					item.style.display = text.includes(keyword) ? "" : "none";
+					const match = text.includes(keyword);
+					item.style.display = match ? "" : "none";
+					if (match) found = true;
 				});
+				const noDataMsg = document.querySelector('#list-{{ $id }} .no-data-message');
+				if (!found) {
+					if (!noDataMsg) {
+						const li = document.createElement('li');
+						li.className = 'no-data-message';
+						li.innerHTML =
+							'<span class="dropdown-item-text text-muted">Tidak ada data yang sesuai</span>';
+						document.getElementById('list-{{ $id }}').appendChild(li);
+					}
+				} else {
+					if (noDataMsg) noDataMsg.remove();
+				}
 			});
 		@endif
 
