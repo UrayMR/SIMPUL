@@ -44,11 +44,11 @@ public function index()
 
         'transaction_pending' => Transaction::where('status', 'pending')->count(),
 
-        'today_income' => Transaction::where('status', 'success')
+        'today_income' => Transaction::where('status', 'approved')
             ->whereDate('created_at', Carbon::today())
             ->sum('amount'),
 
-        'monthly_income' => Transaction::where('status', 'success')
+        'monthly_income' => Transaction::where('status', 'approved')
             ->whereMonth('created_at', Carbon::now()->month)
             ->whereYear('created_at', Carbon::now()->year)
             ->sum('amount'),
