@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'SILAYANKRIS - Kementerian Agama Kota Surabaya')
+@section('title', 'Home')
 
 {{-- Landing Page --}}
 @section('content')
@@ -222,7 +222,7 @@
                     {{-- KANAN: KONTEN --}}
                     <div class="col-lg-7 profil-content ps-lg-5">
                         <h1 class="fw-bold  text-app-white mb-3 ">
-                            Temukan Kelas Sesuai Kebutuhanmu
+                            Temukan Kursus Sesuai Kebutuhanmu
                         </h1>
 
                         <p class="mb-4">
@@ -248,11 +248,11 @@
 
                 {{-- Header konsisten --}}
                 <div class="text-center mb-3">
-                    {{-- <h6 class="fw-bold text-secondary mb-1">KELAS UNGGULAN</h6> --}}
-                    <h2 class="fw-bold text-app-primary mb-2">KELAS UNGGULAN</h2>
+                    {{-- <h6 class="fw-bold text-secondary mb-1">KURSUS UNGGULAN</h6> --}}
+                    <h2 class="fw-bold text-app-primary mb-2">KURSUS UNGGULAN</h2>
                     <div class="partner-divider mx-auto mb-3 bg-app-primary"></div>
                     <p class="text-muted fs-6 mb-0">
-                        Kelas unggulan dari pendidik terpilih dengan materi relevan dan terstruktur
+                        Kursus unggulan dari pendidik terpilih dengan materi relevan dan terstruktur
                     </p>
                 </div>
                 {{-- LINK LIHAT LEBIH BANYAK --}}

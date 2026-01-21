@@ -61,13 +61,13 @@ class UserCourseController extends Controller
     if (Auth::check()) {
 
         if ($ownership === 'true') {
-            // Kelas yang SUDAH DIMILIKI user
+            // Kursus yang SUDAH DIMILIKI user
             $query->whereHas('enrollments', function ($q) {
                 $q->where('user_id', Auth::id());
             });
 
         } elseif ($ownership === 'false') {
-            // Kelas yang BELUM DIMILIKI user
+            // Kursus yang BELUM DIMILIKI user
             $query->whereDoesntHave('enrollments', function ($q) {
                 $q->where('user_id', Auth::id());
             });

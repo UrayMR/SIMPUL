@@ -144,19 +144,21 @@
                 <h5 class="footer-title">Tautan Cepat</h5>
                 <ul class="footer-links">
                     <li><a href="/home">Home</a></li>
-                    <li><a href="/berita">Berita</a></li>
-                    <li><a href="/">Layanan</a></li>
+                    <li><a href="/berita">Kursus</a></li>
+                    <li><a href="/">Lowongan Karir</a></li>
                 </ul>
             </div>
 
             <!-- Services -->
             <div class="col-lg-2 col-md-4 mb-4">
-                <h5 class="footer-title">Layanan</h5>
+                <h5 class="footer-title">Program Unggulan</h5>
                 <ul class="footer-links">
-                    <li><a href="/login">Berkas TPG Guru</a></li>
-                    <li><a href="/login">Pendataan Gereja</a></li>
+                    <li><a href="#">Kelas Guru</a></li>
+                    <li><a href="#">Kelas Administrasi</a></li>
+                    <li><a href="#">Pelatihan Digital</a></li>
                 </ul>
             </div>
+
 
             <!-- Help -->
             <div class="col-lg-3 col-md-4 mb-4">

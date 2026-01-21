@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Course')
+@section('title', 'Kursus')
 
 <style>
     .card:hover {
@@ -25,11 +25,11 @@
                 <div class="col-lg-8">
 
                     <span class="badge bg-white text-app-primary px-3 py-2 rounded-pill mb-3 fw-semibold">
-                        🎓 Katalog Kelas
+                        🎓 Katalog Kursus
                     </span>
 
                     <h1 class="fw-extrabold display-5 mb-3 lh-sm text-white">
-                        Temukan Kelas Sesuai Kebutuhanmu
+                        Temukan Kursus Sesuai Kebutuhanmu
                     </h1>
 
                     <p class="fs-5 opacity-75 mb-0">
@@ -53,7 +53,7 @@
 
                             {{-- SEARCH --}}
                             <div class="mb-4">
-                                <label class="fw-bold mb-2 d-block">Cari Kelas</label>
+                                <label class="fw-bold mb-2 d-block">Cari Kursus</label>
                                 <input type="text" name="search" value="{{ request('search') }}" class="form-control"
                                     placeholder="Nama kelas...">
                             </div>
@@ -166,7 +166,7 @@
                                     <div class="mb-3 fs-1">🔍</div>
 
                                     <h5 class="fw-bold mb-2">
-                                        Kelas tidak ditemukan
+                                        Kursus tidak ditemukan
                                     </h5>
 
                                     <p class="text-muted mb-4">

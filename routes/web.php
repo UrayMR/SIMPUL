@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 // Guest routes
 Route::redirect('/beranda', '/beranda');
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
+Route::view('/lowongan-karir', 'pages.guest.career')->name('lowongan-karir');
 Route::get('/kursus', [UserCourseController::class, 'index'])->name('course.index');
 Route::get('/kursus/{course}', [UserCourseController::class, 'show'])->name('course.show');
 
@@ -48,6 +49,11 @@ Route::middleware(['auth', 'role:teacher'])
         Route::get('/guru/kursus/{course}/edit', [TeacherCourseController::class, 'edit'])->name('teacher.courses.edit');
         Route::put('/guru/kursus/{course}', [TeacherCourseController::class, 'update'])->name('teacher.courses.update');
         Route::delete('/guru/kursus/{course}', [TeacherCourseController::class, 'destroy'])->name('teacher.courses.destroy');
+    });
+
+Route::middleware(['auth'])
+    ->group(function () {
+      Route::get('/payment', [TransactionController::class, 'payment'])->name('payment.index');
     });
 
 Route::middleware(['auth'])
