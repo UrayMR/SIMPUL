@@ -50,7 +50,7 @@
 									<label for="price" class="form-label fw-semibold">Harga Kursus (Rp) <span
 											class="text-danger">*</span></label>
 									<input type="number" name="price" id="price" class="form-control @error('price') is-invalid @enderror"
-										value="{{ old('price', 0) }}" min="0" step="1000" required placeholder="Masukkan harga kursus">
+										value="{{ old('price', 0) }}" min="0" step="any" required placeholder="Masukkan harga kursus">
 									@error('price')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
@@ -66,6 +66,7 @@
 									@enderror
 								</div>
 							</div>
+
 							<div class="mb-3">
 								<label for="description" class="form-label fw-semibold">Deskripsi Kursus</label>
 								<textarea name="description" id="description" rows="4"
@@ -75,33 +76,55 @@
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
 							</div>
-							<div class="mb-3">
-								<label for="thumbnail_file" class="form-label fw-semibold">Gambar Thumbnail (Opsional)</label>
-								<div class="mb-3" id="thumbnail-preview-container"
-									style="display: {{ old('thumbnail_file') ? 'block' : 'none' }};">
-									<img id="thumbnail-preview" src="{{ old('thumbnail_file') ? old('thumbnail_file') : '#' }}"
-										alt="Preview Thumbnail" class="img-thumbnail" style="max-width: 200px;">
-								</div>
-								<input type="file" name="thumbnail_file" id="thumbnail_file"
-									class="form-control @error('thumbnail_file') is-invalid @enderror" accept="image/*">
-								@error('thumbnail_file')
-									<div class="invalid-feedback">{{ $message }}</div>
-								@enderror
-								<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 2MB.</small>
-							</div>
 
-							<div class="mb-4">
-								<label for="hero_file" class="form-label fw-semibold mt-4">Gambar Banner <span
-										class="text-danger">*</span></label>
-								<div class="mb-3" id="hero-preview-container" style="display:none;">
-									<img id="hero-preview" src="#" alt="Preview Hero" class="img-thumbnail" style="max-width: 200px;">
+							<div class="mb-3">
+								<label for="hero_file" class="form-label fw-semibold">Gambar Banner <span class="text-danger">*</span></label>
+								<div id="hero-drop-area" class="drop-area mb-2 position-relative">
+									<div id="hero-drop-content" class="drop-content">
+										<div id="hero-drop-text" class="text-app-primary fw-semibold">Seret & lepas gambar di sini<br><span
+												class="fw-normal text-app-gray">atau klik untuk memilih</span></div>
+									</div>
+									<div id="hero-preview-wrapper" class="preview-wrapper d-none">
+										<img id="hero-preview" src="#" alt="Preview Hero" class="img-thumbnail preview-img">
+										<button type="button" id="hero-remove-btn" class="btn btn-sm btn-light preview-remove"
+											aria-label="Hapus gambar">&times;</button>
+									</div>
 								</div>
 								<input type="file" name="hero_file" id="hero_file"
-									class="form-control @error('hero_file') is-invalid @enderror" accept="image/*" required>
+									class="form-control d-none @error('hero_file') is-invalid @enderror" accept="image/*" required>
 								@error('hero_file')
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
 								<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 4MB.</small>
+							</div>
+
+							<div class="mb-3">
+								<div class="form-check mb-3">
+									<input class="form-check-input" type="checkbox" id="enable-thumbnail">
+									<label class="form-check-label" for="enable-thumbnail">
+										Custom Thumbnail
+									</label>
+								</div>
+								<div id="thumbnail-upload-section">
+									<label for="thumbnail_file" class="form-label fw-semibold">Gambar Thumbnail (Opsional)</label>
+									<div id="thumbnail-drop-area" class="drop-area mb-2 position-relative">
+										<div id="thumbnail-drop-content" class="drop-content">
+											<div id="thumbnail-drop-text" class="text-app-primary fw-semibold">Seret & lepas gambar di sini<br><span
+													class="fw-normal text-app-gray">atau klik untuk memilih</span></div>
+										</div>
+										<div id="thumbnail-preview-wrapper" class="preview-wrapper d-none">
+											<img id="thumbnail-preview" src="#" alt="Preview Thumbnail" class="img-thumbnail preview-img">
+											<button type="button" id="thumbnail-remove-btn" class="btn btn-sm btn-light preview-remove"
+												aria-label="Hapus gambar">&times;</button>
+										</div>
+									</div>
+									<input type="file" name="thumbnail_file" id="thumbnail_file"
+										class="form-control d-none @error('thumbnail_file') is-invalid @enderror" accept="image/*">
+									@error('thumbnail_file')
+										<div class="invalid-feedback">{{ $message }}</div>
+									@enderror
+									<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 2MB.</small>
+								</div>
 							</div>
 
 							<div class="d-flex justify-content-end gap-2">
@@ -125,6 +148,29 @@
 @push('scripts')
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
+			// Checkbox toggle thumbnail upload
+			const enableThumbnail = document.getElementById('enable-thumbnail');
+			const thumbnailUploadSection = document.getElementById('thumbnail-upload-section');
+			const thumbnailInput = document.getElementById('thumbnail_file');
+			const thumbnailPreviewWrapper = document.getElementById('thumbnail-preview-wrapper');
+			const thumbnailDropText = document.getElementById('thumbnail-drop-text');
+
+			function toggleThumbnailSection() {
+				if (enableThumbnail.checked) {
+					thumbnailUploadSection.style.display = '';
+				} else {
+					thumbnailUploadSection.style.display = 'none';
+					thumbnailInput.value = '';
+					if (thumbnailPreviewWrapper) {
+						thumbnailPreviewWrapper.classList.add('d-none');
+					}
+					if (thumbnailDropText) {
+						thumbnailDropText.classList.remove('d-none');
+					}
+				}
+			}
+			enableThumbnail.addEventListener('change', toggleThumbnailSection);
+			toggleThumbnailSection();
 			const courseForm = document.querySelector('form[action="{{ route('teacher.courses.store') }}"]');
 			const submitCourseBtn = document.getElementById('submitCourseBtn');
 			if (courseForm && submitCourseBtn) {
@@ -134,24 +180,53 @@
 					submitCourseBtn.querySelector('.spinner-content').classList.remove('d-none');
 				});
 			}
-			// Preview Thumbnail
-			const thumbnailInput = document.getElementById('thumbnail_file');
-			const thumbnailPreviewContainer = document.getElementById('thumbnail-preview-container');
+
+			// Drag & Drop Thumbnail
+			const thumbnailDropArea = document.getElementById('thumbnail-drop-area');
 			const thumbnailPreview = document.getElementById('thumbnail-preview');
+			const thumbnailRemoveBtn = document.getElementById('thumbnail-remove-btn');
 
 			function updateThumbnailPreview(file) {
 				if (file) {
 					const reader = new FileReader();
 					reader.onload = function(e) {
 						thumbnailPreview.src = e.target.result;
-						thumbnailPreviewContainer.style.display = 'block';
+						thumbnailPreviewWrapper.classList.remove('d-none');
+						thumbnailDropText.classList.add('d-none');
 					};
 					reader.readAsDataURL(file);
 				} else {
 					thumbnailPreview.src = '#';
-					thumbnailPreviewContainer.style.display = 'none';
+					thumbnailPreviewWrapper.classList.add('d-none');
+					thumbnailDropText.classList.remove('d-none');
 				}
 			}
+
+			thumbnailRemoveBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				thumbnailInput.value = '';
+				updateThumbnailPreview(null);
+			});
+
+			thumbnailDropArea.addEventListener('click', function() {
+				thumbnailInput.click();
+			});
+			thumbnailDropArea.addEventListener('dragover', function(e) {
+				e.preventDefault();
+				thumbnailDropArea.classList.add('drop-area-hover');
+			});
+			thumbnailDropArea.addEventListener('dragleave', function(e) {
+				e.preventDefault();
+				thumbnailDropArea.classList.remove('drop-area-hover');
+			});
+			thumbnailDropArea.addEventListener('drop', function(e) {
+				e.preventDefault();
+				thumbnailDropArea.classList.remove('drop-area-hover');
+				if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+					thumbnailInput.files = e.dataTransfer.files;
+					updateThumbnailPreview(e.dataTransfer.files[0]);
+				}
+			});
 			thumbnailInput.addEventListener('change', function(event) {
 				updateThumbnailPreview(event.target.files[0]);
 			});
@@ -159,24 +234,57 @@
 			if (thumbnailInput.files && thumbnailInput.files[0]) {
 				updateThumbnailPreview(thumbnailInput.files[0]);
 			}
-			// Preview Hero Image
+
+			// Drag & Drop Hero
+			const heroDropArea = document.getElementById('hero-drop-area');
 			const heroInput = document.getElementById('hero_file');
-			const heroPreviewContainer = document.getElementById('hero-preview-container');
 			const heroPreview = document.getElementById('hero-preview');
+			const heroDropText = document.getElementById('hero-drop-text');
+
+			const heroPreviewWrapper = document.getElementById('hero-preview-wrapper');
+			const heroRemoveBtn = document.getElementById('hero-remove-btn');
 
 			function updateHeroPreview(file) {
 				if (file) {
 					const reader = new FileReader();
 					reader.onload = function(e) {
 						heroPreview.src = e.target.result;
-						heroPreviewContainer.style.display = 'block';
+						heroPreviewWrapper.classList.remove('d-none');
+						heroDropText.classList.add('d-none');
 					};
 					reader.readAsDataURL(file);
 				} else {
 					heroPreview.src = '#';
-					heroPreviewContainer.style.display = 'none';
+					heroPreviewWrapper.classList.add('d-none');
+					heroDropText.classList.remove('d-none');
 				}
 			}
+
+			heroRemoveBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				heroInput.value = '';
+				updateHeroPreview(null);
+			});
+
+			heroDropArea.addEventListener('click', function() {
+				heroInput.click();
+			});
+			heroDropArea.addEventListener('dragover', function(e) {
+				e.preventDefault();
+				heroDropArea.classList.add('drop-area-hover');
+			});
+			heroDropArea.addEventListener('dragleave', function(e) {
+				e.preventDefault();
+				heroDropArea.classList.remove('drop-area-hover');
+			});
+			heroDropArea.addEventListener('drop', function(e) {
+				e.preventDefault();
+				heroDropArea.classList.remove('drop-area-hover');
+				if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+					heroInput.files = e.dataTransfer.files;
+					updateHeroPreview(e.dataTransfer.files[0]);
+				}
+			});
 			heroInput.addEventListener('change', function(event) {
 				updateHeroPreview(event.target.files[0]);
 			});
