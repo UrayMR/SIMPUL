@@ -50,35 +50,41 @@
                     @enderror
                 </div>
 
-                <div class="mb-2">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me" />
-                        <label class="form-check-label" for="remember-me">
-                            Ingat Saya
+                        <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                        <label class="form-check-label text-muted" for="remember">
+                            Ingat saya
                         </label>
                     </div>
+
                 </div>
+
 
                 <div class="mb-3">
                     <button class="btn btn-primary d-grid w-100" type="submit">Masuk</button>
                 </div>
-                <div class="text-center mb-3">
-                    <span class="text-muted">Belum punya akun?</span>
-                    <a href="{{ route('register.student.index') }}"
-                        class="fw-semibold text-app-primary text-decoration-none">
-                        Daftar sekarang
+                <div class="d-flex justify-content-center gap-2 mt-3 flex-wrap">
+
+                    {{-- DAFTAR --}}
+                    <a href="{{ route('register.student.index') }}" class="btn btn-outline-secondary  btn-md px-4">
+                        <i class="bi bi-person-plus me-1"></i>
+                        Daftar Akun
                     </a>
+
+                    {{-- HUBUNGI ADMIN --}}
+                    <a href="/#contact" class="btn btn-outline-secondary btn-md px-4">
+                        <i class="bi bi-headset me-1"></i>
+                        Hubungi Admin
+                    </a>
+
                 </div>
+
             </form>
 
-            @guest
-                <p class="text-center">
-                    <span>Tidak dapat masuk? </span>
-                    <a href="/#contact" class="text-app-primary ">
-                        <span>Hubungi Kami</span>
-                    </a>
-                </p>
-            @endguest
+
+
         </div>
     </div>
 @endsection

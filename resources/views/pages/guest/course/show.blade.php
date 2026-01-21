@@ -118,63 +118,109 @@
                 <div class="row g-5 align-items-start">
 
                     <!-- LEFT : CATEGORY - AUTHOR -->
-                    <div class="col-lg-7">
-                        <h6 class="fw-bold mb-3 text-app-primary">
-                            Informasi Kursus
-                        </h6>
-                        <div class="d-flex flex-wrap gap-3 gap-lg-5">
+                   <div class="col-lg-7">
+                    <h6 class="fw-bold mb-4 text-app-primary fs-5">
+                        Informasi Detail Kursus
+                    </h6>
 
-                            {{-- META GROUP 1 --}}
-                            <ul class="list-unstyled text-muted mb-0">
-                                <li class="mb-2 d-flex align-items-center text-app-primary">
-                                    <i class="bi bi-bookmark-fill text-app-primary me-2"></i>
-                                    {{ $course->category->name }}
-                                </li>
+                    <div class="row g-3">
 
-                                <li class="mb-2 d-flex align-items-center text-app-primary">
-                                    <i class="bi bi-people-fill text-app-primary me-2"></i>
-                                    {{ $course->enrollments_count }} Terjual
-                                </li>
-                            </ul>
-
-                            {{-- META GROUP 2 --}}
-                            <ul class="list-unstyled text-muted mb-0">
-                                <li class="mb-2 d-flex align-items-center text-app-primary">
-                                    <i class="bx bx-calendar text-app-primary me-2"></i>
-                                    {{ $course->created_at->translatedFormat('l, d F Y H:i') }} WIB
-                                </li>
-
-                                <li class="d-flex align-items-center text-app-primary">
-                                    <i class="bi bi-person-fill text-app-primary me-2"></i>
-                                    {{ $course->teacher->user->name }}
-                                </li>
-                            </ul>
-
+                        {{-- Kategori --}}
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 rounded-4 border d-flex align-items-start gap-3 h-100">
+                                <i class="bi bi-bookmark-fill fs-4 text-app-primary"></i>
+                                <div>
+                                    <div class="text-muted small">Kategori</div>
+                                    <div class="fw-semibold text-app-gray">
+                                        {{ $course->category->name }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        {{-- Terjual --}}
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 rounded-4 border d-flex align-items-start gap-3 h-100">
+                                <i class="bi bi-people-fill fs-4 text-app-primary"></i>
+                                <div>
+                                    <div class="text-muted small">Total Terjual</div>
+                                    <div class="fw-semibold text-app-gray">
+                                        {{ $course->enrollments_count }} Peserta
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Tanggal Dibuat --}}
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 rounded-4 border d-flex align-items-start gap-3 h-100">
+                                <i class="bi bi-calendar-event fs-4 text-app-primary"></i>
+                                <div>
+                                    <div class="text-muted small">Tanggal Dibuat</div>
+                                    <div class="fw-semibold text-app-gray">
+                                        {{ $course->created_at->translatedFormat('l, d F Y H:i') }} WIB
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Pengajar --}}
+                        <div class="col-12 col-md-6">
+                            <div class="p-3 rounded-4 border d-flex align-items-start gap-3 h-100">
+                                <i class="bi bi-person-fill fs-4 text-app-primary"></i>
+                                <div>
+                                    <div class="text-muted small">Pengajar</div>
+                                    <div class="fw-semibold text-app-gray">
+                                        {{ $course->teacher->user->name }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+                </div>
 
                     <!-- RIGHT : CONTACT -->
-                    <div class="col-lg-5">
-                        <h6 class="fw-bold mb-3 text-app-primary">
-                            Hubungi Pengajar
-                        </h6>
+                    <!-- RIGHT : CONTACT -->
+<div class="col-lg-5">
+    <h6 class="fw-bold mb-4 text-app-primary fs-5">
+        Hubungi Pengajar
+    </h6>
 
-                        <div class="mb-2 d-flex align-items-center">
-                            <i class="bi bi-envelope-fill text-app-primary me-2"></i>
-                            <a href="mailto:{{ $course->teacher->user->email }}"
-                                class="text-decoration-none text-app-primary">
-                                {{ $course->teacher->user->email }}
-                            </a>
-                        </div>
+    <div class="row g-3">
 
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-whatsapp text-app-primary  me-2"></i>
-                            <a href="https://wa.me/6285335589526?text={{ urlencode('Halo, saya ingin bertanya terkait kursus ' . $course->title) }}"
-                                target="_blank" class="text-decoration-none  text-app-primary ">
-                                Chat via WhatsApp
-                            </a>
-                        </div>
-                    </div>
+        {{-- Email --}}
+        <div class="col-12">
+            <div class="p-3 rounded-4 border d-flex align-items-start gap-3 h-100">
+                <i class="bi bi-envelope-fill fs-4 text-app-primary"></i>
+                <div>
+                    <div class="text-muted small">Email</div>
+                    <a href="mailto:{{ $course->teacher->user->email }}"
+                        class="fw-semibold text-app-gray text-decoration-none">
+                        {{ $course->teacher->user->email }}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{-- WhatsApp --}}
+        <div class="col-12">
+            <div class="p-3 rounded-4 border d-flex align-items-start gap-3 h-100">
+                <i class="bi bi-whatsapp fs-4 text-app-primary"></i>
+                <div>
+                    <div class="text-muted small">WhatsApp</div>
+                    <a href="https://wa.me/6285335589526?text={{ urlencode('Halo, saya ingin bertanya terkait kursus ' . $course->title) }}"
+                        target="_blank"
+                        class="fw-semibold text-app-gray text-decoration-none">
+                        Chat via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
                 </div>
 
@@ -309,6 +355,20 @@
 
                 </div>
 
+            </div>
+        </div>
+        {{-- ACTION BUTTONS --}}
+        <div class="container py-4">
+            <div
+                class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3  pt-4">
+
+                {{-- LEFT : BACK --}}
+                <a href="{{ route('course.index') }}" class="btn btn-outline-secondary rounded px-4">
+                    <i class="bi bi-arrow-left me-2"></i>
+                    Kembali
+                </a>
+
+               
             </div>
         </div>
     </section>

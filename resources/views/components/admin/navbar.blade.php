@@ -1,6 +1,6 @@
 <style>
     :root {
-        --primary: #008080;
+        --primary: #1e3a8a;
     }
 
     /* USER DROPDOWN */
@@ -66,7 +66,7 @@
     .dropdown-menu .dropdown-item:hover,
     .dropdown-menu .dropdown-item:focus,
     .dropdown-menu .dropdown-item.active {
-        background-color: #E9F5F4 !important;
+        background-color: #c1d9ff !important;
         color: var(--primary) !important;
     }
 </style>
@@ -141,9 +141,7 @@
                         </div>
                     </li>
 
-                    <li><a class="dropdown-item dropdown-user-item" href="{{ route('admin.settings.index') }}"><i class="bx bx-cog"></i>Pengaturan
-                            Akun</a>
-                    </li>
+                    
                     <li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}">
                             <i class="bx bx-power-off"></i> Keluar</a>
                     </li>

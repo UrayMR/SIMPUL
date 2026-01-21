@@ -23,7 +23,7 @@
 				</a>
 			</li>
 			<li class="menu-item {{ request()->is(ltrim('home', '/')) ? 'active' : '' }}">
-				<a href="" class="menu-link text-decoration-none">
+				<a href="{{ route('beranda') }}" class="menu-link text-decoration-none">
 					<i class="menu-icon tf-icons bx bx-home-circle"></i>
 					<div>Halaman Utama</div>
 				</a>
@@ -43,7 +43,7 @@
 
 			<li class="menu-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
 				<a href="{{ route('admin.categories.index') }}" class="menu-link text-decoration-none">
-					<i class="menu-icon tf-icons bx bx-tag"></i>
+					<i class="menu-icon tf-icons bi bi-bookmark"></i>
 					<div>Data Kategori</div>
 				</a>
 			</li>
