@@ -179,12 +179,14 @@
                  </div>
                  @if ($owned)
                      <button class="btn btn-app-secondary w-100">
-                         Lihat Kelas
+                         Lihat Kursus
                      </button>
                  @else
-                     <button class="btn btn-app-secondary w-100">
+                 <form action="/payment">
+                     <button type="submit" class="btn btn-app-secondary w-100">
                          Beli
                      </button>
+                </form>
                  @endif
              </div>
 

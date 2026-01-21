@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $course->title ?? 'Detail Kelas')
+@section('title', $course->title ?? 'Detail Kursus')
 
 @section('content')
     <style>
@@ -87,7 +87,7 @@
                     <!-- LEFT : VIDEO -->
                     <div class="col-lg-7 order-1 order-lg-1">
                         <div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-sm">
-                            <iframe src="https://www.youtube.com/embed/{{ $course->video_url }}" title="Preview Kelas"
+                            <iframe src="https://www.youtube.com/embed/{{ $course->video_url }}" title="Preview Kursus"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen>
                             </iframe>
@@ -115,7 +115,7 @@
                             </li>
                             <li>
                                 <i class="bx bx-calendar text-app-primary me-2"></i>
-                                {{ $course->created_at }}
+                              {{ $course->created_at->translatedFormat('l, d F Y H:i') }} WIB
                             </li>
                             <li>
                                 <i class="bi bi-person-fill text-app-primary me-2"></i>
@@ -146,24 +146,24 @@
                         <!-- META INFO -->
                         <div class="d-flex flex-wrap align-items-center gap-4 mb-4">
 
-                            <div class="d-flex align-items-center gap-2 text-app-primary">
+                            <div class="d-flex align-items-center gap-1 text-app-primary">
                                 <i class="bi bi-bookmark-fill me-1"></i>
                                 <span> {{ $course->category->name }}</span>
                             </div>
-                            <div class="d-flex align-items-center gap-2 text-app-primary">
+                            <div class="d-flex align-items-center gap-1 text-app-primary">
                                 <i class="bi bi-people-fill me-1"></i>
                                 <span>0 Terjual</span>
                             </div>
-                            <div class="d-flex align-items-center gap-2 text-app-primary">
+                            <div class="d-flex align-items-center gap-1 text-app-primary">
                                 <i class="bx bx-calendar me-2"></i>
-                                {{ $course->created_at }}
+                                {{ $course->created_at->translatedFormat('l, d F Y H:i') }} WIB
                             </div>
-                            <div class="d-flex align-items-center gap-2 text-app-primary">
+                            <div class="d-flex align-items-center gap-1 text-app-primary">
                                 <i class="bi bi-person-fill me-1"></i>
                                 <span>{{ $course->teacher->user->name }}</span>
                             </div>
 
-                            <div class="d-flex align-items-center gap-2 text-app-primary">
+                            <div class="d-flex align-items-center gap-1 text-app-primary">
                                 <i class="bi bi-cash "></i>
                                 <div
                                     class="course-price {{ (float) $course->price === 0.0 ? 'text-app-primary' : 'text-dark' }}">
@@ -176,7 +176,7 @@
 
                         <!-- CTA -->
                         <a href="#" class="btn btn-app-secondary px-4 py-2 fw-semibold rounded-3">
-                            Beli Kelas
+                            Beli Kursus
                         </a>
                     </div>
 

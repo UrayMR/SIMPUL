@@ -10,7 +10,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        $courses = Course::orderBy('enrollments_count', 'asc')->take(4)->get();
+        $courses = Course::orderBy('enrollments_count', 'desc')->take(4)->get();
         return view('pages.guest.home', compact('courses'));
     }
 }

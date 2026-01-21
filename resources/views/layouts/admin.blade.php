@@ -10,7 +10,7 @@
 	<title>@yield('title') - {{ config('app.name') }}</title>
 
 	<!-- Favicon -->
-	<link rel="icon" type="image/svg+xml" href="{{ asset('assets/img/logo/Logo Simpul.svg') }}" />
+	<link rel="icon" type="image/svg+xml" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
 
 	<!-- Google Font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />

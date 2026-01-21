@@ -130,4 +130,8 @@ class TransactionController extends Controller
         $transaction->save();
         return redirect()->route('admin.transactions.show', $transaction)->with('success', 'Transaksi berhasil direject.');
     }
+
+    public function payment(){
+        return view('pages.guest.transaction.payment');
+    }
 }

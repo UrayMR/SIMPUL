@@ -214,7 +214,7 @@
 
         <!-- Toggle -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLanding">
-           <i class="bi bi-list fs-3 text-app-primary"></i>
+            <i class="bi bi-list fs-3 text-app-primary"></i>
         </button>
 
         <!-- Logo Mobile -->
@@ -263,9 +263,8 @@
                                 </div> --}}
                             </div>
                         </li>
-                          <li><a class="dropdown-item dropdown-user-item"
-                            href="{{ route('user.settings.index') }}">
-                            <i class="bi bi-book"></i> Kelas Saya</a></li>
+                        <li><a class="dropdown-item dropdown-user-item" href="/kursus?search=&sort_price=&ownership=true">
+                                <i class="bi bi-book"></i> Kursus Saya</a></li>
                         <li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}"><i
                                     class="bx bx-cog"></i>
                                 Pengaturan Akun</a></li>
@@ -278,79 +277,77 @@
         @endauth
 
         <!-- Menu -->
-       <div class="collapse navbar-collapse" id="navbarLanding">
+        <div class="collapse navbar-collapse" id="navbarLanding">
 
-    <!-- ===== MENU TENGAH ===== -->
-    <ul class="navbar-nav mx-auto gap-lg-4 align-items-lg-center">
+            <!-- ===== MENU TENGAH ===== -->
+            <ul class="navbar-nav mx-auto gap-lg-4 align-items-lg-center">
 
-        <li class="nav-item">
-            <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
+                </li>
 
-        <li class="nav-item">
-            <a class="nav-link {{ request()->is('kursus*') ? 'active' : '' }}" href="/kursus">Kelas</a>
-        </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('kursus*') ? 'active' : '' }}" href="/kursus">Kursus</a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is(patterns: 'Karir*') ? 'active' : '' }}" href="/layanan">Lowongan Karir</a>
-            </li>
-            
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is(patterns: 'lowongan-karir*') ? 'active' : '' }}"
+                        href="/lowongan-karir">Lowongan Karir</a>
+                </li>
 
-       
-    </ul>
 
-    <!-- ===== RIGHT ACTION (LOGIN / PROFILE) ===== -->
-    <ul class="navbar-nav align-items-lg-center gap-3">
 
-        @auth
-            <li class="nav-item dropdown d-none d-lg-block">
-                <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                        @if (!empty($profilePhotoUrl))
-                            <img src="{{ $profilePhotoUrl }}" class="rounded-circle"
-                                style="width:40px;height:40px;object-fit:cover;">
-                        @else
-                            <div class="d-flex align-items-center justify-content-center rounded-circle text-white"
-                                style="width:40px;height:40px;font-weight:600;background: var(--primary);">
-                                {{ $initials ?? 'U' }}
+            </ul>
+
+            <!-- ===== RIGHT ACTION (LOGIN / PROFILE) ===== -->
+            <ul class="navbar-nav align-items-lg-center gap-3">
+
+                @auth
+                    <li class="nav-item dropdown d-none d-lg-block">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                            <div class="avatar avatar-online">
+                                @if (!empty($profilePhotoUrl))
+                                    <img src="{{ $profilePhotoUrl }}" class="rounded-circle"
+                                        style="width:40px;height:40px;object-fit:cover;">
+                                @else
+                                    <div class="d-flex align-items-center justify-content-center rounded-circle text-white"
+                                        style="width:40px;height:40px;font-weight:600;background: var(--primary);">
+                                        {{ $initials ?? 'U' }}
+                                    </div>
+                                @endif
                             </div>
-                        @endif
-                    </div>
-                </a>
+                        </a>
 
-                <ul class="dropdown-menu dropdown-menu-end dropdown-user-menu shadow">
-                    <li class="dropdown-user-header">
-                        <strong>{{ auth()->user()->name }}</strong>
-                        {{-- <div style="font-size: 0.8rem; color:#777;">Admin</div> --}}
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-user-menu shadow">
+                            <li class="dropdown-user-header">
+                                <strong>{{ auth()->user()->name }}</strong>
+                                {{-- <div style="font-size: 0.8rem; color:#777;">Admin</div> --}}
+                            </li>
+
+                            <li><a class="dropdown-item dropdown-user-item" href="/kursus?search=&sort_price=&ownership=true">
+                                    <i class="bi bi-book"></i> Kursus Saya</a></li>
+                            <li><a class="dropdown-item dropdown-user-item" href="{{ route('user.settings.index') }}">
+                                    <i class="bx bx-cog"></i> Pengaturan Akun</a></li>
+                            <li><a class="dropdown-item dropdown-user-item text-danger" href="{{ route('logout') }}">
+                                    <i class="bx bx-power-off"></i> Keluar</a></li>
+                        </ul>
                     </li>
+                @endauth
 
-                    <li><a class="dropdown-item dropdown-user-item"
-                            href="{{ route('user.settings.index') }}">
-                            <i class="bi bi-book"></i> Kelas Saya</a></li>
-                    <li><a class="dropdown-item dropdown-user-item"
-                            href="{{ route('user.settings.index') }}">
-                            <i class="bx bx-cog"></i> Pengaturan Akun</a></li>
-                    <li><a class="dropdown-item dropdown-user-item text-danger"
-                            href="{{ route('logout') }}">
-                            <i class="bx bx-power-off"></i> Keluar</a></li>
-                </ul>
-            </li>
-        @endauth
+                @guest
+                    <li class="nav-item">
+                        <a href="/login"
+                            class="btn btn-app-primary w-100 w-lg-auto px-4 py-2 rounded-3 fw-semibold mt-3 mt-lg-0 text-center">
+                            Masuk
+                        </a>
 
-        @guest
-            <li class="nav-item">
-               <a href="/login"
-    class="btn btn-app-primary w-100 w-lg-auto px-4 py-2 rounded-3 fw-semibold mt-3 mt-lg-0 text-center">
-    Masuk
-</a>
+                    </li>
+                    {{-- "btn btn-primary px-4 py-2 rounded-3 fw-semibold " --}}
+                @endguest
 
-            </li>
-            {{-- "btn btn-primary px-4 py-2 rounded-3 fw-semibold " --}}
-        @endguest
+            </ul>
 
-    </ul>
-
-</div>
+        </div>
 
     </div>
 </nav>
