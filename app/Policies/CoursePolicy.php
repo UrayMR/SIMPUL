@@ -13,7 +13,7 @@ class CoursePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === User::ROLE_ADMIN;
+        return $user->role === User::ROLE_ADMIN || $user->role === User::ROLE_TEACHER;
     }
 
     /**
@@ -21,7 +21,13 @@ class CoursePolicy
      */
     public function view(User $user, Course $course): bool
     {
-        return $user->role === User::ROLE_ADMIN;
+        if ($user->role === User::ROLE_ADMIN) {
+            return true;
+        }
+        if ($user->role === User::ROLE_TEACHER && $course->teacher_id === optional($user->teacher)->id) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -29,7 +35,7 @@ class CoursePolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === User::ROLE_ADMIN;
+        return $user->role === User::ROLE_ADMIN || $user->role === User::ROLE_TEACHER;
     }
 
     /**
@@ -37,7 +43,13 @@ class CoursePolicy
      */
     public function update(User $user, Course $course): bool
     {
-        return $user->role === User::ROLE_ADMIN;
+        if ($user->role === User::ROLE_ADMIN) {
+            return true;
+        }
+        if ($user->role === User::ROLE_TEACHER && $course->teacher_id === optional($user->teacher)->id) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -45,7 +57,13 @@ class CoursePolicy
      */
     public function delete(User $user, Course $course): bool
     {
-        return $user->role === User::ROLE_ADMIN;
+        if ($user->role === User::ROLE_ADMIN) {
+            return true;
+        }
+        if ($user->role === User::ROLE_TEACHER && $course->teacher_id === optional($user->teacher)->id) {
+            return true;
+        }
+        return false;
     }
 
     /**

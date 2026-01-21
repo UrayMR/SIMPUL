@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Kursus Baru')
+@section('title', 'Edit Kursus')
 
 @section('content')
 	<section class="bg-app-primary text-white py-5 py-lg-6 mb-0">
@@ -11,10 +11,10 @@
 						Kursus Saya
 					</span>
 					<h1 class="fw-extrabold display-5 mb-3 lh-sm text-white">
-						Buat Kursus Baru
+						Edit Kursus
 					</h1>
 					<p class="fs-5 opacity-75 mb-0">
-						Isi detail kursus yang ingin Anda buat di bawah ini.
+						Ubah detail kursus Anda di bawah ini.
 					</p>
 				</div>
 			</div>
@@ -25,20 +25,21 @@
 			<div class="row justify-content-center">
 				<div class="col-lg-8">
 					<div class="bg-white rounded-4 p-4">
-						<form action="{{ route('teacher.courses.store') }}" method="POST" enctype="multipart/form-data">
+						<form action="{{ route('teacher.courses.update', $course->id) }}" method="POST" enctype="multipart/form-data">
 							@csrf
+							@method('PUT')
 							<div class="row">
 								<div class="col-md-6 mb-3">
 									<label for="title" class="form-label fw-semibold">Judul Kursus <span class="text-danger">*</span></label>
 									<input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
-										value="{{ old('title') }}" required maxlength="150" placeholder="Masukkan judul kursus">
+										value="{{ old('title', $course->title) }}" required maxlength="150" placeholder="Masukkan judul kursus">
 									@error('title')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
 								</div>
 								<div class="col-md-6 mb-3">
 									<label for="category_id" class="form-label fw-semibold">Kategori <span class="text-danger">*</span></label>
-									<x-select-input id="category_id" name="category_id" label="Kategori" :options="$categories" :selected="old('category_id')"
+									<x-select-input id="category_id" name="category_id" label="Kategori" :options="$categories" :selected="old('category_id', $course->category_id)"
 										required />
 									@error('category_id')
 										<div class="invalid-feedback">{{ $message }}</div>
@@ -50,7 +51,8 @@
 									<label for="price" class="form-label fw-semibold">Harga Kursus (Rp) <span
 											class="text-danger">*</span></label>
 									<input type="number" name="price" id="price" class="form-control @error('price') is-invalid @enderror"
-										value="{{ old('price', 0) }}" min="0" step="any" required placeholder="Masukkan harga kursus">
+										value="{{ old('price', $course->price) }}" min="0" step="any" required
+										placeholder="Masukkan harga kursus">
 									@error('price')
 										<div class="invalid-feedback">{{ $message }}</div>
 									@enderror
@@ -59,7 +61,8 @@
 									<label for="video_url" class="form-label fw-semibold">URL Video Youtube <span
 											class="text-danger">*</span></label>
 									<input type="url" name="video_url" id="video_url"
-										class="form-control @error('video_url') is-invalid @enderror" value="{{ old('video_url') }}"
+										class="form-control @error('video_url') is-invalid @enderror"
+										value="{{ old('video_url', 'https://www.youtube.com/watch?v=' . $course->video_url) }}"
 										placeholder="https://www.youtube.com/watch?v=..." required>
 									@error('video_url')
 										<div class="invalid-feedback">{{ $message }}</div>
@@ -71,7 +74,7 @@
 								<label for="description" class="form-label fw-semibold">Deskripsi Kursus</label>
 								<textarea name="description" id="description" rows="4"
 								 class="form-control @error('description') is-invalid @enderror" maxlength="1000"
-								 placeholder="Masukkan deskripsi kursus (opsional)">{{ old('description') }}</textarea>
+								 placeholder="Masukkan deskripsi kursus (opsional)">{{ old('description', $course->description) }}</textarea>
 								@error('description')
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
@@ -81,17 +84,19 @@
 								<label for="hero_file" class="form-label fw-semibold">Gambar Banner <span class="text-danger">*</span></label>
 								<div id="hero-drop-area" class="drop-area mb-2 position-relative">
 									<div id="hero-drop-content" class="drop-content">
-										<div id="hero-drop-text" class="text-app-primary fw-semibold">Seret & lepas gambar di sini<br><span
-												class="fw-normal text-app-gray">atau klik untuk memilih</span></div>
+										<div id="hero-drop-text" class="text-app-primary fw-semibold {{ $course->hero_path ? 'd-none' : '' }}">Seret &
+											lepas gambar di sini<br><span class="fw-normal text-app-gray">atau klik untuk memilih</span></div>
 									</div>
-									<div id="hero-preview-wrapper" class="preview-wrapper d-none">
-										<img id="hero-preview" src="#" alt="Preview Hero" class="img-thumbnail preview-img">
-										<button type="button" id="hero-remove-btn" class="btn btn-sm btn-light preview-remove"
+									<div id="hero-preview-wrapper" class="preview-wrapper {{ $course->hero_path ? '' : 'd-none' }}">
+										<img id="hero-preview" src="{{ $course->hero_path ? asset('storage/' . $course->hero_path) : '#' }}"
+											alt="Preview Hero" class="img-thumbnail preview-img {{ $course->hero_path ? '' : 'd-none' }}">
+										<button type="button" id="hero-remove-btn"
+											class="btn btn-sm btn-light preview-remove {{ $course->hero_path ? '' : 'd-none' }}"
 											aria-label="Hapus gambar">&times;</button>
 									</div>
 								</div>
 								<input type="file" name="hero_file" id="hero_file"
-									class="form-control d-none @error('hero_file') is-invalid @enderror" accept="image/*" required>
+									class="form-control d-none @error('hero_file') is-invalid @enderror" accept="image/*">
 								@error('hero_file')
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
@@ -100,21 +105,31 @@
 
 							<div class="mb-3">
 								<div class="form-check mb-3">
-									<input class="form-check-input" type="checkbox" id="enable-thumbnail">
-									<label class="form-check-label" for="enable-thumbnail">
-										Custom Thumbnail
+									@php
+										$isCustomThumbnail =
+										    $course->thumbnail_path &&
+										    !str_contains($course->thumbnail_path, 'thumb_') &&
+										    $course->thumbnail_path !== null;
+									@endphp
+									<input class="form-check-input" type="checkbox" id="enable-thumbnail"
+										{{ $isCustomThumbnail ? 'checked' : '' }}>
+									Custom Thumbnail
 									</label>
 								</div>
-								<div id="thumbnail-upload-section">
+								<div id="thumbnail-upload-section" style="display: {{ $isCustomThumbnail ? '' : 'none' }};">
 									<label for="thumbnail_file" class="form-label fw-semibold">Gambar Thumbnail (Opsional)</label>
 									<div id="thumbnail-drop-area" class="drop-area mb-2 position-relative">
 										<div id="thumbnail-drop-content" class="drop-content">
-											<div id="thumbnail-drop-text" class="text-app-primary fw-semibold">Seret & lepas gambar di sini<br><span
-													class="fw-normal text-app-gray">atau klik untuk memilih</span></div>
+											<div id="thumbnail-drop-text"
+												class="text-app-primary fw-semibold {{ $isCustomThumbnail ? 'd-none' : '' }}">Seret & lepas gambar di
+												sini<br><span class="fw-normal text-app-gray">atau klik untuk memilih</span></div>
 										</div>
-										<div id="thumbnail-preview-wrapper" class="preview-wrapper d-none">
-											<img id="thumbnail-preview" src="#" alt="Preview Thumbnail" class="img-thumbnail preview-img">
-											<button type="button" id="thumbnail-remove-btn" class="btn btn-sm btn-light preview-remove"
+										<div id="thumbnail-preview-wrapper" class="preview-wrapper {{ $isCustomThumbnail ? '' : 'd-none' }}">
+											<img id="thumbnail-preview"
+												src="{{ $isCustomThumbnail ? asset('storage/' . $course->thumbnail_path) : '#' }}" alt="Preview Thumbnail"
+												class="img-thumbnail preview-img {{ $isCustomThumbnail ? '' : 'd-none' }}">
+											<button type="button" id="thumbnail-remove-btn"
+												class="btn btn-sm btn-light preview-remove {{ $isCustomThumbnail ? '' : 'd-none' }}"
 												aria-label="Hapus gambar">&times;</button>
 										</div>
 									</div>
@@ -130,11 +145,9 @@
 							<div class="d-flex justify-content-end gap-2">
 								<a href="{{ route('teacher.courses.index') }}" class="btn btn-secondary">Batal</a>
 								<button type="submit" class="btn btn-app-primary fw-semibold" id="submitCourseBtn">
-									<span class="button-content">Tambah Kursus</span>
-									<span class="spinner-content d-none">
-										<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-										Sedang Menambah...
-									</span>
+									<span class="button-content">Simpan Perubahan</span>
+									<span class="spinner-content d-none"><span class="spinner-border spinner-border-sm"></span>
+										Menyimpan...</span>
 								</button>
 							</div>
 						</form>
@@ -171,7 +184,8 @@
 			}
 			enableThumbnail.addEventListener('change', toggleThumbnailSection);
 			toggleThumbnailSection();
-			const courseForm = document.querySelector('form[action="{{ route('teacher.courses.store') }}"]');
+			const courseForm = document.querySelector(
+				'form[action="{{ route('teacher.courses.update', $course->id) }}"]');
 			const submitCourseBtn = document.getElementById('submitCourseBtn');
 			if (courseForm && submitCourseBtn) {
 				courseForm.addEventListener('submit', function() {
@@ -230,7 +244,6 @@
 			thumbnailInput.addEventListener('change', function(event) {
 				updateThumbnailPreview(event.target.files[0]);
 			});
-			// If file already selected (after validation error), show preview
 			if (thumbnailInput.files && thumbnailInput.files[0]) {
 				updateThumbnailPreview(thumbnailInput.files[0]);
 			}
