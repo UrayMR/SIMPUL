@@ -4,6 +4,15 @@
 
 @section('content')
 	<style>
+		/* Pastikan modal dan backdrop di atas navbar */
+		.modal {
+			z-index: 11000 !important;
+		}
+
+		.modal-backdrop {
+			z-index: 10990 !important;
+		}
+
 		.course-preview h3 {
 			font-size: 1.6rem;
 		}
@@ -142,14 +151,71 @@
 					<a href="{{ route('teacher.courses.edit', $course) }}" class="btn btn-app-outline-primary fw-semibold">
 						<i class="bi bi-pencil"></i> Edit
 					</a>
-					<form action="{{ route('teacher.courses.destroy', $course) }}" method="POST" class="d-inline"
-						onsubmit="return confirm('Yakin ingin menghapus kursus ini?')">
-						@csrf
-						@method('DELETE')
-						<button class="btn btn-outline-danger fw-semibold"><i class="bi bi-trash"></i> Hapus</button>
-					</form>
+					<button type="button" class="btn btn-outline-danger fw-semibold" data-bs-toggle="modal"
+						data-bs-target="#modalDeleteCourse">
+						<i class="bi bi-trash"></i> Hapus
+					</button>
 				</div>
 			</div>
 		</div>
 	</section>
+
+	{{-- Modal Konfirmasi Hapus --}}
+	<div class="modal fade" id="modalDeleteCourse" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content rounded-4 shadow-lg border-0 p-2">
+				<div class="modal-header border-0 pb-0">
+					<div class="d-flex align-items-center gap-2 w-100">
+						<i class="bi bi-exclamation-triangle-fill text-danger fs-3 me-2"></i>
+						<div class="flex-grow-1">
+							<h5 class="modal-title mb-0 fw-bold text-danger">Konfirmasi Hapus</h5>
+							<small class="text-muted">Aksi ini tidak dapat dibatalkan</small>
+						</div>
+						<button type="button" class="btn-close me-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+				</div>
+				<div class="modal-body pt-3 pb-0 px-4">
+					<p class="mb-3 fs-6">Apakah Anda yakin ingin menghapus
+						<strong>{{ Str::limit($course->title, 15, '...') }}</strong>?
+					</p>
+				</div>
+				<div class="modal-footer border-0 pt-0 px-4 pb-4 d-flex justify-content-end gap-2">
+					<button type="button" class="btn btn-light border" data-bs-dismiss="modal">Batal</button>
+					<form action="{{ route('teacher.courses.destroy', $course) }}" method="POST" class="d-inline">
+						@csrf
+						@method('DELETE')
+						<button type="submit" class="btn btn-danger px-4 btn-delete-course">
+							<span class="button-content"><i class="bi bi-trash me-1"></i> Hapus</span>
+							<span class="spinner-content d-none">
+								<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+								Menghapus
+							</span>
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
+
+@push('scripts')
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// Spinner for delete course (match admin/teacher index logic)
+			document.querySelectorAll('.modal form').forEach(function(form) {
+				form.addEventListener('submit', function(e) {
+					var btn = form.querySelector('.btn-delete-course');
+					if (btn) {
+						btn.disabled = true;
+						var buttonContent = btn.querySelector('.button-content');
+						var spinnerContent = btn.querySelector('.spinner-content');
+						if (buttonContent && spinnerContent) {
+							buttonContent.classList.add('d-none');
+							spinnerContent.classList.remove('d-none');
+						}
+					}
+				});
+			});
+		});
+	</script>
+@endpush
