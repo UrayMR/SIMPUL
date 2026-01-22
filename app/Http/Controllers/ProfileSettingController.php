@@ -21,15 +21,14 @@ class ProfileSettingController extends Controller
 
         $data = $request->validated();
 
-        if ($request->hasFile('profile_picture')) {
+        if ($request->hasFile('profile_picture_file')) {
             if ($user->profile_picture_path && Storage::disk('public')->exists($user->profile_picture_path)) {
                 Storage::disk('public')->delete($user->profile_picture_path);
             }
 
-            $file = $request->file('profile_picture');
-            $filename = 'profile_'.$user->id.'_'.time().'.'.$file->getClientOriginalExtension();
+            $file = $request->file('profile_picture_file');
+            $filename = 'profile_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
             $path = $file->storeAs('profiles', $filename, 'public');
-            $user->profile_picture_path = $path;
         }
 
         $user->name = $data['name'];
@@ -42,6 +41,9 @@ class ProfileSettingController extends Controller
             }
             if ($request->filled('expertise')) {
                 $user->teacher->expertise = $request->input('expertise');
+            }
+            if ($request->hasFile('profile_picture_file')) {
+                $user->teacher->profile_picture_path = $path;
             }
             $user->teacher->save();
         }

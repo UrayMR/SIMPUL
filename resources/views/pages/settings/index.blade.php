@@ -50,7 +50,7 @@
 											<div id="profile-preview-wrapper" class="preview-wrapper position-absolute top-0 start-0 w-100 h-100"
 												style="display:none;">
 												<img id="photoPreview"
-													src="{{ auth()->user()->teacher?->profile_picture_path ? asset('storage/' . auth()->user()->teacher->profile_picture_path) : asset('assets/img/default-profile.png') }}"
+													src="{{ auth()->user()->teacher?->profile_picture_path ? asset('storage/' . auth()->user()->teacher->profile_picture_path) : null }}"
 													alt="Foto Profil" class="w-100 object-fit-cover rounded-3" style="height: calc(100% + 24px)">
 												<button type="button" id="profile-remove-btn"
 													class="btn btn-sm btn-light preview-remove position-absolute end-0 m-2" style="top: -5px;"
@@ -302,7 +302,7 @@
 					reader.readAsDataURL(file);
 				} else {
 					profilePreview.src =
-						"{{ auth()->user()->teacher?->profile_picture_path ? asset('storage/' . auth()->user()->teacher->profile_picture_path) : asset('assets/img/default-profile.png') }}";
+						"{{ auth()->user()->teacher?->profile_picture_path ? asset('storage/' . auth()->user()->teacher->profile_picture_path) : null }}";
 					setPreviewVisible(false);
 				}
 			}

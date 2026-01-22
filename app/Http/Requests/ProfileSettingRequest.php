@@ -30,11 +30,11 @@ class ProfileSettingRequest extends FormRequest
         ];
 
         if ($this->user() && $this->user()->role === User::ROLE_TEACHER) {
-            $profilePhotoRule = $this->isMethod('post')
-              ? ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048']
-              : ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'];
+            $profilePictureRules = $this->isMethod('post')
+                ? ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048']
+                : ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'];
             $rules = array_merge($rules, [
-                'profile_photo' => $profilePhotoRule,
+                'profile_picture_file' => $profilePictureRules,
                 'bio' => ['nullable', 'string', 'max:1000'],
                 'expertise' => ['nullable', 'string', 'max:255'],
             ]);

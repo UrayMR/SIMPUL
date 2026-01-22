@@ -58,7 +58,7 @@
 						<div class="col-12 mb-3">
 							<label for="price" class="form-label">Harga (Rp) <span class="text-danger">*</span></label>
 							<input type="number" name="price" id="price" class="form-control @error('price') is-invalid @enderror"
-								value="{{ old('price', 0) }}" min="0" step="1000" required placeholder="Masukkan harga kursus">
+								value="{{ old('price', 0) }}" min="0" step="any" required placeholder="Masukkan harga kursus">
 							@error('price')
 								<div class="invalid-feedback">{{ $message }}</div>
 							@enderror
