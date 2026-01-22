@@ -117,13 +117,13 @@ class CoursePaymentController extends Controller
         }
 
         $file = $request->file('payment_proof_file');
-        $filename = 'payment_'.$user->id.'_'.time().'.'.$file->getClientOriginalExtension();
+        $filename = 'payment_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
         $path = $file->storeAs('payments', $filename, 'public');
 
         $transaction->payment_proof_path = $path;
         $transaction->save();
 
-        return redirect()->route('course.show', ['course_id' => $courseId])
+        return redirect()->route('course.show', $courseId)
             ->with('success', 'Bukti pembayaran berhasil diunggah. Menunggu verifikasi admin.');
     }
 
