@@ -20,7 +20,7 @@
 						<input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
 							placeholder="Masukkan email anda" value="{{ old('email') }}" required autofocus />
 						@error('email')
-							<div class="text-danger mt-1 small">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 					<div class="mb-3">
@@ -33,7 +33,7 @@
 									class="bi bi-eye-slash"></i></button>
 						</div>
 						@error('password')
-							<div class="text-danger mt-1 small">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 					<div class="d-flex align-items-center justify-content-between mb-3">

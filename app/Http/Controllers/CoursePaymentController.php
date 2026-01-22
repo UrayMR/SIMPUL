@@ -31,12 +31,14 @@ class CoursePaymentController extends Controller
 
         $transaction = Transaction::where('user_id', $user->id)
             ->where('course_id', $courseId)
-            ->where('status', Transaction::STATUS_PENDING)
             ->first();
 
-        if (! $transaction) {
+        if ($transaction->status === Transaction::STATUS_REJECTED) {
             return redirect()->route('course.show', ['course' => $courseId])
-                ->with('error', 'Transaksi pembayaran tidak ditemukan. Silakan coba lagi.');
+                ->with('info', 'Transaksi pembayaran telah ditolak. Silahkan lakukan transaksi kembali.');
+        } elseif ($transaction->status === Transaction::STATUS_APPROVED) {
+            return redirect()->route('course.show', ['course' => $courseId])
+                ->with('info', 'Transaksi pembayaran telah diterima. Selamat belajar!');
         }
 
         // Jika token expired, generate token baru
@@ -117,7 +119,7 @@ class CoursePaymentController extends Controller
         }
 
         $file = $request->file('payment_proof_file');
-        $filename = 'payment_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+        $filename = 'payment_'.$user->id.'_'.time().'.'.$file->getClientOriginalExtension();
         $path = $file->storeAs('payments', $filename, 'public');
 
         $transaction->payment_proof_path = $path;

@@ -25,7 +25,7 @@
 						<input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
 							value="{{ old('name', $category->name) }}" required maxlength="100" placeholder="Masukkan nama kategori">
 						@error('name')
-							<div class="invalid-feedback">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 					<div class="mb-3">
@@ -33,7 +33,7 @@
 						<textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
 						 maxlength="255" rows="3" placeholder="Masukkan deskripsi (opsional)">{{ old('description', $category->description) }}</textarea>
 						@error('description')
-							<div class="invalid-feedback">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 					<div class="d-flex justify-content-end gap-2">

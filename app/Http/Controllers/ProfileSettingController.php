@@ -27,7 +27,7 @@ class ProfileSettingController extends Controller
             }
 
             $file = $request->file('profile_picture_file');
-            $filename = 'profile_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $filename = 'profile_'.$user->id.'_'.time().'.'.$file->getClientOriginalExtension();
             $path = $file->storeAs('profiles', $filename, 'public');
         }
 

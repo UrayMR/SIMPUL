@@ -26,7 +26,7 @@
 							<input type="text" name="title" class="form-control" required placeholder="Masukkan judul kursus"
 								value="{{ old('title', $course->title) }}">
 							@error('title')
-								<div class="invalid-feedback">{{ $message }}</div>
+								<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 							@enderror
 						</div>
 						<div class="col-md-6 mb-3">
@@ -65,7 +65,7 @@
 								value="{{ old('price', $course->price) }}" min="0" step="any" required
 								placeholder="Masukkan harga kursus">
 							@error('price')
-								<div class="invalid-feedback">{{ $message }}</div>
+								<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 							@enderror
 						</div>
 					</div>
@@ -73,7 +73,7 @@
 						<label for="description" class="form-label">Deskripsi <span class="text-danger">*</span></label>
 						<textarea name="description" class="form-control" rows="4" required>{{ old('description', $course->description) }}</textarea>
 						@error('description')
-							<div class="invalid-feedback">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 					<div class="mb-3">

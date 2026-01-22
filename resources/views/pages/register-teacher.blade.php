@@ -22,7 +22,7 @@
 									<input type="text" class="form-control rounded-3 @error('name') is-invalid @enderror" id="name"
 										name="name" value="{{ old('name') }}" required autofocus autocomplete="name">
 									@error('name')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12">
@@ -33,7 +33,7 @@
 											id="email" name="email" value="{{ old('email') }}" required autocomplete="email">
 									</div>
 									@error('email')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12">
@@ -46,7 +46,7 @@
 											id="phone_number" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="tel">
 									</div>
 									@error('phone_number')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12 col-md-6">
@@ -59,7 +59,7 @@
 												class="bi bi-eye-slash"></i></button>
 									</div>
 									@error('password')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12 col-md-6">
@@ -74,7 +74,7 @@
 												class="bi bi-eye-slash"></i></button>
 									</div>
 									@error('password_confirmation')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12">
@@ -88,7 +88,7 @@
 										id="profile_picture_file" name="profile_picture_file" accept="image/*" required>
 									<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 2MB. Ukuran pas foto: 3x4.</small>
 									@error('profile_picture_file')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12">
@@ -96,7 +96,7 @@
 									<textarea class="form-control rounded-3 @error('bio') is-invalid @enderror" id="bio" name="bio"
 									 rows="3">{{ old('bio') }}</textarea>
 									@error('bio')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12">
@@ -104,7 +104,7 @@
 									<input type="text" class="form-control rounded-3 @error('expertise') is-invalid @enderror" id="expertise"
 										name="expertise" value="{{ old('expertise') }}">
 									@error('expertise')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 							</div>

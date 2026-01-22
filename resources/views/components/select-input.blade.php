@@ -50,7 +50,7 @@
 	</ul>
 	<input type="hidden" name="{{ $name }}" id="{{ $id }}" value="{{ $selected }}"
 		@if ($required) required @endif>
-	<div id="error-{{ $id }}" class="invalid-feedback" style="display:none;">
+	<div id="error-{{ $id }}" class="text-danger mt-1 small" style="display:none;">
 		{{ $label }} wajib dipilih.
 	</div>
 </div>

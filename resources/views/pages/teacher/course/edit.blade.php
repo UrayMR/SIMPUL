@@ -34,7 +34,7 @@
 									<input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
 										value="{{ old('title', $course->title) }}" required maxlength="150" placeholder="Masukkan judul kursus">
 									@error('title')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-md-6 mb-3">
@@ -42,7 +42,7 @@
 									<x-select-input id="category_id" name="category_id" label="Kategori" :options="$categories" :selected="old('category_id', $course->category_id)"
 										required />
 									@error('category_id')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 							</div>
@@ -54,7 +54,7 @@
 										value="{{ old('price', $course->price) }}" min="0" step="any" required
 										placeholder="Masukkan harga kursus">
 									@error('price')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-md-6 mb-3">
@@ -65,7 +65,7 @@
 										value="{{ old('video_url', 'https://www.youtube.com/watch?v=' . $course->video_url) }}"
 										placeholder="https://www.youtube.com/watch?v=..." required>
 									@error('video_url')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 							</div>
@@ -76,7 +76,7 @@
 								 class="form-control @error('description') is-invalid @enderror" maxlength="1000"
 								 placeholder="Masukkan deskripsi kursus (opsional)">{{ old('description', $course->description) }}</textarea>
 								@error('description')
-									<div class="invalid-feedback">{{ $message }}</div>
+									<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 								@enderror
 							</div>
 
@@ -98,7 +98,7 @@
 								<input type="file" name="hero_file" id="hero_file"
 									class="form-control d-none @error('hero_file') is-invalid @enderror" accept="image/*">
 								@error('hero_file')
-									<div class="invalid-feedback">{{ $message }}</div>
+									<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 								@enderror
 								<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 4MB.</small>
 							</div>
@@ -136,7 +136,7 @@
 									<input type="file" name="thumbnail_file" id="thumbnail_file"
 										class="form-control d-none @error('thumbnail_file') is-invalid @enderror" accept="image/*">
 									@error('thumbnail_file')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 									<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 2MB.</small>
 								</div>

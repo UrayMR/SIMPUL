@@ -21,7 +21,7 @@
 									<input type="text" class="form-control rounded-3 @error('name') is-invalid @enderror" id="name"
 										name="name" value="{{ old('name') }}" required autofocus autocomplete="name">
 									@error('name')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12">
@@ -32,7 +32,7 @@
 											id="email" name="email" value="{{ old('email') }}" required autocomplete="email">
 									</div>
 									@error('email')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12">
@@ -45,7 +45,7 @@
 											id="phone_number" name="phone_number" value="{{ old('phone_number') }}" required autocomplete="tel">
 									</div>
 									@error('phone_number')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12 col-md-6">
@@ -58,7 +58,7 @@
 												class="bi bi-eye-slash"></i></button>
 									</div>
 									@error('password')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 								<div class="col-12 col-md-6">
@@ -73,7 +73,7 @@
 												class="bi bi-eye-slash"></i></button>
 									</div>
 									@error('password_confirmation')
-										<div class="invalid-feedback">{{ $message }}</div>
+										<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 									@enderror
 								</div>
 							</div>

@@ -71,7 +71,7 @@
 										<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
 											value="{{ old('name', auth()->user()->name) }}" required maxlength="150" placeholder="Masukkan nama">
 										@error('name')
-											<div class="invalid-feedback">{{ $message }}</div>
+											<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 										@enderror
 									</div>
 									<div class="col-md-6 mb-3">
@@ -79,7 +79,7 @@
 										<input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
 											value="{{ old('email', auth()->user()->email) }}" required maxlength="150" placeholder="Masukkan email">
 										@error('email')
-											<div class="invalid-feedback">{{ $message }}</div>
+											<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 										@enderror
 									</div>
 								</div>
@@ -91,7 +91,7 @@
 											name="phone_number" value="{{ old('phone_number', auth()->user()->phone_number) }}" required maxlength="20"
 											placeholder="Masukkan nomor telepon">
 										@error('phone_number')
-											<div class="invalid-feedback">{{ $message }}</div>
+											<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 										@enderror
 									</div>
 									@if (auth()->user()->role === 'teacher')
@@ -101,7 +101,7 @@
 												name="expertise" value="{{ old('expertise', auth()->user()->teacher->expertise ?? '') }}" maxlength="100"
 												placeholder="Masukkan keahlian">
 											@error('expertise')
-												<div class="invalid-feedback">{{ $message }}</div>
+												<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 											@enderror
 										</div>
 										<div class="col-md-12 mb-3">
@@ -109,7 +109,7 @@
 											<textarea class="form-control @error('bio') is-invalid @enderror" id="bio" name="bio" rows="3"
 											 maxlength="500" placeholder="Masukkan bio singkat">{{ old('bio', auth()->user()->teacher->bio ?? '') }}</textarea>
 											@error('bio')
-												<div class="invalid-feedback">{{ $message }}</div>
+												<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 											@enderror
 										</div>
 									@endif
@@ -141,7 +141,7 @@
 													class="bi bi-eye-slash"></i></button>
 										</div>
 										@error('old_password')
-											<div class="invalid-feedback">{{ $message }}</div>
+											<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 										@enderror
 									</div>
 									<div class="col-md-6 mb-3">
@@ -155,7 +155,7 @@
 													class="bi bi-eye-slash"></i></button>
 										</div>
 										@error('new_password')
-											<div class="invalid-feedback">{{ $message }}</div>
+											<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 										@enderror
 									</div>
 									<div class="col-md-6 mb-3">
@@ -171,7 +171,7 @@
 													class="bi bi-eye-slash"></i></button>
 										</div>
 										@error('new_password_confirmation')
-											<div class="invalid-feedback">{{ $message }}</div>
+											<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 										@enderror
 									</div>
 								</div>
