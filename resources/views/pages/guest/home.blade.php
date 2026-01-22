@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Beranda')
 
 {{-- Landing Page --}}
 @section('content')
@@ -264,6 +264,7 @@
 			</div>
 		</section>
 
+        
 		{{-- DAFTAR GURU SECTION --}}
 		<section class="profil-section bg-white pt-1 pb-4" data-aos="fade-up">
 			<div class="container ">
