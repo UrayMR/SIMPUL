@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfilePasswordRequest;
 use App\Http\Requests\ProfileSettingRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,7 +17,7 @@ class ProfileSettingController extends Controller
 
     public function update(ProfileSettingRequest $request)
     {
-        $user = Auth::user();
+        $user = $request->user();
 
         $data = $request->validated();
 
@@ -56,7 +55,7 @@ class ProfileSettingController extends Controller
     {
         $data = $request->validated();
 
-        $user = Auth::user();
+        $user = $request->user();
         if (! Hash::check($data['old_password'], $user->password)) {
             return back()->withErrors(['old_password' => 'Password lama tidak sesuai.']);
         }
