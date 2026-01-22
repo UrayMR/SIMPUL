@@ -2,19 +2,24 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
+use App\Models\Enrollment;
+use App\Models\Transaction;
 use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
 {
     public function run(): void
     {
-        $enrollments = \App\Models\Enrollment::all();
+        $enrollments = Enrollment::all();
+
         foreach ($enrollments as $enrollment) {
-            $course = \App\Models\Course::find($enrollment->course_id);
+            $course = Course::find($enrollment->course_id);
             if (! $course) {
-                continue;
+                continue; // skip kalau course tidak ditemukan
             }
-            \App\Models\Transaction::factory()->create([
+
+            Transaction::factory()->create([
                 'user_id' => $enrollment->user_id,
                 'course_id' => $enrollment->course_id,
                 'amount' => $course->price,
