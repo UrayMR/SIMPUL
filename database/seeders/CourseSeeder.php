@@ -57,7 +57,7 @@ class CourseSeeder extends Seeder
                     'price' => rand(100000, 500000),
                     'video_url' => 'dQw4w9WgXcQ', // dummy youtube id
                     'status' => 'approved',
-                    'enrollments_count' => rand(0, 50),
+                    'enrollments_count' => 0,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
