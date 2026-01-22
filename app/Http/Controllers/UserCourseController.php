@@ -25,6 +25,7 @@ class UserCourseController extends Controller
         $query = Course::query()
             ->with(['category', 'teacher']);
 
+        $query->where('status', Course::STATUS_APPROVED);
         /* ======================
      | FILTER CATEGORY
      ====================== */
