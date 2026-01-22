@@ -143,9 +143,9 @@
             <div class="col-lg-2 col-md-4 mb-4">
                 <h5 class="footer-title">Tautan Cepat</h5>
                 <ul class="footer-links">
-                    <li><a href="/home">Home</a></li>
-                    <li><a href="/berita">Kursus</a></li>
-                    <li><a href="/">Lowongan Karir</a></li>
+                    <li><a href="/">Beranda</a></li>
+                    <li><a href="/kursus">Kursus</a></li>
+                    <li><a href="/lowongan-karir">Lowongan Karir</a></li>
                 </ul>
             </div>
 

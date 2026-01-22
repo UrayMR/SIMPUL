@@ -289,7 +289,7 @@
 							@endif
 						@endauth
 						<li><a class="dropdown-item dropdown-user-item"
-								href="{{ route('course.index', ['search' => '', 'sort_price' => '', 'ownership' => true]) }}">
+								href="{{ route('course.index', ['search' => '', 'sort_price' => '', 'ownership' => "true"]) }}">
 								<i class="bi bi-book"></i> Kursus Saya</a></li>
 						<li><a class="dropdown-item dropdown-user-item" href="{{ route('history.index') }}">
 								<i class="bi bi-receipt"></i> Riwayat Transaksi</a></li>
@@ -363,7 +363,7 @@
 							@endauth
 
 							<li><a class="dropdown-item dropdown-user-item"
-									href="{{ route('course.index', ['search' => '', 'sort_price' => '', 'ownership' => true]) }}">
+									href="{{ route('course.index', ['search' => '', 'sort_price' => '', 'ownership' => "true"]) }}">
 									<i class="bi bi-book"></i> Kursus Saya</a></li>
 							<li><a class="dropdown-item dropdown-user-item" href="{{ route('history.index') }}">
 									<i class="bi bi-receipt"></i> Riwayat Transaksi</a></li>
