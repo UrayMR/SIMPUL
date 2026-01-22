@@ -13,8 +13,8 @@
 			<div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
 				<h5 class="mb-0 fw-semibold fs-4">Tambah Pengguna</h5>
 
-				<a href="{{ route('admin.users.index') }}" class="btn btn-secondary">
-					<i class="bi bi-arrow-left me-2"></i> Batal
+				<a href="{{ route('admin.users.index') }}" class="btn btn-secondary border">
+					Batal
 				</a>
 			</div>
 

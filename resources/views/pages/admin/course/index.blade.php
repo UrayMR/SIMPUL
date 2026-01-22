@@ -34,8 +34,8 @@
 						</form>
 					</div>
 					<div class="col-12 col-md-auto ms-md-auto text-md-end">
-						<a href="{{ route('admin.courses.create') }}" class="btn btn-primary w-100 w-md-auto">
-							<i class="bi bi-plus-lg me-1"></i> Tambah Baru
+						<a href="{{ route('admin.courses.create') }}" class="btn btn-app-primary w-100 w-md-auto">
+							<i class="bi bi-plus-circle me-1"></i> Tambah Baru
 						</a>
 					</div>
 				</div>
@@ -213,7 +213,7 @@
 
 			function renderActions(course) {
 				return `
-			<a href="/admin/courses/${course.id}" class="btn btn-sm btn-info"><i class="bx bx-info-circle"></i> Lihat</a>
+			<a href="/admin/courses/${course.id}" class="btn btn-sm btn-success"><i class="bx bx-check"></i> Konfirmasi</a>
 			<a href="/admin/courses/${course.id}/edit" class="btn btn-sm btn-warning"><i class="bx bx-pencil"></i> Ubah</a>
 			<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalDeleteCourse${course.id}"><i class="bx bx-trash"></i> Hapus</button>
 		`;

@@ -12,8 +12,8 @@
 		<div class="card shadow-sm border-0 mb-4 p-3">
 			<div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
 				<h5 class="mb-0 fw-semibold fs-4">Tambah Kursus</h5>
-				<a href="{{ route('admin.courses.index') }}" class="btn btn-secondary">
-					<i class="bi bi-arrow-left me-2"></i> Batal
+				<a href="{{ route('admin.courses.index') }}" class="btn btn-secondary border">
+					Batal
 				</a>
 			</div>
 			<div class="card-body">
@@ -105,8 +105,8 @@
 						@enderror
 						<small class="text-muted">Format: jpg, png, jpeg. Maksimal: 4MB.</small>
 					</div>
-					<div class="d-flex justify-content-end gap-2">
-						<button type="submit" class="btn btn-primary" id="submitCourseBtn">
+					<div class="d-flex justify-content-end mt-4">
+						<button type="submit" class="btn btn-app-primary" id="submitCourseBtn">
 							<span class="button-content">Simpan</span>
 							<span class="spinner-content d-none">
 								<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>

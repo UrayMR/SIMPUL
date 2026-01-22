@@ -36,8 +36,8 @@
 						</form>
 					</div>
 					<div class="col-12 col-md-auto ms-md-auto text-md-end">
-						<a href="{{ route('admin.users.create') }}" class="btn btn-primary w-100 w-md-auto">
-							<i class="bi bi-plus-lg me-1"></i> Tambah Baru
+						<a href="{{ route('admin.users.create') }}" class="btn btn-app-primary w-100 w-md-auto">
+							<i class="bi bi-plus-circle me-1"></i> Tambah Baru
 						</a>
 					</div>
 				</div>
@@ -219,7 +219,7 @@
 
 			function renderActions(user) {
 				return `
-						<a href="/admin/users/${user.id}" class="btn btn-sm btn-info"><i class="bx bx-info-circle"></i> Lihat</a>
+						<a href="/admin/users/${user.id}" class="btn btn-sm btn-success"><i class="bx bx-check"></i> Konfirmasi</a>
 						<a href="/admin/users/${user.id}/edit" class="btn btn-sm btn-warning"><i class="bx bx-pencil"></i> Ubah</a>
 						${authId !== user.id ? `<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalCenter${user.id}"><i class="bx bx-trash"></i> Hapus</button>` : `<button type="button" class="btn btn-secondary btn-sm" disabled title="Tidak dapat menghapus akun sendiri"><i class="bx bx-trash"></i> Hapus</button>`}
 					`;

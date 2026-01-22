@@ -1,4 +1,3 @@
-
 @extends('layouts.admin')
 
 @section('title', 'Manajemen Transaksi')
@@ -66,11 +65,14 @@
 											    default => 'bg-secondary',
 											};
 										@endphp
-										<span class="badge w-100 {{ $badgeClass }}">{{ ucfirst($status) }}</span>
+										<span class="badge w-50 {{ $badgeClass }}">{{ ucfirst($status) }}</span>
 									</td>
 									<td class="d-flex justify-content-center gap-2">
-										<a href="{{ route('admin.transactions.show', $transaction) }}" class="btn btn-sm btn-info"><i
-												class="bx bx-info-circle"></i> Lihat</a>
+										<a href="{{ route('admin.transactions.show', $transaction) }}"
+											class="btn btn-sm {{ $transaction->status === 'approved' ? 'btn-info' : 'btn-success' }}">
+											<i class="bx {{ $transaction->status === 'approved' ? 'bx-info-circle' : 'bx-check' }}"></i>
+											{{ $transaction->status === 'approved' ? 'Lihat' : 'Konfirmasi' }}
+										</a>
 										<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
 											data-bs-target="#modalDeleteTransaction{{ $transaction->id }}"><i class="bx bx-trash"></i> Hapus</button>
 									</td>
@@ -103,7 +105,8 @@
 								<div class="modal-body pt-3 pb-0 px-4">
 									<p class="mb-3 fs-6">Apakah Anda yakin ingin menghapus transaksi
 										<strong>{{ $transaction->user->name ?? '-' }}</strong> untuk kursus
-										<strong>{{ Str::limit($transaction->course->title ?? '-', 15, '...') }}</strong>?</p>
+										<strong>{{ Str::limit($transaction->course->title ?? '-', 15, '...') }}</strong>?
+									</p>
 								</div>
 								<div class="modal-footer border-0 pt-0 px-4 pb-4 d-flex justify-content-end gap-2">
 									<button type="button" class="btn btn-light border" data-bs-dismiss="modal">Batal</button>
