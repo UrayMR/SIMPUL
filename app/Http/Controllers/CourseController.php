@@ -41,7 +41,7 @@ class CourseController extends Controller
 
         // Count courses pending+rejected
         $pendingCount = Course::query()
-            ->whereIn('status', [Course::STATUS_PENDING, Course::STATUS_REJECTED])
+            ->where('status', Course::STATUS_PENDING)
             ->count();
 
         return view('pages.admin.course.index', [

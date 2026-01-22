@@ -38,9 +38,9 @@ class UserController extends Controller
         $perPage = $users->perPage();
         $total = $users->total();
 
-        // Count user pending+rejected
+        // Count user pending
         $pendingCount = User::query()
-            ->whereIn('status', [User::STATUS_PENDING, User::STATUS_REJECTED])
+            ->where('status', User::STATUS_PENDING)
             ->count();
 
         return view('pages.admin.user.index', compact(

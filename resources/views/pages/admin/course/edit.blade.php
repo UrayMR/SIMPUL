@@ -77,6 +77,15 @@
 						@enderror
 					</div>
 					<div class="mb-3">
+						<label for="video_url" class="form-label fw-semibold">URL Video Youtube <span class="text-danger">*</span></label>
+						<input type="url" name="video_url" id="video_url" class="form-control @error('video_url') is-invalid @enderror"
+							value="{{ old('video_url', $course->video_url ? 'https://www.youtube.com/watch?v=' . $course->video_url : '') }}"
+							placeholder="https://www.youtube.com/watch?v=..." required>
+						@error('video_url')
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
+						@enderror
+					</div>
+					<div class="mb-3">
 						<label for="thumbnail_file" class="form-label">Thumbnail</label>
 						<img src="{{ asset('storage/' . $course->thumbnail_path) }}" class="img-thumbnail mb-3" style="max-width: 200px;"
 							id="thumbnail-img">

@@ -61,7 +61,7 @@
 											id="profile_picture_file" name="profile_picture_file" accept="image/*">
 										<small class="text-app-gray">Format: jpg, png, jpeg. Maksimal: 2MB. Ukuran pas foto: 3x4.</small>
 										@error('profile_picture_file')
-											<div class="invalid-feedback d-block">{{ $message }}</div>
+											<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 										@enderror
 									</div>
 								@endif

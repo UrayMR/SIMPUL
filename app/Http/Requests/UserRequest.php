@@ -42,8 +42,16 @@ class UserRequest extends FormRequest
 
         // RULES TEACHER
         if ($this->input('role') === User::ROLE_TEACHER) {
+            $profilePictureRules = ['file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'];
+            $user = $this->route('user');
+            $hasOldPhoto = $user && $user->teacher && !empty($user->teacher->profile_picture_path);
+            if ($this->isMethod('post') || !$hasOldPhoto) {
+                array_unshift($profilePictureRules, 'required');
+            } else {
+                array_unshift($profilePictureRules, 'nullable');
+            }
             $rules = array_merge($rules, [
-                'profile_picture_file' => ['required', 'file', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+                'profile_picture_file' => $profilePictureRules,
                 'bio' => ['nullable', 'string', 'max:1000'],
                 'expertise' => ['nullable', 'string', 'max:255'],
             ]);

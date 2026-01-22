@@ -139,6 +139,10 @@ class TeacherCourseController extends Controller
 
         $data['video_url'] = YoutubeUrlParser::extractId($data['video_url'] ?? '');
 
+        if ($course->status === Course::STATUS_REJECTED) {
+            $data['status'] = Course::STATUS_PENDING;
+        }
+
         $course->update($data);
 
         return redirect()->route('teacher.courses.index')->with('success', 'Kursus berhasil diperbarui.');

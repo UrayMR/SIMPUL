@@ -14,7 +14,7 @@
 ])
 <div class="dropdown {{ $dropdownClass }}">
 	<button id="btn-{{ $id }}" class="form-control text-start {{ $buttonClass }}"
-		style="background-color: #fff; border: 1px solid #d9dee3; border-radius: 0.375rem; min-height: 38px; padding: 0.375rem 0.75rem; display: flex; align-items: center; justify-content: space-between;"
+		style="background-color: {{ $disabled ? '#f5f5f5' : '#fff' }}; color: {{ $disabled ? '#b0b0b0' : 'inherit' }}; border: 1px solid #d9dee3; border-radius: 0.375rem; min-height: 38px; padding: 0.375rem 0.75rem; display: flex; align-items: center; justify-content: space-between; cursor: {{ $disabled ? 'not-allowed' : 'pointer' }};"
 		data-bs-toggle="dropdown" @if ($disabled) disabled @endif type="button">
 		<span class="dropdown-label">
 			{{ $selected && isset($options[$selected]) ? $options[$selected] : $placeholder ?? 'Pilih ' . $label }}

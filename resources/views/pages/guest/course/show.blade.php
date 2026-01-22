@@ -16,11 +16,6 @@
 			transition: all 0.3s ease;
 		}
 
-		.teacher-card:hover {
-			transform: translateY(-4px);
-			box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-		}
-
 		.teacher-avatar {
 			width: 120px;
 			height: 120px;

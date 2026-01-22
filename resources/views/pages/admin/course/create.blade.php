@@ -73,9 +73,9 @@
 						@enderror
 					</div>
 					<div class="mb-3">
-						<label for="video_url" class="form-label fw-semibold">URL Video Youtube</label>
+						<label for="video_url" class="form-label fw-semibold">URL Video Youtube <span class="text-danger">*</span></label>
 						<input type="url" name="video_url" id="video_url" class="form-control @error('video_url') is-invalid @enderror"
-							value="{{ old('video_url') }}" placeholder="https://www.youtube.com/watch?v=...">
+							value="{{ old('video_url') }}" placeholder="https://www.youtube.com/watch?v=..." required>
 						@error('video_url')
 							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror

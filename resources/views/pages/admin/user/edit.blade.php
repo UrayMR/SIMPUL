@@ -60,7 +60,7 @@
 						<input type="email" name="email" class="form-control" required placeholder="Masukkan email"
 							value="{{ old('email', $user->email) }}">
 						@error('email')
-							<div class="invalid-feedback d-block">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 
@@ -70,7 +70,7 @@
 						<input type="text" name="phone_number" class="form-control" required placeholder="Masukkan nomor telepon"
 							value="{{ old('phone_number', $user->phone_number) }}">
 						@error('phone_number')
-							<div class="invalid-feedback d-block">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 
@@ -85,7 +85,7 @@
 							</button>
 						</div>
 						@error('password')
-							<div class="invalid-feedback d-block">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 
@@ -101,7 +101,7 @@
 							</button>
 						</div>
 						@error('password_confirmation')
-							<div class="invalid-feedback d-block">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 
@@ -185,7 +185,11 @@
 				if (roleSelect.value === 'teacher') {
 					photoForm.style.display = 'block';
 					teacherFields.style.display = 'block';
-					photoInput.required = true;
+
+					// Cek apakah sudah ada foto lama (profile_picture_path)
+					const hasOldPhoto = oldPhoto && oldPhoto.style.display !== 'none';
+					// Jika ada foto lama, tidak required
+					photoInput.required = !hasOldPhoto;
 				} else {
 					photoForm.style.display = 'none';
 					teacherFields.style.display = 'none';

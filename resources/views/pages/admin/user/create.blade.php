@@ -62,7 +62,7 @@
 						<input type="email" name="email" class="form-control" required placeholder="Masukkan email"
 							value="{{ old('email') }}">
 						@error('email')
-							<div class="invalid-feedback d-block">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 
@@ -72,7 +72,7 @@
 						<input type="text" name="phone_number" class="form-control" required placeholder="Masukkan nomor telepon"
 							value="{{ old('phone_number') }}">
 						@error('phone_number')
-							<div class="invalid-feedback d-block">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 
@@ -87,7 +87,7 @@
 							</button>
 						</div>
 						@error('password')
-							<div class="invalid-feedback d-block">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 
@@ -103,7 +103,7 @@
 							</button>
 						</div>
 						@error('password_confirmation')
-							<div class="invalid-feedback d-block">{{ $message }}</div>
+							<div class="text-danger mt-1 small">{{ ucfirst($message) }}</div>
 						@enderror
 					</div>
 

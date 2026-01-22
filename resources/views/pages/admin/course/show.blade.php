@@ -57,9 +57,14 @@
 				</div>
 				<div class="row mb-2">
 					<div class="col-12 mb-3">
-						<label class="form-label text-start d-block">Video URL</label>
+						<label class="form-label text-start d-block">Video Youtube</label>
 						@if (!empty($course->video_url))
-							<input type="text" class="form-control" value="{{ $course->video_url }}" disabled>
+							<input type="text" class="form-control mb-2" value="https://www.youtube.com/watch?v={{ $course->video_url }}"
+								disabled>
+							<div class="ratio ratio-16x9" style="max-width: 480px;">
+								<iframe src="https://www.youtube.com/embed/{{ $course->video_url }}" title="Youtube video"
+									allowfullscreen></iframe>
+							</div>
 						@else
 							<input type="text" class="form-control" value="-" disabled>
 						@endif

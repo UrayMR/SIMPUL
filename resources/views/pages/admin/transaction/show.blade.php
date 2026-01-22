@@ -51,8 +51,9 @@
 					<div class="col-12 mb-3">
 						<label class="form-label text-start d-block">Bukti Pembayaran</label>
 						@if ($transaction->payment_proof_path)
-							<a href="{{ asset('storage/' . $transaction->payment_proof_path) }}" target="_blank" class="btn btn-info">Lihat
-								Bukti</a>
+							<img src="{{ asset('storage/' . $transaction->payment_proof_path) }}" alt="Bukti Pembayaran"
+								class="img-thumbnail shadow-sm"
+								style="max-width: 350px; max-height: 350px; object-fit: contain; border: 2px solid #dee2e6;">
 						@else
 							<span class="text-muted">-</span>
 						@endif
@@ -61,7 +62,7 @@
 			</div>
 			<div class="card-footer bg-white border-0 pt-0">
 				<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-					<div class="fw-semibold text-primary">
+					<div class="fw-bold text-warning">
 						Nominal Transaksi: Rp{{ number_format($transaction->amount, 0, ',', '.') }}
 					</div>
 					@if ($transaction->status === 'pending')
