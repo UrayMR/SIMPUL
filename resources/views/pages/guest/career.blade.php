@@ -129,7 +129,7 @@
                 </div>
 
                 <div class="col-lg-6 text-center" data-aos="fade-left">
-                    <img src="{{ asset('assets/img/background/2.png') }}" alt="Benefit Pengajar" class="img-fluid"
+                    <img src="{{ asset('assets/img/background/3.png') }}" alt="Benefit Pengajar" class="img-fluid"
                         style="max-height: 320px;">
                 </div>
 
