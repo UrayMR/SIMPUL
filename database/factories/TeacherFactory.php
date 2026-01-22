@@ -17,7 +17,7 @@ class TeacherFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => fn() => \App\Models\User::factory(),
+            'user_id' => fn () => \App\Models\User::factory(),
             'bio' => $this->faker->optional()->paragraph(),
             'expertise' => $this->faker->optional()->word(),
             'profile_picture_path' => $this->faker->optional()->imageUrl(),

@@ -17,8 +17,8 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
-            'teacher_id' => fn() => \App\Models\Teacher::factory(),
-            'category_id' => fn() => \App\Models\Category::factory(),
+            'teacher_id' => fn () => \App\Models\Teacher::factory(),
+            'category_id' => fn () => \App\Models\Category::factory(),
             'thumbnail_path' => $this->faker->optional()->imageUrl(),
             'hero_path' => $this->faker->imageUrl(),
             'title' => $this->faker->sentence(3),

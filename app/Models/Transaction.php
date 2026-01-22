@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +11,9 @@ class Transaction extends Model
     use HasFactory, HasUuids;
 
     public const STATUS_APPROVED = 'approved';
+
     public const STATUS_PENDING = 'pending';
+
     public const STATUS_REJECTED = 'rejected';
 
     /**

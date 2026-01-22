@@ -1,24 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Beranda')
 
-{{-- Landing Page --}}
 @section('content')
 	<style>
-		/* Prevent horizontal scrollbar root-level */
 		html,
 		body {
 			max-width: 100%;
 			overflow-x: hidden;
 		}
 
-		/* --- Foto Profil 3:4 --- */
 		.profil-photo-wrapper {
 			width: 100%;
 			max-width: 300px;
-			/* batas maksimal supaya tidak terlalu besar */
 			aspect-ratio: 3 / 4;
-			/* rasio 3:4 */
 			border-radius: 1rem;
 			overflow: hidden;
 			margin: auto;
@@ -59,22 +54,18 @@
 			position: relative;
 			min-height: 90vh;
 			background-image: url('{{ asset('assets/img/background/Hero.svg') }}');
-			/* background-color: black; */
 			background-size: cover;
 			background-position: center;
 			background-repeat: no-repeat;
 			display: flex;
 			align-items: center;
 			overflow-x: hidden;
-			/* ensure no child causes overflow */
 		}
 
 		.hero-overlay {
 			position: absolute;
 			inset: 0;
 			background: rgba(255, 255, 255, 0.45);
-			/* background: #fffff; */
-			/* gelap biar teks kebaca */
 		}
 
 		.hero-content {
@@ -90,7 +81,6 @@
 			border-radius: 999px;
 		}
 
-		/* ===== PROFIL BANNER SECTION ===== */
 		.profil-section {
 			padding: 5rem 0;
 		}
@@ -154,7 +144,6 @@
 			text-decoration: underline;
 		}
 
-		/* Animasi fade-in dari bawah */
 		.fade-up {
 			opacity: 0;
 			transform: translateY(20px);

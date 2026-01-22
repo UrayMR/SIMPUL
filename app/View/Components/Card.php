@@ -11,18 +11,23 @@ class Card extends Component
     /**
      * Create a new component instance.
      */
-     public $title;
+    public $title;
+
     public $category;
+
     public $image;
+
     public $price;
+
     public $teacher;
+
     public $count;
+
     public $id;
 
     public $owned;
 
-
-    public function __construct($title ="TITLE", $category = 'IT', $image = 'kemenag2.jpg', $price = 0, $teacher = "Teacher", $count = 0,$id = null, $owned = false)
+    public function __construct($title = 'TITLE', $category = 'IT', $image = 'kemenag2.jpg', $price = 0, $teacher = 'Teacher', $count = 0, $id = null, $owned = false)
     {
         $this->title = $title;
         $this->category = $category;

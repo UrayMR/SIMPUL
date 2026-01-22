@@ -9,16 +9,27 @@ use Illuminate\View\Component;
 class SelectInput extends Component
 {
     public $id;
+
     public $label;
+
     public $name;
+
     public $options;
+
     public $placeholder;
+
     public $disabled;
+
     public $dropdownClass;
+
     public $buttonClass;
+
     public $ulClass;
+
     public $selected;
+
     public $searchable;
+
     public $required;
 
     /**
@@ -40,16 +51,16 @@ class SelectInput extends Component
     ) {
         // If id not provided, generate one from name (replace [] for arrays) or uniqid
         if (empty($id)) {
-            if (!empty($name)) {
+            if (! empty($name)) {
                 $sanitized = str_replace(['[', ']'], ['_', ''], $name);
-                $id = $sanitized . '_' . uniqid();
+                $id = $sanitized.'_'.uniqid();
             } else {
-                $id = 'select_' . uniqid();
+                $id = 'select_'.uniqid();
             }
         }
 
         // If label not provided, derive from name
-        if (empty($label) && !empty($name)) {
+        if (empty($label) && ! empty($name)) {
             $label = ucwords(str_replace(['_', '-'], ' ', str_replace(['[', ']'], '', $name)));
         }
 

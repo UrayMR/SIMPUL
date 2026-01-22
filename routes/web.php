@@ -3,14 +3,14 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CoursePaymentController;
-use App\Http\Controllers\UserCourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileSettingController;
 use App\Http\Controllers\TeacherCourseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserCourseController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileSettingController;
 
 // Guest routes
 Route::redirect('/beranda', '/beranda');
@@ -67,4 +67,4 @@ Route::middleware(['auth'])
         Route::put('/settings/password', [ProfileSettingController::class, 'updatePassword'])->name('settings.update-password');
     });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

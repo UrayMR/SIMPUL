@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Course;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -12,6 +11,7 @@ class HomeController extends Controller
     {
 
         $courses = Course::orderBy('enrollments_count', 'desc')->take(4)->get();
+
         return view('pages.guest.home', compact('courses'));
     }
 

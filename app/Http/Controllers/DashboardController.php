@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Course;
 use App\Models\Transaction;
+use App\Models\User;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-
-
     public function index()
     {
         $stats = [
@@ -55,6 +53,7 @@ class DashboardController extends Controller
                 ->whereYear('created_at', Carbon::now()->year)
                 ->sum('amount'),
         ];
+
         return view('pages.admin.dashboard', compact('stats'));
     }
 }

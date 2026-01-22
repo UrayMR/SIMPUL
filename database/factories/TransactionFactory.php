@@ -17,8 +17,8 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => fn() => \App\Models\User::factory(),
-            'course_id' => fn() => \App\Models\Course::factory(),
+            'user_id' => fn () => \App\Models\User::factory(),
+            'course_id' => fn () => \App\Models\Course::factory(),
             'amount' => $this->faker->randomFloat(2, 10000, 1000000),
             'payment_proof_path' => $this->faker->optional()->imageUrl(),
             'status' => $this->faker->randomElement(['approved', 'pending', 'rejected']),

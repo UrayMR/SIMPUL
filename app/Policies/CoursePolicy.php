@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Course;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class CoursePolicy
 {
@@ -27,6 +26,7 @@ class CoursePolicy
         if ($user->role === User::ROLE_TEACHER && $course->teacher_id === optional($user->teacher)->id) {
             return true;
         }
+
         return false;
     }
 
@@ -49,6 +49,7 @@ class CoursePolicy
         if ($user->role === User::ROLE_TEACHER && $course->teacher_id === optional($user->teacher)->id) {
             return true;
         }
+
         return false;
     }
 
@@ -63,6 +64,7 @@ class CoursePolicy
         if ($user->role === User::ROLE_TEACHER && $course->teacher_id === optional($user->teacher)->id) {
             return true;
         }
+
         return false;
     }
 

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourseRequest;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Teacher;
-use App\Http\Requests\CourseRequest;
 use App\Models\User;
 use App\Utils\ImageCompressor;
 use App\Utils\YoutubeUrlParser;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -77,7 +77,6 @@ class CourseController extends Controller
         ]);
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
@@ -90,8 +89,9 @@ class CourseController extends Controller
                 $q->where('users.status', User::STATUS_ACTIVE);
             })
             ->get()
-            ->mapWithKeys(fn($t) => [$t->id => $t->user->name])
+            ->mapWithKeys(fn ($t) => [$t->id => $t->user->name])
             ->toArray();
+
         return view('pages.admin.course.create', compact('categories', 'teachers'));
     }
 
@@ -133,6 +133,7 @@ class CourseController extends Controller
     {
         $this->authorize('view', $course);
         $course->load(['category', 'teacher.user']);
+
         return view('pages.admin.course.show', compact('course'));
     }
 
@@ -149,8 +150,9 @@ class CourseController extends Controller
                 $q->where('users.status', User::STATUS_ACTIVE);
             })
             ->get()
-            ->mapWithKeys(fn($t) => [$t->id => $t->user->name])
+            ->mapWithKeys(fn ($t) => [$t->id => $t->user->name])
             ->toArray();
+
         return view('pages.admin.course.edit', compact('course', 'categories', 'teachers'));
     }
 
@@ -212,6 +214,7 @@ class CourseController extends Controller
         }
         $course->status = Course::STATUS_APPROVED;
         $course->save();
+
         return redirect()->route('admin.courses.show', $course)->with('success', 'Kursus berhasil di-approve.');
     }
 
@@ -226,6 +229,7 @@ class CourseController extends Controller
         }
         $course->status = Course::STATUS_REJECTED;
         $course->save();
+
         return redirect()->route('admin.courses.show', $course)->with('success', 'Kursus berhasil direject.');
     }
 }

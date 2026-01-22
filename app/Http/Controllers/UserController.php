@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -110,22 +109,24 @@ class UserController extends Controller
 
             if ($user->role === User::ROLE_TEACHER) {
                 $teacherData = [];
-                if (!empty($profilePicturePath)) {
+                if (! empty($profilePicturePath)) {
                     $teacherData['profile_picture_path'] = $profilePicturePath;
                 }
-                if (!empty($data['bio'])) {
+                if (! empty($data['bio'])) {
                     $teacherData['bio'] = $data['bio'];
                 }
-                if (!empty($data['expertise'])) {
+                if (! empty($data['expertise'])) {
                     $teacherData['expertise'] = $data['expertise'];
                 }
                 $user->teacher()->create($teacherData);
             }
 
             DB::commit();
+
             return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil ditambahkan.');
         } catch (\Exception $e) {
             DB::rollBack();
+
             return redirect()->back()->withInput()->withErrors(['register' => 'Terjadi kesalahan saat menambah pengguna. Silakan coba lagi.']);
         }
     }
@@ -183,24 +184,26 @@ class UserController extends Controller
 
             if ($user->role === User::ROLE_TEACHER && $user->teacher) {
                 $teacherData = [];
-                if (!empty($profilePicturePath)) {
+                if (! empty($profilePicturePath)) {
                     $teacherData['profile_picture_path'] = $profilePicturePath;
                 }
-                if (!empty($data['bio'])) {
+                if (! empty($data['bio'])) {
                     $teacherData['bio'] = $data['bio'];
                 }
-                if (!empty($data['expertise'])) {
+                if (! empty($data['expertise'])) {
                     $teacherData['expertise'] = $data['expertise'];
                 }
-                if (!empty($teacherData)) {
+                if (! empty($teacherData)) {
                     $user->teacher->update($teacherData);
                 }
             }
 
             DB::commit();
+
             return redirect()->route('admin.users.index')->with('success', ' Data Pengguna berhasil diperbarui.');
         } catch (\Exception $e) {
             DB::rollBack();
+
             return redirect()->back()->withInput()->withErrors(['register' => 'Terjadi kesalahan saat memperbarui pengguna. Silakan coba lagi.']);
         }
     }
@@ -254,6 +257,7 @@ class UserController extends Controller
         }
         $user->status = User::STATUS_REJECTED;
         $user->save();
+
         return redirect()->route('admin.users.show', $user)->with('success', 'Pengajuan guru ditolak.');
     }
 }

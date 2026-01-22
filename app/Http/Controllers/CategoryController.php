@@ -6,7 +6,6 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Utils\SlugGenerator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -47,6 +46,7 @@ class CategoryController extends Controller
     public function create()
     {
         $this->authorize('create', Category::class);
+
         return view('pages.admin.category.create');
     }
 
@@ -65,16 +65,15 @@ class CategoryController extends Controller
         return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
-
     /**
      * Display the specified resource.
      */
     public function show(Category $category)
     {
         $this->authorize('view', $category);
+
         return view('pages.admin.category.show', compact('category'));
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -82,9 +81,9 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $this->authorize('update', $category);
+
         return view('pages.admin.category.edit', compact('category'));
     }
-
 
     /**
      * Update the specified resource in storage.

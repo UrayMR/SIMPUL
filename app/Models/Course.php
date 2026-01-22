@@ -11,7 +11,9 @@ class Course extends Model
     use HasFactory, HasUuids;
 
     public const STATUS_PENDING = 'pending';
+
     public const STATUS_APPROVED = 'approved';
+
     public const STATUS_REJECTED = 'rejected';
 
     /**
@@ -68,17 +70,19 @@ class Course extends Model
     }
 
     public function isOwnedBy(?User $user): bool
-{
-    if (!$user) return false;
+    {
+        if (! $user) {
+            return false;
+        }
 
-    // Guru pemilik kursus
-    if ($this->teacher && $this->teacher->user_id === $user->id) {
-        return true;
+        // Guru pemilik kursus
+        if ($this->teacher && $this->teacher->user_id === $user->id) {
+            return true;
+        }
+
+        // Peserta kursus
+        return $this->enrollments()
+            ->where('user_id', $user->id)
+            ->exists();
     }
-
-    // Peserta kursus
-    return $this->enrollments()
-        ->where('user_id', $user->id)
-        ->exists();
-}
 }

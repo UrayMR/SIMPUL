@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -39,7 +39,6 @@ class UserRequest extends FormRequest
         } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
             $rules['password'] = ['nullable', 'string', 'confirmed'];
         }
-
 
         // RULES TEACHER
         if ($this->input('role') === User::ROLE_TEACHER) {

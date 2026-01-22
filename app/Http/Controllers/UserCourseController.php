@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Course;
-use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +28,7 @@ class UserCourseController extends Controller
         /* ======================
      | FILTER CATEGORY
      ====================== */
-        if (!empty($categoryIds)) {
+        if (! empty($categoryIds)) {
             $query->whereIn('category_id', $categoryIds);
         }
 
@@ -73,8 +72,6 @@ class UserCourseController extends Controller
             $query->whereRaw('0 = 1');
         }
 
-
-
         /* ======================
      | FILTER OWNERSHIP
      ====================== */
@@ -97,7 +94,6 @@ class UserCourseController extends Controller
         return view('pages.guest.course.index', compact('categories', 'courses'));
     }
 
-
     public function show(Course $course)
     {
         $course->load('category', 'teacher.user');
@@ -114,16 +110,16 @@ class UserCourseController extends Controller
             // 2️⃣ cek apakah user sudah enroll
             elseif (
                 $course->enrollments()
-                ->where('user_id', Auth::id())
-                ->exists()
+                    ->where('user_id', Auth::id())
+                    ->exists()
             ) {
                 $isOwned = true;
             }
         }
 
         return view('pages.guest.course.show', [
-            'course'   => $course,
-            'enrolled' => $isOwned
+            'course' => $course,
+            'enrolled' => $isOwned,
         ]);
     }
 }

@@ -7,23 +7,23 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentProofFileRequest extends FormRequest
 {
-  /**
-   * Determine if the user is authorized to make this request.
-   */
-  public function authorize(): bool
-  {
-    return Auth::check();
-  }
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return Auth::check();
+    }
 
-  /**
-   * Get the validation rules that apply to the request.
-   *
-   * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-   */
-  public function rules(): array
-  {
-    return [
-      'payment_proof_file' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
-    ];
-  }
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'payment_proof_file' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
+        ];
+    }
 }

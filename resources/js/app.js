@@ -18,7 +18,6 @@ import "../sneat/js/main.js";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-// Inisialisasi Sneat sidebar overlay dan AOS
 document.addEventListener("DOMContentLoaded", () => {
     if (
         typeof window.Helpers !== "undefined" &&

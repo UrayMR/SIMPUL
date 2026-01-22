@@ -141,17 +141,19 @@ class TransactionController extends Controller
         return redirect()->route('admin.transactions.show', $transaction)->with('success', 'Transaksi berhasil direject.');
     }
 
-    public function payment(){
+    public function payment()
+    {
         return view('pages.guest.transaction.payment');
     }
 
-
-    public function history(){
+    public function history()
+    {
         $transactions = Transaction::where('user_id', Auth::id())
             ->with('course')
             ->orderByDesc('created_at')
             ->paginate(5);
+
         return view('pages.guest.transaction.history', compact('transactions'));
-        
+
     }
 }

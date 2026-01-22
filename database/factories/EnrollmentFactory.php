@@ -17,8 +17,8 @@ class EnrollmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => fn() => \App\Models\User::factory(),
-            'course_id' => fn() => \App\Models\Course::factory(),
+            'user_id' => fn () => \App\Models\User::factory(),
+            'course_id' => fn () => \App\Models\Course::factory(),
         ];
     }
 }

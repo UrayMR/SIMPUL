@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TransactionSeeder extends Seeder
 {
@@ -12,7 +11,7 @@ class TransactionSeeder extends Seeder
         $enrollments = \App\Models\Enrollment::all();
         foreach ($enrollments as $enrollment) {
             $course = \App\Models\Course::find($enrollment->course_id);
-            if (!$course) {
+            if (! $course) {
                 continue;
             }
             \App\Models\Transaction::factory()->create([
