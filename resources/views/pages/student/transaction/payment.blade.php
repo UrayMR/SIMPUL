@@ -70,11 +70,11 @@
 								</div>
 								<div class="col-md-4">
 									<div class="text-muted small">Nomor Rekening</div>
-									<div class="fw-semibold fs-5">1234567890</div>
+									<div class="fw-semibold fs-5">880940124144</div>
 								</div>
 								<div class="col-md-4">
 									<div class="text-muted small">Atas Nama</div>
-									<div class="fw-semibold fs-5">PT Plenger Edukasi</div>
+									<div class="fw-semibold fs-5">PT Simpul Digital</div>
 								</div>
 							</div>
 
