@@ -32,7 +32,7 @@ class Handler extends ExceptionHandler
             return response()->view('pages.error.404', [], 404);
         }
         if ($e instanceof AuthenticationException) {
-            return response()->view('pages.error.401', [], 401);
+            return redirect()->guest(route('login'));
         }
         if ($e instanceof AuthorizationException) {
             return response()->view('pages.error.403', [], 403);
