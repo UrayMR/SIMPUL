@@ -65,7 +65,7 @@
 											    default => 'bg-secondary',
 											};
 										@endphp
-										<span class="badge w-50 {{ $badgeClass }}">{{ ucfirst($status) }}</span>
+										<span class="badge w-100 {{ $badgeClass }}">{{ ucfirst($status) }}</span>
 									</td>
 									<td class="d-flex justify-content-center gap-2">
 										<a href="{{ route('admin.transactions.show', $transaction) }}"
